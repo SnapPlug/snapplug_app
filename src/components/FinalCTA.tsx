@@ -8,10 +8,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const aiTeamMembers = [
-  { name: 'Ara', image: '/AI_ara.webp' },
-  { name: 'Rio', image: '/AI_rio.webp' },
-  { name: 'Luna', image: '/AI_luna.webp' },
-  { name: 'Sera', image: '/AI_sera.webp' },
+  { name: 'Ara', role: '수석보좌관', image: '/AI_ara.webp' },
+  { name: 'Rio', role: '영업 책임자', image: '/AI_rio.webp' },
+  { name: 'Luna', role: '마케팅 책임자', image: '/AI_luna.webp' },
+  { name: 'Sera', role: '고객응대 책임자', image: '/AI_sera.webp' },
+  { name: 'Alex', role: '데이터 분석가', image: '/AI_alex.webp' },
 ];
 
 export default function FinalCTA() {
@@ -146,6 +147,7 @@ export default function FinalCTA() {
                 />
               </div>
               <p className="text-sm font-medium">{member.name}</p>
+              <p className="text-xs opacity-80">{member.role}</p>
             </div>
           ))}
         </div>
@@ -156,7 +158,7 @@ export default function FinalCTA() {
           </p>
 
           <div className="max-w-md mx-auto mb-8">
-            <p className="text-lg mb-1">30분 무료 진단으로 시작하세요.</p>
+            <p className="text-lg mb-1">60분 맞춤 컨설팅으로 시작하세요.</p>
             <p className="text-base opacity-90">
               어디에 AI 팀원을 붙이면 좋을지 같이 찾아드립니다.
             </p>
@@ -171,11 +173,11 @@ export default function FinalCTA() {
           rel="noopener noreferrer"
           className="inline-block bg-white text-[var(--primary)] px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg opacity-0"
         >
-          무료 진단 신청하기
+          맞춤 컨설팅 신청하기
         </a>
 
         <p className="mt-4 text-sm opacity-80">
-          진단 후 구매 의무 없습니다. 부담 없이 신청하세요.
+          컨설팅 후 구매 의무 없습니다. 부담 없이 신청하세요.
         </p>
       </div>
     </section>
