@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Problem from '@/components/Problem';
-import AITeamDetail from '@/components/AITeamDetail';
 import Scenarios from '@/components/Scenarios';
 import ROICalculator from '@/components/ROICalculator';
 import Process from '@/components/Process';
@@ -15,7 +14,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Problem />
-      <AITeamDetail />
       <Scenarios />
       <ROICalculator />
       <Process />
