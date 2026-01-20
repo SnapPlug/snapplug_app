@@ -8,10 +8,11 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const aiTeamMembers = [
-  { name: 'Ara', role: '수석보좌관', desc: '일정 · 이메일', image: '/AI_ara.webp', delay: 0 },
-  { name: 'Rio', role: '영업 책임자', desc: '리드 · 세일즈', image: '/AI_rio.webp', delay: 0.5 },
-  { name: 'Luna', role: '마케팅 책임자', desc: '콘텐츠 · 발행', image: '/AI_luna.webp', delay: 1 },
-  { name: 'Sera', role: '고객응대 책임자', desc: '24시간 CS', image: '/AI_sera.webp', delay: 1.5 },
+  { name: 'Ara', role: '수석보좌관', desc: '업무 자동화는 제가 할게요!', image: '/AI_ara.webp', delay: 0 },
+  { name: 'Rio', role: '영업 책임자', desc: '리드 관리 맡겨주세요!', image: '/AI_rio.webp', delay: 0.5 },
+  { name: 'Luna', role: '마케팅 책임자', desc: '콘텐츠 발행 도와드릴게요!', image: '/AI_luna.webp', delay: 1 },
+  { name: 'Sera', role: '고객응대 책임자', desc: '고객 문의 제가 받을게요!', image: '/AI_sera.webp', delay: 1.5 },
+  { name: 'Alex', role: '인사이트 책임자', desc: '고객 문의 제가 받을게요!', image: '/AI_alex.webp', delay: 2 },
 ];
 
 // Random underline SVG paths (hand-drawn style)
@@ -70,6 +71,8 @@ export default function Hero() {
 
       // Team cards - bounce in with stagger
       const cards = teamGridRef.current?.querySelectorAll('.team-card');
+      const roleUnderlines = teamGridRef.current?.querySelectorAll('.role-underline');
+
       if (cards) {
         tl.fromTo(
           cards,
@@ -91,8 +94,24 @@ export default function Hero() {
           '-=0.3'
         );
 
+        // Draw role underlines after cards appear
+        if (roleUnderlines) {
+          tl.to(
+            roleUnderlines,
+            {
+              strokeDashoffset: 0,
+              duration: 1.2,
+              stagger: 0.2,
+              ease: 'power2.out',
+            },
+            '-=0.2'
+          );
+        }
+
         // Add continuous floating animation to each card
         cards.forEach((card, index) => {
+          const cardImage = card.querySelector('.team-avatar');
+
           gsap.to(card, {
             y: -10,
             duration: 2 + index * 0.3,
@@ -101,6 +120,18 @@ export default function Hero() {
             ease: 'sine.inOut',
             delay: index * 0.2,
           });
+
+          // Rotate image while floating
+          if (cardImage) {
+            gsap.to(cardImage, {
+              rotation: index % 2 === 0 ? 10 : -10,
+              duration: 2 + index * 0.3,
+              repeat: -1,
+              yoyo: true,
+              ease: 'sine.inOut',
+              delay: index * 0.2,
+            });
+          }
         });
       }
 
@@ -145,19 +176,19 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="hero-ponpon px-6 md:px-12 py-20"
+      className="hero-ponpon px-6 md:px-12 pt-32 pb-20"
     >
       {/* Title */}
       <h1
         ref={titleRef}
-        className="hero-title-ponpon text-5xl md:text-7xl lg:text-8xl text-center mb-4 opacity-0"
+        className="hero-title-ponpon text-4xl md:text-6xl lg:text-7xl text-center mb-4 opacity-0"
       >
         BUSINESS & BEYOND
       </h1>
 
       <p
         ref={subtitleRef}
-        className="text-lg md:text-2xl text-center text-[var(--text-sub)] mb-12 md:mb-16 opacity-0"
+        className="text-lg md:text-3xl text-center text-[var(--text-sub)] mb-12 md:mb-16 opacity-0"
       >
         당신의 첫 번째{' '}
         <span className="relative inline-block">
@@ -184,14 +215,16 @@ export default function Hero() {
       {/* Team Grid */}
       <div
         ref={teamGridRef}
-        className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto mb-12 md:mb-16"
+        className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-6xl mx-auto mb-12 md:mb-16"
       >
-        {aiTeamMembers.map((member) => (
+        {aiTeamMembers.map((member, index) => (
           <div
             key={member.name}
-            className="team-card team-card-ponpon text-center opacity-0"
+            className="team-card team-card-ponpon text-center opacity-0 w-[160px] md:w-[200px]"
           >
-            <div className="relative w-20 h-20 md:w-28 md:h-28 mx-auto mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]">
+            <div
+              className="team-avatar relative w-20 h-20 md:w-28 md:h-28 mx-auto mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]"
+            >
               <Image
                 src={member.image}
                 alt={member.name}
@@ -201,9 +234,30 @@ export default function Hero() {
               />
             </div>
             <h3 className="font-bold text-lg md:text-xl mb-1">{member.name}</h3>
-            <p className="text-sm text-[var(--secondary)] font-medium mb-1">
-              AI {member.role}
-            </p>
+            <div className="relative inline-block mb-1">
+              <p className="text-sm text-[var(--primary)] font-bold">
+                AI {member.role}
+              </p>
+              <svg
+                className="absolute -bottom-1 left-0 w-full h-3 overflow-visible"
+                viewBox="0 0 180 16"
+                preserveAspectRatio="none"
+              >
+                <path
+                  className="role-underline"
+                  d={underlinePaths[index % underlinePaths.length]}
+                  fill="none"
+                  stroke="var(--primary)"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  style={{
+                    strokeDasharray: 200,
+                    strokeDashoffset: 200,
+                  }}
+                />
+              </svg>
+            </div>
             <p className="text-xs text-[var(--text-sub)]">{member.desc}</p>
           </div>
         ))}
@@ -219,10 +273,16 @@ export default function Hero() {
       </a>
 
       {/* Decorative Elements */}
-      <div className="absolute top-20 left-10 w-4 h-4 rounded-full bg-[var(--secondary)] opacity-60 animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute top-40 right-20 w-6 h-6 rounded-full bg-[var(--primary)] opacity-40 animate-float" style={{ animationDelay: '0.5s' }} />
-      <div className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-[var(--secondary)] opacity-50 animate-float" style={{ animationDelay: '1s' }} />
-      <div className="absolute bottom-20 right-10 w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-70 animate-float" style={{ animationDelay: '1.5s' }} />
+      <div className="absolute top-32 left-[20%] w-4 h-4 rounded-full bg-[var(--secondary)] opacity-60 animate-float" style={{ animationDelay: '0s' }} />
+      <div className="absolute top-48 right-[25%] w-6 h-6 rounded-full bg-[var(--primary)] opacity-40 animate-float" style={{ animationDelay: '0.5s' }} />
+      <div className="absolute bottom-48 left-[25%] w-3 h-3 rounded-full bg-[var(--secondary)] opacity-50 animate-float" style={{ animationDelay: '1s' }} />
+      <div className="absolute bottom-32 right-[20%] w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-70 animate-float" style={{ animationDelay: '1.5s' }} />
+      <div className="absolute top-[30%] left-[15%] w-2 h-2 rounded-full bg-[var(--primary)] opacity-50 animate-float" style={{ animationDelay: '0.3s' }} />
+      <div className="absolute top-[25%] right-[18%] w-3 h-3 rounded-full bg-[var(--accent-warm)] opacity-60 animate-float" style={{ animationDelay: '0.8s' }} />
+      <div className="absolute bottom-[35%] right-[30%] w-4 h-4 rounded-full bg-[var(--secondary)] opacity-45 animate-float" style={{ animationDelay: '1.2s' }} />
+      <div className="absolute top-[60%] left-[30%] w-2 h-2 rounded-full bg-[var(--primary)] opacity-35 animate-float" style={{ animationDelay: '1.8s' }} />
+      <div className="absolute bottom-[25%] left-[18%] w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-50 animate-float" style={{ animationDelay: '2s' }} />
+      <div className="absolute top-[45%] right-[15%] w-3 h-3 rounded-full bg-[var(--secondary)] opacity-55 animate-float" style={{ animationDelay: '0.7s' }} />
     </section>
   );
 }

@@ -1,7 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Problem from '@/components/Problem';
-import BeforeAfter from '@/components/BeforeAfter';
 import AITeamDetail from '@/components/AITeamDetail';
 import Scenarios from '@/components/Scenarios';
 import ROICalculator from '@/components/ROICalculator';
@@ -16,7 +15,6 @@ export default function Home() {
       <Navbar />
       <Hero />
       <Problem />
-      <BeforeAfter />
       <AITeamDetail />
       <Scenarios />
       <ROICalculator />
