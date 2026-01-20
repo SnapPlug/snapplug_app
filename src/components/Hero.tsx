@@ -14,11 +14,19 @@ const aiTeamMembers = [
   { name: 'Sera', role: '고객응대 책임자', desc: '24시간 CS', image: '/AI_sera.webp', delay: 1.5 },
 ];
 
+// Random underline SVG paths (hand-drawn style)
+const underlinePaths = [
+  "M0,8 Q30,2 60,8 T120,8 T180,8",
+  "M0,5 C20,12 40,0 60,8 S100,2 120,8 S160,12 180,5",
+  "M0,8 Q45,0 90,8 T180,8",
+  "M0,6 C30,14 60,0 90,8 C120,16 150,2 180,6",
+];
+
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const discRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const underlineRef = useRef<SVGPathElement>(null);
   const teamGridRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
 
@@ -26,19 +34,11 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'back.out(1.7)' } });
 
-      // Disc - spin in from scale 0
-      tl.fromTo(
-        discRef.current,
-        { scale: 0, rotation: -180 },
-        { scale: 1, rotation: 0, duration: 1.2, ease: 'elastic.out(1, 0.5)' }
-      );
-
       // Title - bounce up
       tl.fromTo(
         titleRef.current,
         { opacity: 0, y: 80, scale: 0.8 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.8 },
-        '-=0.6'
+        { opacity: 1, y: 0, scale: 1, duration: 0.8 }
       );
 
       // Subtitle - slide up
@@ -48,6 +48,25 @@ export default function Hero() {
         { opacity: 1, y: 0, duration: 0.6 },
         '-=0.4'
       );
+
+      // Draw underline animation
+      if (underlineRef.current) {
+        const pathLength = underlineRef.current.getTotalLength();
+        gsap.set(underlineRef.current, {
+          strokeDasharray: pathLength,
+          strokeDashoffset: pathLength,
+        });
+
+        tl.to(
+          underlineRef.current,
+          {
+            strokeDashoffset: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+          },
+          '-=0.3'
+        );
+      }
 
       // Team cards - bounce in with stagger
       const cards = teamGridRef.current?.querySelectorAll('.team-card');
@@ -104,17 +123,6 @@ export default function Hero() {
       });
 
       // Scroll parallax
-      gsap.to(discRef.current, {
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top top',
-          end: 'bottom top',
-          scrub: 1,
-        },
-        y: -100,
-        rotation: 360,
-      });
-
       gsap.to(titleRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -131,13 +139,14 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
+  // Select a random underline path
+  const randomPath = underlinePaths[Math.floor(Math.random() * underlinePaths.length)];
+
   return (
     <section
       ref={sectionRef}
       className="hero-ponpon px-6 md:px-12 py-20"
     >
-   
-
       {/* Title */}
       <h1
         ref={titleRef}
@@ -150,7 +159,26 @@ export default function Hero() {
         ref={subtitleRef}
         className="text-lg md:text-2xl text-center text-[var(--text-sub)] mb-12 md:mb-16 opacity-0"
       >
-        당신의 첫 번째 <span className="text-[var(--primary)] font-bold">AI 팀원</span>을 만나보세요
+        당신의 첫 번째{' '}
+        <span className="relative inline-block">
+          <span className="text-[var(--primary)] font-bold">AI 팀원</span>
+          <svg
+            className="absolute -bottom-2 left-0 w-full h-4 overflow-visible"
+            viewBox="0 0 180 16"
+            preserveAspectRatio="none"
+          >
+            <path
+              ref={underlineRef}
+              d={randomPath}
+              fill="none"
+              stroke="var(--primary)"
+              strokeWidth="3"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </span>
+        을 만나보세요
       </p>
 
       {/* Team Grid */}

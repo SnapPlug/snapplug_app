@@ -29,7 +29,7 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar pt-6 ${isScrolled ? 'scrolled' : ''}`}>
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <Link
