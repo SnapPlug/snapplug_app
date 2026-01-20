@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -13,10 +14,13 @@ const challenges = [
   {
     id: 'content',
     title: '콘텐츠 작성',
-    icon: '✍️',
-    problem: '주 5시간 소요',
+    avatar: '/AI_luna.webp',
+    aiName: 'Luna',
+    beforeValue: 100,
+    afterValue: 10,
+    beforeLabel: '주 5시간',
+    afterLabel: '주 30분',
     problemDesc: '채널마다 다시 쓰고, 톤 맞추고...',
-    solution: '주 30분',
     solutionDesc: '1개 작성 → 4개 채널 자동 변환',
     improvement: '90%',
     improvementLabel: '시간 절감',
@@ -24,10 +28,13 @@ const challenges = [
   {
     id: 'cs',
     title: '고객 응대',
-    icon: '💬',
-    problem: '놓치는 문의 多',
+    avatar: '/AI_sera.webp',
+    aiName: 'Sera',
+    beforeValue: 40,
+    afterValue: 100,
+    beforeLabel: '40% 응대',
+    afterLabel: '100% 응대',
     problemDesc: '밤/주말엔 답변 불가, 고객 이탈',
-    solution: '24시간 자동',
     solutionDesc: '즉시 응대, 복잡한 건만 연결',
     improvement: '100%',
     improvementLabel: '응대율',
@@ -35,10 +42,13 @@ const challenges = [
   {
     id: 'lead',
     title: '리드 관리',
-    icon: '📊',
-    problem: '수동 정리',
+    avatar: '/AI_rio.webp',
+    aiName: 'Rio',
+    beforeValue: 50,
+    afterValue: 100,
+    beforeLabel: '15% 전환',
+    afterLabel: '30% 전환',
     problemDesc: '누락 잦고, 팔로업 타이밍 놓침',
-    solution: '자동 분류',
     solutionDesc: 'Hot/Warm/Cold 자동 분류 & 알림',
     improvement: '2배',
     improvementLabel: '전환율',
@@ -46,10 +56,13 @@ const challenges = [
   {
     id: 'admin',
     title: '반복 업무',
-    icon: '📋',
-    problem: '하루 2시간+',
+    avatar: '/AI_ara.webp',
+    aiName: 'Ara',
+    beforeValue: 100,
+    afterValue: 20,
+    beforeLabel: '하루 2시간+',
+    afterLabel: '하루 24분',
     problemDesc: '일정 조율, 보고서, 이메일...',
-    solution: '자동화',
     solutionDesc: '일정/보고서/이메일 자동 처리',
     improvement: '80%',
     improvementLabel: '업무 감소',
@@ -120,6 +133,27 @@ export default function Problem() {
         );
       }
 
+      // Animate comparison bars
+      const comparisonBars = cardsRef.current?.querySelectorAll('.comparison-bar');
+      if (comparisonBars) {
+        comparisonBars.forEach((bar) => {
+          const targetWidth = (bar as HTMLElement).style.width;
+          gsap.fromTo(
+            bar,
+            { width: '0%' },
+            {
+              width: targetWidth,
+              duration: 1.2,
+              ease: 'power3.out',
+              scrollTrigger: {
+                trigger: bar,
+                start: 'top 90%',
+              },
+            }
+          );
+        });
+      }
+
       // CTA animation
       gsap.fromTo(
         ctaRef.current,
@@ -181,49 +215,68 @@ export default function Problem() {
           {challenges.map((item) => (
             <div
               key={item.id}
-              className="challenge-card card p-0 overflow-hidden opacity-0"
+              className="challenge-card card p-6 overflow-hidden opacity-0"
             >
               {/* Header */}
-              <div className="flex items-center gap-3 p-5 border-b border-[var(--border)]">
-                <span className="text-3xl">{item.icon}</span>
-                <h3 className="text-xl font-bold">{item.title}</h3>
-              </div>
-
-              {/* Content */}
-              <div className="grid grid-cols-2">
-                {/* Before */}
-                <div className="p-5 bg-gray-50 border-r border-[var(--border)]">
-                  <p className="text-xs font-semibold text-[var(--text-sub)] mb-2 uppercase tracking-wider">Before</p>
-                  <p className="text-lg font-bold text-[var(--text-main)] mb-1">{item.problem}</p>
-                  <p className="text-sm text-[var(--text-sub)]">{item.problemDesc}</p>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[var(--accent-warm)] flex-shrink-0">
+                  <Image
+                    src={item.avatar}
+                    alt={item.aiName}
+                    fill
+                    className="object-cover"
+                    sizes="48px"
+                  />
                 </div>
-
-                {/* After */}
-                <div className="p-5 bg-[#FFF8F5]">
-                  <p className="text-xs font-semibold text-[var(--primary)] mb-2 uppercase tracking-wider">After</p>
-                  <p className="text-lg font-bold text-[var(--text-main)] mb-1">{item.solution}</p>
-                  <p className="text-sm text-[var(--text-sub)]">{item.solutionDesc}</p>
+                <div>
+                  <h3 className="text-lg font-bold">{item.title}</h3>
+                  <p className="text-xs text-[var(--primary)] font-semibold">with {item.aiName}</p>
+                </div>
+                <div className="ml-auto bg-[var(--primary)] text-white px-3 py-1 rounded-full">
+                  <span className="text-sm font-bold">{item.improvement}</span>
+                  <span className="text-xs ml-1">{item.improvementLabel}</span>
                 </div>
               </div>
 
-              {/* Improvement Badge */}
-              <div className="p-4 bg-[var(--primary)] text-white flex items-center justify-center gap-2">
-                <span className="text-2xl font-bold">{item.improvement}</span>
-                <span className="text-sm">{item.improvementLabel}</span>
+              {/* Visual Comparison Graph */}
+              <div className="space-y-4">
+                {/* Before Bar */}
+                <div className="relative">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs font-semibold text-[var(--text-sub)] uppercase tracking-wider">Before</span>
+                    <span className="text-sm font-bold text-[var(--text-main)]">{item.beforeLabel}</span>
+                  </div>
+                  <div className="h-8 bg-gray-100 rounded-full overflow-hidden relative">
+                    <div
+                      className="comparison-bar before-bar h-full bg-gray-400 rounded-full flex items-center justify-end pr-3"
+                      style={{ width: `${item.beforeValue}%` }}
+                    >
+                    </div>
+                  </div>
+                  <p className="text-xs text-[var(--text-sub)] mt-1">{item.problemDesc}</p>
+                </div>
+
+                {/* After Bar */}
+                <div className="relative">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs font-semibold text-[var(--primary)] uppercase tracking-wider">After</span>
+                    <span className="text-sm font-bold text-[var(--primary)]">{item.afterLabel}</span>
+                  </div>
+                  <div className="h-8 bg-[#FFF0E8] rounded-full overflow-hidden relative">
+                    <div
+                      className="comparison-bar after-bar h-full bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-full flex items-center justify-end pr-3"
+                      style={{ width: `${item.afterValue}%` }}
+                    >
+                    </div>
+                  </div>
+                  <p className="text-xs text-[var(--text-sub)] mt-1">{item.solutionDesc}</p>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
-        {/* CTA */}
-        <div ref={ctaRef} className="text-center mt-12 opacity-0">
-          <p className="text-xl md:text-2xl font-semibold mb-4">
-            더 이상 시간 낭비하지 마세요
-          </p>
-          <a href="#contact" className="btn-primary">
-            무료 진단 받기
-          </a>
-        </div>
+       
       </div>
     </section>
   );
