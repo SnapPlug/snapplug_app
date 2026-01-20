@@ -6,45 +6,59 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const steps = [
+interface Step {
+  number: string;
+  title: string;
+  duration: string;
+  items: string[];
+  isHighlighted?: boolean;
+  subtext?: string;
+}
+
+const steps: Step[] = [
   {
     number: '1',
-    title: '무료 진단',
-    duration: '30분',
+    title: '맞춤 컨설팅',
+    duration: '60분',
+    subtext: '무료로 진행됩니다',
     items: [
-      '현재 업무 프로세스 파악',
+      '현재 업무 프로세스 심층 분석',
       '자동화 가능 포인트 발견',
-      'ROI 예상치 공유',
+      '예상 ROI 및 도입 방향 제안',
     ],
   },
   {
     number: '2',
-    title: '맞춤 설계',
-    duration: '1주',
+    title: '서비스 기획 & 설계',
+    duration: '1~2주',
+    isHighlighted: true,
+    subtext: '성공의 80%가 여기서 결정됩니다',
     items: [
-      '회사에 맞는 AI 팀원 구성 제안',
-      '연동할 툴 확인 (채널톡, 슬랙 등)',
-      '견적 및 일정 확정',
+      '비즈니스 요구사항 정의',
+      '최적의 AI 솔루션 아키텍처 설계',
+      '연동 시스템 및 워크플로우 설계',
     ],
   },
   {
     number: '3',
-    title: '구축 & 테스트',
-    duration: '1~2주',
+    title: '개발 & 품질 검증',
+    duration: '2~3주',
+    subtext: '완벽하게 작동할 때까지',
     items: [
-      '회사 데이터로 AI 학습',
-      '실제 환경에서 테스트',
-      '피드백 반영 및 조정',
+      'AI 솔루션 개발 및 학습',
+      '내부 테스트 (기능/성능)',
+      '외부 테스트 (실사용 환경)',
     ],
   },
   {
     number: '4',
-    title: '런칭 & 모니터링',
+    title: '런칭 & 안정화',
     duration: '',
+    subtext: '안심하고 맡기세요',
     items: [
       'AI 팀원 정식 투입',
       '초기 2주 집중 모니터링',
-      '필요시 추가 조정',
+      '지속적인 성능 개선',
     ],
   },
 ];
@@ -167,10 +181,12 @@ export default function Process() {
 
             {steps.map((step, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center">
-                <div className="timeline-circle w-12 h-12 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-bold text-lg mb-2 opacity-0">
+                <div className={`timeline-circle w-12 h-12 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-bold text-lg mb-2 opacity-0 ${
+                  step.isHighlighted ? 'ring-4 ring-orange-200 scale-110' : ''
+                }`}>
                   {step.number}
                 </div>
-                <p className="font-semibold text-center">{step.title}</p>
+                <p className={`font-semibold text-center ${step.isHighlighted ? 'text-[var(--primary)]' : ''}`}>{step.title}</p>
                 {step.duration && (
                   <p className="text-sm text-[var(--text-sub)]">({step.duration})</p>
                 )}
@@ -182,9 +198,25 @@ export default function Process() {
         {/* Step Details */}
         <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
           {steps.map((step, idx) => (
-            <div key={idx} className="process-card card opacity-0">
+            <div
+              key={idx}
+              className={`process-card card opacity-0 ${
+                step.isHighlighted
+                  ? 'border-2 border-[var(--primary)] bg-gradient-to-br from-orange-50 to-white relative'
+                  : ''
+              }`}
+            >
+              {/* 핵심 뱃지 */}
+              {step.isHighlighted && (
+                <span className="absolute -top-3 left-4 bg-[var(--primary)] text-white text-xs px-3 py-1 rounded-full font-semibold">
+                  핵심 단계
+                </span>
+              )}
+
               <div className="flex items-center gap-3 mb-4 md:hidden">
-                <div className="w-10 h-10 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-bold">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+                  step.isHighlighted ? 'bg-[var(--primary)] text-white ring-4 ring-orange-200' : 'bg-[var(--primary)] text-white'
+                }`}>
                   {step.number}
                 </div>
                 <div>
@@ -195,18 +227,25 @@ export default function Process() {
                 </div>
               </div>
 
-              <h3 className="hidden md:block font-bold mb-1">
-                {step.number}️⃣ {step.title} {step.duration && `(${step.duration})`}
+              <h3 className={`hidden md:block font-bold mb-1 ${step.isHighlighted ? 'text-[var(--primary)]' : ''}`}>
+                {step.number}️. {step.title} {step.duration && `(${step.duration})`}
               </h3>
 
               <ul className="space-y-2 mt-3">
                 {step.items.map((item, itemIdx) => (
                   <li key={itemIdx} className="flex items-start gap-2 text-sm text-[var(--text-sub)]">
-                    <span>•</span>
+                    <span className={step.isHighlighted ? 'text-[var(--primary)]' : ''}>•</span>
                     <span>{item}</span>
                   </li>
                 ))}
               </ul>
+
+              {/* 서브텍스트 */}
+              {step.subtext && (
+                <p className="mt-3 pt-3 border-t border-gray-100 text-xs text-[var(--primary)] font-semibold text-center">
+                  ✨ {step.subtext}
+                </p>
+              )}
             </div>
           ))}
         </div>
@@ -214,7 +253,7 @@ export default function Process() {
         {/* CTA */}
         <div ref={ctaRef} className="text-center mt-10 opacity-0">
           <a href="#contact" className="btn-primary">
-            무료 진단 신청하기
+            맞춤 컨설팅 신청하기
           </a>
         </div>
       </div>

@@ -47,6 +47,10 @@ export default function ROICalculator() {
   // 그래프 높이 비율 (Before가 100%)
   const afterHeightPercent = 100 - automationRate;
 
+  // ROI & 회수기간
+  const roi = developmentCost > 0 ? Math.round(((savedCost - developmentCost) / developmentCost) * 100) : 0;
+  const paybackMonths = savedCost > 0 ? (developmentCost / (savedCost / 12)).toFixed(1) : '-';
+
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.fromTo(
@@ -178,38 +182,9 @@ export default function ROICalculator() {
             )}
           </div>
 
-          {/* 2행: 절감효과 + 그래프 (2열 배치) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* 왼쪽: 계산 결과 */}
-            <div className="card">
-              <h3 className="text-[var(--text-main)] text-lg font-bold mb-6">예상 절감 효과</h3>
-
-              <div className="space-y-4">
-                {/* 연간 절감액 */}
-                <div className="bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-xl p-5 text-white">
-                  <p className="text-white/80 text-sm mb-1">연간 절감액</p>
-                  <p className="text-4xl font-bold">
-                    {savedCost.toLocaleString()}<span className="text-2xl">만원</span>
-                  </p>
-                  <p className="text-white/70 text-xs mt-2">
-                    월 약 {Math.round(savedCost / 12).toLocaleString()}만원 절감
-                  </p>
-                </div>
-
-                {/* 연간 절감시간 */}
-                <div className="bg-[var(--secondary)] rounded-xl p-5">
-                  <p className="text-white/80 text-sm mb-1">연간 절감시간</p>
-                  <p className="text-white text-4xl font-bold">
-                    {savedHours.toLocaleString()}<span className="text-2xl">시간</span>
-                  </p>
-                  <p className="text-white/70 text-xs mt-2">
-                    약 {Math.round(savedHours / 8)}일의 업무시간 확보
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* 오른쪽: Before/After 그래프 */}
+          {/* 2행: 그래프 + 절감효과 (2열 배치) */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            {/* 왼쪽: Before/After 그래프 */}
             <div className="card !p-4 flex flex-col justify-center">
               <h3 className="text-[var(--text-main)] text-center text-lg font-bold mb-4">
                 AI 팀원 도입 전 후
@@ -248,6 +223,57 @@ export default function ROICalculator() {
                   <span className="text-[var(--primary)] text-xs mt-2 font-bold">도입 후</span>
                 </div>
               </div>
+            </div>
+
+            {/* 오른쪽: 계산 결과 */}
+            <div className="card">
+              <h3 className="text-[var(--text-main)] text-lg font-bold mb-6">예상 절감 효과</h3>
+
+              <div className="space-y-4">
+                {/* 연간 절감액 */}
+                <div className="bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-xl p-5 text-white">
+                  <p className="text-white/80 text-sm mb-1">연간 절감액</p>
+                  <p className="text-4xl font-bold">
+                    {savedCost.toLocaleString()}<span className="text-2xl">만원</span>
+                  </p>
+                  <p className="text-white/70 text-xs mt-2">
+                    월 약 {Math.round(savedCost / 12).toLocaleString()}만원 절감
+                  </p>
+                </div>
+
+                {/* 연간 절감시간 */}
+                <div className="bg-[var(--secondary)] rounded-xl p-5">
+                  <p className="text-white/80 text-sm mb-1">연간 절감시간</p>
+                  <p className="text-white text-4xl font-bold">
+                    {savedHours.toLocaleString()}<span className="text-2xl">시간</span>
+                  </p>
+                  <p className="text-white/70 text-xs mt-2">
+                    약 {Math.round(savedHours / 8)}일의 업무시간 확보
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* 3행: ROI & 회수기간 */}
+          <div className="grid grid-cols-2 gap-6 mb-6">
+            <div className="card text-center">
+              <p className="text-[var(--text-sub)] text-sm mb-2">ROI (투자수익률)</p>
+              <p className="text-[var(--primary)] text-4xl font-bold">
+                {roi > 0 ? '+' : ''}{roi}%
+              </p>
+              <p className="text-[var(--text-sub)] text-xs mt-2">
+                (절감액 - 개발비) / 개발비 × 100
+              </p>
+            </div>
+            <div className="card text-center">
+              <p className="text-[var(--text-sub)] text-sm mb-2">투자 회수기간</p>
+              <p className="text-[var(--text-main)] text-4xl font-bold">
+                {paybackMonths}<span className="text-2xl">개월</span>
+              </p>
+              <p className="text-[var(--text-sub)] text-xs mt-2">
+                개발비 / (월 절감액)
+              </p>
             </div>
           </div>
 
