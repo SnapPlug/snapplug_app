@@ -12,7 +12,7 @@ const aiTeamMembers = [
   { name: 'Rio', role: '영업 책임자', desc: '리드 관리 맡겨주세요!', image: '/AI_rio.webp', delay: 0.5 },
   { name: 'Luna', role: '마케팅 책임자', desc: '콘텐츠 발행 도와드릴게요!', image: '/AI_luna.webp', delay: 1 },
   { name: 'Sera', role: '고객응대 책임자', desc: '고객 문의 제가 받을게요!', image: '/AI_sera.webp', delay: 1.5 },
-  { name: 'Alex', role: '인사이트 책임자', desc: '고객 문의 제가 받을게요!', image: '/AI_alex.webp', delay: 2 },
+  { name: 'Alex', role: '정보관리 책임자', desc: '자료·정보 정리 맡겨주세요!', image: '/AI_alex.webp', delay: 2 },
 ];
 
 // Random underline SVG paths (hand-drawn style)
@@ -220,7 +220,7 @@ export default function Hero() {
         {aiTeamMembers.map((member, index) => (
           <div
             key={member.name}
-            className="team-card team-card-ponpon text-center opacity-0 w-[160px] md:w-[200px]"
+            className="team-card team-card-ponpon text-center opacity-0 w-[140px] md:w-[180px]"
           >
             <div
               className="team-avatar relative w-20 h-20 md:w-28 md:h-28 mx-auto mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]"
