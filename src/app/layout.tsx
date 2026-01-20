@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import ChannelTalk from "@/components/ChannelTalk";
 
 export const metadata: Metadata = {
   title: "SnapPlug - 당신의 첫 번째 AI 팀원 | Business & Beyond",
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
   keywords: "AI 자동화, AI 팀원, 업무 자동화, 마케팅 자동화, 고객 응대, 챗봇, 스몰비즈니스",
   openGraph: {
     title: "SnapPlug - 당신의 첫 번째 AI 팀원",
-    description: "AI 자동화로 반복 업무에서 해방되세요. 30분 무료 진단으로 시작하세요.",
+    description: "AI 자동화로 반복 업무에서 해방되세요. 60분 맞춤 컨설팅으로 시작하세요.",
     type: "website",
     locale: "ko_KR",
     siteName: "SnapPlug",
@@ -23,6 +24,7 @@ export default function RootLayout({
     <html lang="ko">
       <body className="antialiased">
         {children}
+        <ChannelTalk />
       </body>
     </html>
   );
