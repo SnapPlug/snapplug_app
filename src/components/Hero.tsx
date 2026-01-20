@@ -8,180 +8,103 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 const aiTeamMembers = [
-  { name: 'Ara', role: 'AI 수석보좌관', desc: '일정관리, 이메일 답장', image: '/AI_ara.webp' },
-  { name: 'Rio', role: 'AI 영업 책임자', desc: '고객 DB 관리, 세일즈 최적화', image: '/AI_rio.webp' },
-  { name: 'Luna', role: 'AI 마케팅 책임자', desc: '콘텐츠 초안 작성, 자동발행', image: '/AI_luna.webp' },
-  { name: 'Sera', role: 'AI 고객응대 책임자', desc: '24시간 고객 문의 자동 응대', image: '/AI_sera.webp' },
+  { name: 'Ara', role: '수석보좌관', desc: '일정 · 이메일', image: '/AI_ara.webp', delay: 0 },
+  { name: 'Rio', role: '영업 책임자', desc: '리드 · 세일즈', image: '/AI_rio.webp', delay: 0.5 },
+  { name: 'Luna', role: '마케팅 책임자', desc: '콘텐츠 · 발행', image: '/AI_luna.webp', delay: 1 },
+  { name: 'Sera', role: '고객응대 책임자', desc: '24시간 CS', image: '/AI_sera.webp', delay: 1.5 },
 ];
 
 export default function Hero() {
   const sectionRef = useRef<HTMLElement>(null);
-  const logoRef = useRef<HTMLHeadingElement>(null);
-  const subLogoRef = useRef<HTMLParagraphElement>(null);
-  const sloganRef = useRef<HTMLHeadingElement>(null);
-  const greetingRef = useRef<HTMLDivElement>(null);
-  const teamCardsRef = useRef<HTMLDivElement>(null);
+  const discRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const teamGridRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // 3D Timeline with dramatic effects
-      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      const tl = gsap.timeline({ defaults: { ease: 'back.out(1.7)' } });
 
-      // Logo - 3D Flip from Y axis
+      // Disc - spin in from scale 0
       tl.fromTo(
-        logoRef.current,
-        {
-          opacity: 0,
-          rotationY: 180,
-          scale: 0.5,
-          z: -500
-        },
-        {
-          opacity: 1,
-          rotationY: 0,
-          scale: 1,
-          z: 0,
-          duration: 1.2,
-          ease: 'power4.out'
-        }
+        discRef.current,
+        { scale: 0, rotation: -180 },
+        { scale: 1, rotation: 0, duration: 1.2, ease: 'elastic.out(1, 0.5)' }
       );
 
-      // Sub logo - slide in with rotation
+      // Title - bounce up
       tl.fromTo(
-        subLogoRef.current,
-        {
-          opacity: 0,
-          rotationX: -90,
-          y: -50
-        },
-        {
-          opacity: 1,
-          rotationX: 0,
-          y: 0,
-          duration: 0.8,
-          ease: 'back.out(1.7)'
-        },
+        titleRef.current,
+        { opacity: 0, y: 80, scale: 0.8 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.8 },
         '-=0.6'
       );
 
-      // Main slogan - dramatic 3D rotation from below
+      // Subtitle - slide up
       tl.fromTo(
-        sloganRef.current,
-        {
-          opacity: 0,
-          rotationX: -90,
-          y: 100,
-          scale: 0.8,
-          transformOrigin: 'center bottom'
-        },
-        {
-          opacity: 1,
-          rotationX: 0,
-          y: 0,
-          scale: 1,
-          duration: 1,
-          ease: 'back.out(1.7)'
-        },
+        subtitleRef.current,
+        { opacity: 0, y: 40 },
+        { opacity: 1, y: 0, duration: 0.6 },
         '-=0.4'
       );
 
-      // Greeting - fade with subtle 3D
-      tl.fromTo(
-        greetingRef.current,
-        {
-          opacity: 0,
-          y: 30,
-          rotationX: -20
-        },
-        {
-          opacity: 1,
-          y: 0,
-          rotationX: 0,
-          duration: 0.6,
-          ease: 'power3.out'
-        },
-        '-=0.3'
-      );
-
-      // Team cards - 3D spin entrance with stagger
-      const cards = teamCardsRef.current?.querySelectorAll('.team-card');
+      // Team cards - bounce in with stagger
+      const cards = teamGridRef.current?.querySelectorAll('.team-card');
       if (cards) {
         tl.fromTo(
           cards,
           {
             opacity: 0,
-            rotationY: -180,
-            scale: 0,
-            z: -200
+            y: 100,
+            scale: 0.5,
+            rotation: -10
           },
           {
             opacity: 1,
-            rotationY: 0,
+            y: 0,
             scale: 1,
-            z: 0,
+            rotation: 0,
             duration: 0.8,
-            stagger: 0.15,
+            stagger: 0.12,
             ease: 'back.out(2)',
           },
-          '-=0.2'
+          '-=0.3'
         );
-      }
 
-      // CTA button - elastic pop from below
-      tl.fromTo(
-        ctaRef.current,
-        {
-          opacity: 0,
-          rotationX: 90,
-          y: 50,
-          z: -100,
-          scale: 0.5
-        },
-        {
-          opacity: 1,
-          rotationX: 0,
-          y: 0,
-          z: 0,
-          scale: 1,
-          duration: 1,
-          ease: 'elastic.out(1, 0.5)',
-        },
-        '-=0.3'
-      );
-
-      // Continuous 3D floating animation for team cards
-      if (cards) {
+        // Add continuous floating animation to each card
         cards.forEach((card, index) => {
-          // Create a floating timeline for each card
-          const floatTl = gsap.timeline({ repeat: -1, yoyo: true });
-
-          floatTl.to(card, {
+          gsap.to(card, {
             y: -10,
-            rotationY: 5,
-            rotationX: -3,
             duration: 2 + index * 0.3,
+            repeat: -1,
+            yoyo: true,
             ease: 'sine.inOut',
+            delay: index * 0.2,
           });
-
-          // Add slight delay based on index
-          floatTl.delay(index * 0.2);
         });
       }
 
-      // CTA pulse with subtle 3D
+      // CTA - pop in
+      tl.fromTo(
+        ctaRef.current,
+        { opacity: 0, scale: 0.5 },
+        { opacity: 1, scale: 1, duration: 0.6, ease: 'back.out(2)' },
+        '-=0.4'
+      );
+
+      // CTA pulse animation
       gsap.to(ctaRef.current, {
         scale: 1.05,
-        rotationX: -5,
-        duration: 1.2,
+        duration: 1.5,
         repeat: -1,
         yoyo: true,
         ease: 'sine.inOut',
         delay: 2,
       });
 
-      // Scroll-triggered parallax with 3D
-      gsap.to(logoRef.current, {
+      // Scroll parallax
+      gsap.to(discRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
@@ -189,38 +112,19 @@ export default function Hero() {
           scrub: 1,
         },
         y: -100,
-        rotationX: 30,
-        opacity: 0,
+        rotation: 360,
       });
 
-      gsap.to(sloganRef.current, {
+      gsap.to(titleRef.current, {
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top top',
-          end: 'bottom top',
+          end: '50% top',
           scrub: 1,
         },
         y: -50,
-        rotationX: 20,
         opacity: 0.3,
       });
-
-      // Cards 3D parallax on scroll
-      if (cards) {
-        cards.forEach((card, index) => {
-          gsap.to(card, {
-            scrollTrigger: {
-              trigger: sectionRef.current,
-              start: '50% top',
-              end: 'bottom top',
-              scrub: 1,
-            },
-            y: -30 - index * 10,
-            rotationY: index % 2 === 0 ? 15 : -15,
-            opacity: 0.5,
-          });
-        });
-      }
 
     }, sectionRef);
 
@@ -230,75 +134,67 @@ export default function Hero() {
   return (
     <section
       ref={sectionRef}
-      className="hero-3d-container min-h-screen flex flex-col justify-center items-center py-20 px-4 overflow-hidden"
+      className="hero-ponpon px-6 md:px-12 py-20"
     >
-      <div className="text-center max-w-4xl mx-auto hero-3d-element">
-        {/* Logo */}
-        <h1
-          ref={logoRef}
-          className="hero-3d-element text-4xl md:text-5xl font-bold mb-2 tracking-tight opacity-0"
-        >
-          SNAPPLUG
-        </h1>
-        <p
-          ref={subLogoRef}
-          className="hero-3d-element text-lg text-[var(--text-sub)] mb-8 opacity-0"
-        >
-          Business & Beyond
-        </p>
+   
 
-        {/* Main Slogan */}
-        <h2
-          ref={sloganRef}
-          className="hero-3d-element text-3xl md:text-5xl font-bold mb-8 leading-tight opacity-0"
-        >
-          &ldquo;당신의 첫 번째 AI 팀원&rdquo;
-        </h2>
+      {/* Title */}
+      <h1
+        ref={titleRef}
+        className="hero-title-ponpon text-5xl md:text-7xl lg:text-8xl text-center mb-4 opacity-0"
+      >
+        BUSINESS & BEYOND
+      </h1>
 
-        {/* Greeting */}
-        <div ref={greetingRef} className="hero-3d-element mb-12 opacity-0">
-          <p className="text-xl md:text-2xl mb-2">반갑습니다!</p>
-          <p className="text-lg md:text-xl text-[var(--text-sub)]">
-            저희가 대표님의 팀이 되어드릴게요.
-          </p>
-        </div>
+      <p
+        ref={subtitleRef}
+        className="text-lg md:text-2xl text-center text-[var(--text-sub)] mb-12 md:mb-16 opacity-0"
+      >
+        당신의 첫 번째 <span className="text-[var(--primary)] font-bold">AI 팀원</span>을 만나보세요
+      </p>
 
-        {/* AI Team Members */}
-        <div
-          ref={teamCardsRef}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12"
-          style={{ perspective: '1000px' }}
-        >
-          {aiTeamMembers.map((member) => (
-            <div
-              key={member.name}
-              className="team-card team-card-3d card text-center p-6 cursor-pointer opacity-0"
-            >
-              <div className="relative w-20 h-20 md:w-24 md:h-24 mx-auto mb-3 rounded-full overflow-hidden bg-[var(--background)]">
-                <Image
-                  src={member.image}
-                  alt={member.name}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 80px, 96px"
-                />
-              </div>
-              <h3 className="font-bold text-lg mb-1">{member.name}</h3>
-              <p className="text-sm text-[var(--text-sub)] mb-2">{member.role}</p>
-              <p className="text-xs text-[var(--text-sub)]">{member.desc}</p>
+      {/* Team Grid */}
+      <div
+        ref={teamGridRef}
+        className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto mb-12 md:mb-16"
+      >
+        {aiTeamMembers.map((member) => (
+          <div
+            key={member.name}
+            className="team-card team-card-ponpon text-center opacity-0"
+          >
+            <div className="relative w-20 h-20 md:w-28 md:h-28 mx-auto mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]">
+              <Image
+                src={member.image}
+                alt={member.name}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 80px, 112px"
+              />
             </div>
-          ))}
-        </div>
-
-        {/* CTA Button */}
-        <a
-          ref={ctaRef}
-          href="#ai-team"
-          className="hero-3d-element btn-primary text-lg opacity-0 inline-block"
-        >
-          AI 팀원 만나기
-        </a>
+            <h3 className="font-bold text-lg md:text-xl mb-1">{member.name}</h3>
+            <p className="text-sm text-[var(--secondary)] font-medium mb-1">
+              AI {member.role}
+            </p>
+            <p className="text-xs text-[var(--text-sub)]">{member.desc}</p>
+          </div>
+        ))}
       </div>
+
+      {/* CTA Button */}
+      <a
+        ref={ctaRef}
+        href="#ai-team"
+        className="cta-ponpon opacity-0"
+      >
+        AI 팀원 만나기
+      </a>
+
+      {/* Decorative Elements */}
+      <div className="absolute top-20 left-10 w-4 h-4 rounded-full bg-[var(--secondary)] opacity-60 animate-float" style={{ animationDelay: '0s' }} />
+      <div className="absolute top-40 right-20 w-6 h-6 rounded-full bg-[var(--primary)] opacity-40 animate-float" style={{ animationDelay: '0.5s' }} />
+      <div className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-[var(--secondary)] opacity-50 animate-float" style={{ animationDelay: '1s' }} />
+      <div className="absolute bottom-20 right-10 w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-70 animate-float" style={{ animationDelay: '1.5s' }} />
     </section>
   );
 }
