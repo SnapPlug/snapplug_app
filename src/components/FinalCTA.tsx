@@ -20,7 +20,7 @@ export default function FinalCTA() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const teamRef = useRef<HTMLDivElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLAnchorElement>(null);
+  const ctaRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -166,15 +166,13 @@ export default function FinalCTA() {
         </div>
 
         {/* CTA Button */}
-        <a
+        <button
           ref={ctaRef}
-          href="https://tally.so/r/snapplug-diagnosis"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block bg-white text-[var(--primary)] px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg opacity-0"
+          className="inline-block bg-white text-[var(--primary)] px-8 py-4 rounded-lg font-bold text-lg hover:bg-opacity-90 transition-all shadow-lg opacity-0 cursor-pointer"
+          onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
         >
-          맞춤 컨설팅 신청하기
-        </a>
+          문의하기
+        </button>
 
         <p className="mt-4 text-sm opacity-80">
           컨설팅 후 구매 의무 없습니다. 부담 없이 신청하세요.

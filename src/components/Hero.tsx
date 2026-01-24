@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -30,6 +30,17 @@ export default function Hero() {
   const underlineRef = useRef<SVGPathElement>(null);
   const teamGridRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLAnchorElement>(null);
+
+  // Use fixed path for SSR, randomize on client to avoid hydration mismatch
+  const [randomPath, setRandomPath] = useState(underlinePaths[0]);
+
+  // Scroll to top on initial page load (clear stale #contact hash)
+  useEffect(() => {
+    if (window.location.hash === '#contact') {
+      window.history.replaceState(null, '', window.location.pathname);
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -170,11 +181,14 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  // Select a random underline path
-  const randomPath = underlinePaths[Math.floor(Math.random() * underlinePaths.length)];
+  // Randomize underline path on client mount
+  useEffect(() => {
+    setRandomPath(underlinePaths[Math.floor(Math.random() * underlinePaths.length)]);
+  }, []);
 
   return (
     <section
+      id="ai-team"
       ref={sectionRef}
       className="hero-ponpon px-6 md:px-12 pt-32 pb-20"
     >
@@ -266,7 +280,7 @@ export default function Hero() {
       {/* CTA Button */}
       <a
         ref={ctaRef}
-        href="#ai-team"
+        href="#scenarios"
         className="cta-ponpon opacity-0"
       >
         AI 팀원 만나기

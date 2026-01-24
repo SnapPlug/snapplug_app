@@ -59,7 +59,6 @@ export default function ChannelTalk() {
     // Boot Channel Talk
     window.ChannelIO?.('boot', {
       pluginKey: CHANNEL_TALK_PLUGIN_KEY,
-      customLauncherSelector: '.channel-talk-launcher',
       hideChannelButtonOnBoot: false,
     });
 

@@ -11,8 +11,8 @@ const pirulen = localFont({
 
 const navLinks = [
   { href: '#ai-team', label: 'AI 팀원' },
-  { href: '#process', label: '도입 과정' },
-  { href: '#contact', label: '문의하기' },
+  { href: '#scenarios', label: '성과' },
+  { href: '#roi', label: '기대효과' },
 ];
 
 export default function Navbar() {
@@ -50,12 +50,12 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
+          <button
             className="cta-ponpon !py-3 !px-6 !text-sm"
+            onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
           >
-            무료 진단
-          </a>
+            문의하기
+          </button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -99,13 +99,15 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            className="cta-ponpon text-center mt-2"
-            onClick={() => setIsMobileMenuOpen(false)}
+          <button
+            className="cta-ponpon text-center mt-2 w-full"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              window.ChannelIO?.('openWorkflow', 803868);
+            }}
           >
-            무료 진단
-          </a>
+            문의하기
+          </button>
         </div>
       </div>
     </nav>

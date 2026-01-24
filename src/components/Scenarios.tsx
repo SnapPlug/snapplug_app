@@ -133,7 +133,7 @@ const scenarios: Scenario[] = [
 
 export default function Scenarios() {
   return (
-    <section className="section">
+    <section id="scenarios" className="section">
       <div className="container">
         <h2 className="section-title">매출 2배, 비용 40% 절감, 월 54시간 확보</h2>
         <p className="text-center text-[var(--text-sub)] mb-10 max-w-2xl mx-auto">
@@ -215,15 +215,15 @@ export default function Scenarios() {
           <p className="text-[var(--text-sub)] mb-4">
             우리 업종에도 적용 가능한지 궁금하신가요?
           </p>
-          <a
-            href="#contact"
+          <button
             className="inline-flex items-center gap-2 px-6 py-3 bg-[var(--foreground)] text-white font-semibold rounded-full hover:bg-gray-800 transition-colors"
+            onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
           >
-            무료 진단 받기
+            문의하기
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </section>

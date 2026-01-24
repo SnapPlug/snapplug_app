@@ -252,9 +252,12 @@ export default function Process() {
 
         {/* CTA */}
         <div ref={ctaRef} className="text-center mt-10 opacity-0">
-          <a href="#contact" className="btn-primary">
-            맞춤 컨설팅 신청하기
-          </a>
+          <button
+            className="btn-primary"
+            onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
+          >
+            문의하기
+          </button>
         </div>
       </div>
     </section>
