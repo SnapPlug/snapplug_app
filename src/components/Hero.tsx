@@ -280,7 +280,7 @@ export default function Hero() {
       {/* CTA Button */}
       <a
         ref={ctaRef}
-        href="#scenarios"
+        href="#problem"
         className="cta-ponpon opacity-0"
       >
         AI 팀원 만나기

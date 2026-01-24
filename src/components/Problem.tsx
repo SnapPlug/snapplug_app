@@ -460,7 +460,7 @@ export default function Problem() {
   };
 
   return (
-    <section ref={sectionRef} className="section bg-white">
+    <section id="problem" ref={sectionRef} className="section bg-white">
       <div className="container">
         <h2 ref={titleRef} className="text-center mb-3 sm:mb-4 opacity-0">
           <span className="text-xl sm:text-2xl md:text-3xl text-[var(--text-sub)]">반복 업무에 지치셨나요?</span>

@@ -10,7 +10,7 @@ const pirulen = localFont({
 });
 
 const navLinks = [
-  { href: '#ai-team', label: 'AI 팀원' },
+  { href: '#problem', label: 'AI 팀원' },
   { href: '#scenarios', label: '성과' },
   { href: '#roi', label: '기대효과' },
 ];
