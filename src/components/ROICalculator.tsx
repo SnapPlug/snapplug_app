@@ -93,78 +93,78 @@ export default function ROICalculator() {
         <div ref={calculatorRef} className="max-w-5xl mx-auto opacity-0">
           {/* 1행: 입력 파라미터 (전체 너비) */}
           <div className="card mb-6">
-            <div className="flex items-center justify-between mb-6">
-              <h3 className="text-[var(--text-main)] text-lg font-bold">대표님의 상황을 알려주세요.</h3>
+            <div className="flex items-center justify-between mb-4 sm:mb-6">
+              <h3 className="text-[var(--text-main)] text-base sm:text-lg font-bold">대표님의 상황을 알려주세요.</h3>
               <button
                 onClick={() => setShowDetail(!showDetail)}
-                className="text-[var(--primary)] text-sm font-medium hover:underline"
+                className="text-[var(--primary)] text-[13px] sm:text-sm font-medium hover:underline"
               >
                 {showDetail ? '간단히 보기 ←' : '자세히 설정 →'}
               </button>
             </div>
 
             {/* 1행: 직원수, 평균월급 (간단/자세히 공통) */}
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {/* 직원 수 */}
               <div>
-                <label className="text-[var(--text-sub)] text-sm mb-2 block">직원 수 (명)</label>
+                <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">직원 수 (명)</label>
                 <input
                   type="number"
                   value={employees}
                   onChange={(e) => setEmployees(Number(e.target.value) || 1)}
                   min={1}
-                  className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
 
               {/* 평균 월급 */}
               <div>
-                <label className="text-[var(--text-sub)] text-sm mb-2 block">평균 월급 (만원)</label>
+                <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">평균 월급 (만원)</label>
                 <input
                   type="number"
                   value={monthlySalary}
                   onChange={(e) => setMonthlySalary(Number(e.target.value) || 300)}
                   min={100}
                   step={50}
-                  className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                  className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                 />
               </div>
             </div>
 
-            {/* 2행: 자세히 보기 - 업무수행시간, 자동화 효과, 개발비 (3열) */}
+            {/* 2행: 자세히 보기 - 업무수행시간, 자동화 효과, 개발비 */}
             {showDetail && (
-              <div className="grid grid-cols-3 gap-4 mt-4 pt-4 border-t border-[var(--border)]">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 pt-4 border-t border-[var(--border)]">
                 <div>
-                  <label className="text-[var(--text-sub)] text-sm mb-2 block">업무수행시간 (시간/일)</label>
+                  <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">업무수행시간 (시간/일)</label>
                   <input
                     type="number"
                     value={taskHoursPerDay}
                     onChange={(e) => setTaskHoursPerDay(Math.min(8, Math.max(1, Number(e.target.value) || 4)))}
                     min={1}
                     max={8}
-                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
                 <div>
-                  <label className="text-[var(--text-sub)] text-sm mb-2 block">자동화 효과 (%)</label>
+                  <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">자동화 효과 (%)</label>
                   <input
                     type="number"
                     value={automationRate}
                     onChange={(e) => setAutomationRate(Math.min(90, Math.max(30, Number(e.target.value) || 70)))}
                     min={30}
                     max={90}
-                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
                 <div>
-                  <label className="text-[var(--text-sub)] text-sm mb-2 block">개발비 (만원)</label>
+                  <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">개발비 (만원)</label>
                   <input
                     type="number"
                     value={developmentCost}
                     onChange={(e) => setDevelopmentCost(Number(e.target.value) || 300)}
                     min={100}
                     step={50}
-                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
                   />
                 </div>
               </div>
@@ -172,37 +172,37 @@ export default function ROICalculator() {
 
             {/* 간단 버전일 때 기본 설정 안내 */}
             {!showDetail && (
-              <p className="text-xs text-[var(--text-sub)] mt-4">
+              <p className="text-[11px] sm:text-xs text-[var(--text-sub)] mt-3 sm:mt-4">
                 * 기본 설정: 업무 {taskHoursPerDay}시간/일, 자동화 {automationRate}%, 개발비 {developmentCost}만원
               </p>
             )}
           </div>
 
           {/* 2행: 절감효과 + 그래프 (2열 배치) */}
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
             {/* 왼쪽: 계산 결과 */}
             <div className="card">
-              <h3 className="text-[var(--text-main)] text-lg font-bold mb-6">예상 절감 효과</h3>
+              <h3 className="text-[var(--text-main)] text-base sm:text-lg font-bold mb-4 sm:mb-6">예상 절감 효과</h3>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {/* 연간 절감액 */}
-                <div className="bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-xl p-5 text-white">
-                  <p className="text-white/80 text-sm mb-1">연간 절감액</p>
-                  <p className="text-4xl font-bold">
-                    {savedCost.toLocaleString()}<span className="text-2xl">만원</span>
+                <div className="bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-xl p-4 sm:p-5 text-white">
+                  <p className="text-white/80 text-[13px] sm:text-sm mb-1">연간 절감액</p>
+                  <p className="text-3xl sm:text-4xl font-bold">
+                    {savedCost.toLocaleString()}<span className="text-xl sm:text-2xl">만원</span>
                   </p>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white/70 text-[11px] sm:text-xs mt-2">
                     월 약 {Math.round(savedCost / 12).toLocaleString()}만원 절감
                   </p>
                 </div>
 
                 {/* 연간 절감시간 */}
-                <div className="bg-[var(--secondary)] rounded-xl p-5">
-                  <p className="text-white/80 text-sm mb-1">연간 절감시간</p>
-                  <p className="text-white text-4xl font-bold">
-                    {savedHours.toLocaleString()}<span className="text-2xl">시간</span>
+                <div className="bg-[var(--secondary)] rounded-xl p-4 sm:p-5">
+                  <p className="text-white/80 text-[13px] sm:text-sm mb-1">연간 절감시간</p>
+                  <p className="text-white text-3xl sm:text-4xl font-bold">
+                    {savedHours.toLocaleString()}<span className="text-xl sm:text-2xl">시간</span>
                   </p>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white/70 text-[11px] sm:text-xs mt-2">
                     약 {Math.round(savedHours / 8)}일의 업무시간 확보
                   </p>
                 </div>
@@ -210,42 +210,42 @@ export default function ROICalculator() {
             </div>
 
             {/* 오른쪽: Before/After 그래프 */}
-            <div className="card !p-4">
-              <h3 className="text-[var(--text-main)] text-center text-lg font-bold mb-4">
+            <div className="card !p-3 sm:!p-4">
+              <h3 className="text-[var(--text-main)] text-center text-base sm:text-lg font-bold mb-3 sm:mb-4">
                 AI 팀원 도입 전 후
               </h3>
 
-              <div className="flex items-end justify-center gap-6 h-64">
+              <div className="flex items-end justify-center gap-3 sm:gap-6 h-48 sm:h-56 md:h-64">
                 {/* Before 막대 */}
                 <div className="flex flex-col items-center">
                   <div
-                    className="w-32 bg-gray-300 rounded-t-lg flex flex-col items-center justify-center transition-all duration-500"
-                    style={{ height: '210px' }}
+                    className="w-20 sm:w-28 md:w-32 bg-gray-300 rounded-t-lg flex flex-col items-center justify-center transition-all duration-500"
+                    style={{ height: '160px' }}
                   >
-                    <span className="text-[var(--text-main)] font-bold text-lg">{beforeYearlyCost.toLocaleString()}만원</span>
-                    <span className="text-[var(--text-sub)] text-sm">{beforeYearlyHours.toLocaleString()}시간</span>
+                    <span className="text-[var(--text-main)] font-bold text-sm sm:text-lg">{beforeYearlyCost.toLocaleString()}만원</span>
+                    <span className="text-[var(--text-sub)] text-[11px] sm:text-sm">{beforeYearlyHours.toLocaleString()}시간</span>
                   </div>
-                  <span className="text-[var(--text-sub)] text-xs mt-2">도입 전</span>
+                  <span className="text-[var(--text-sub)] text-[11px] sm:text-xs mt-2">도입 전</span>
                 </div>
 
                 {/* 화살표 */}
-                <div className="flex flex-col items-center justify-center pb-8">
-                  <span className="text-[var(--primary)] text-3xl font-bold">→</span>
-                  <span className="text-[var(--primary)] text-sm font-bold">{automationRate}%</span>
+                <div className="flex flex-col items-center justify-center pb-6 sm:pb-8">
+                  <span className="text-[var(--primary)] text-2xl sm:text-3xl font-bold">→</span>
+                  <span className="text-[var(--primary)] text-[11px] sm:text-sm font-bold">{automationRate}%</span>
                 </div>
 
                 {/* After 막대 */}
                 <div className="flex flex-col items-center">
-                  <div className="flex flex-col items-center justify-end" style={{ height: '210px' }}>
+                  <div className="flex flex-col items-center justify-end" style={{ height: '160px' }}>
                     <div
-                      className="w-32 bg-gradient-to-t from-[var(--primary)] to-[#FF9A76] rounded-t-lg flex flex-col items-center justify-center transition-all duration-500"
-                      style={{ height: `${Math.max(afterHeightPercent * 2.1, 50)}px` }}
+                      className="w-20 sm:w-28 md:w-32 bg-gradient-to-t from-[var(--primary)] to-[#FF9A76] rounded-t-lg flex flex-col items-center justify-center transition-all duration-500"
+                      style={{ height: `${Math.max(afterHeightPercent * 1.6, 40)}px` }}
                     >
-                      <span className="text-white font-bold">{afterYearlyCost.toLocaleString()}만원</span>
-                      <span className="text-white/80 text-sm">{afterYearlyHours.toLocaleString()}시간</span>
+                      <span className="text-white font-bold text-sm sm:text-base">{afterYearlyCost.toLocaleString()}만원</span>
+                      <span className="text-white/80 text-[11px] sm:text-sm">{afterYearlyHours.toLocaleString()}시간</span>
                     </div>
                   </div>
-                  <span className="text-[var(--primary)] text-xs mt-2 font-bold">도입 후</span>
+                  <span className="text-[var(--primary)] text-[11px] sm:text-xs mt-2 font-bold">도입 후</span>
                 </div>
               </div>
             </div>

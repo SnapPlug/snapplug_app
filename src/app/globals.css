@@ -55,8 +55,14 @@ body {
   border: 1px solid var(--border);
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  padding: 24px;
+  padding: 16px;
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+@media (min-width: 768px) {
+  .card {
+    padding: 24px;
+  }
 }
 
 .card:hover {
@@ -68,15 +74,22 @@ body {
 .btn-primary {
   background: var(--primary);
   color: #FFFFFF;
-  padding: 16px 32px;
+  padding: 14px 24px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   border: none;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
   display: inline-block;
   text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .btn-primary {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
 }
 
 .btn-primary:hover {
@@ -88,15 +101,22 @@ body {
 .btn-secondary {
   background: transparent;
   color: var(--primary);
-  padding: 16px 32px;
+  padding: 14px 24px;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 16px;
+  font-size: 15px;
   border: 2px solid var(--primary);
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
   display: inline-block;
   text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .btn-secondary {
+    padding: 16px 32px;
+    font-size: 16px;
+  }
 }
 
 .btn-secondary:hover {
@@ -117,34 +137,53 @@ body {
 
 /* Section styling */
 .section {
-  padding: 80px 20px;
+  padding: 48px 16px;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 640px) {
   .section {
     padding: 60px 16px;
   }
 }
 
+@media (min-width: 768px) {
+  .section {
+    padding: 80px 20px;
+  }
+}
+
 .section-title {
-  font-size: 36px;
+  font-size: 24px;
   font-weight: 700;
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 24px;
   color: var(--text-main);
 }
 
-@media (max-width: 768px) {
+@media (min-width: 640px) {
   .section-title {
     font-size: 28px;
     margin-bottom: 32px;
   }
 }
 
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 36px;
+    margin-bottom: 48px;
+  }
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 20px;
+  }
 }
 
 /* 3D Animation Styles */
@@ -298,13 +337,20 @@ body {
 .cta-ponpon {
   background: var(--foreground);
   color: #fff;
-  padding: 18px 40px;
+  padding: 14px 28px;
   border-radius: 50px;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 15px;
   transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
   display: inline-block;
   text-decoration: none;
+}
+
+@media (min-width: 640px) {
+  .cta-ponpon {
+    padding: 18px 40px;
+    font-size: 18px;
+  }
 }
 
 .cta-ponpon:hover {

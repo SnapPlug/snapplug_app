@@ -99,16 +99,16 @@ export default function FAQ() {
           자주 묻는 질문
         </h2>
 
-        <div ref={faqListRef} className="max-w-2xl mx-auto space-y-3">
+        <div ref={faqListRef} className="max-w-2xl mx-auto space-y-2 sm:space-y-3">
           {faqs.map((faq, idx) => (
             <div key={idx} className="faq-item card p-0 overflow-hidden opacity-0">
               <button
                 onClick={() => setOpenIndex(openIndex === idx ? null : idx)}
-                className="w-full p-5 text-left flex items-center justify-between gap-4 hover:bg-[var(--background)] transition-colors"
+                className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 sm:gap-4 hover:bg-[var(--background)] transition-colors"
               >
-                <span className="font-semibold">{faq.question}</span>
+                <span className="font-semibold text-[13px] sm:text-base">{faq.question}</span>
                 <span
-                  className={`text-2xl text-[var(--primary)] transition-transform duration-300 ${
+                  className={`text-xl sm:text-2xl text-[var(--primary)] transition-transform duration-300 flex-shrink-0 ${
                     openIndex === idx ? 'rotate-45' : ''
                   }`}
                 >
@@ -118,10 +118,10 @@ export default function FAQ() {
 
               <div
                 className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === idx ? 'max-h-96' : 'max-h-0'
+                  openIndex === idx ? 'max-h-64 sm:max-h-96' : 'max-h-0'
                 }`}
               >
-                <div className="px-5 pb-5 text-[var(--text-sub)] whitespace-pre-line">
+                <div className="px-4 sm:px-5 pb-4 sm:pb-5 text-[var(--text-sub)] text-[13px] sm:text-base whitespace-pre-line">
                   {faq.answer}
                 </div>
               </div>

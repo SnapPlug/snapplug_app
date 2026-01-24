@@ -196,7 +196,7 @@ export default function Process() {
         </div>
 
         {/* Step Details */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
           {steps.map((step, idx) => (
             <div
               key={idx}
@@ -213,16 +213,16 @@ export default function Process() {
                 </span>
               )}
 
-              <div className="flex items-center gap-3 mb-4 md:hidden">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold ${
+              <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 md:hidden">
+                <div className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-bold text-sm sm:text-base ${
                   step.isHighlighted ? 'bg-[var(--primary)] text-white ring-4 ring-orange-200' : 'bg-[var(--primary)] text-white'
                 }`}>
                   {step.number}
                 </div>
                 <div>
-                  <h3 className="font-bold">{step.title}</h3>
+                  <h3 className="font-bold text-sm sm:text-base">{step.title}</h3>
                   {step.duration && (
-                    <p className="text-sm text-[var(--text-sub)]">({step.duration})</p>
+                    <p className="text-[11px] sm:text-sm text-[var(--text-sub)]">({step.duration})</p>
                   )}
                 </div>
               </div>
@@ -231,9 +231,9 @@ export default function Process() {
                 {step.number}️. {step.title} {step.duration && `(${step.duration})`}
               </h3>
 
-              <ul className="space-y-2 mt-3">
+              <ul className="space-y-1.5 sm:space-y-2 mt-2 sm:mt-3">
                 {step.items.map((item, itemIdx) => (
-                  <li key={itemIdx} className="flex items-start gap-2 text-sm text-[var(--text-sub)]">
+                  <li key={itemIdx} className="flex items-start gap-2 text-[13px] sm:text-sm text-[var(--text-sub)]">
                     <span className={step.isHighlighted ? 'text-[var(--primary)]' : ''}>•</span>
                     <span>{item}</span>
                   </li>
@@ -242,7 +242,7 @@ export default function Process() {
 
               {/* 서브텍스트 */}
               {step.subtext && (
-                <p className="mt-3 pt-3 border-t border-gray-100 text-xs text-[var(--primary)] font-semibold text-center">
+                <p className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-gray-100 text-[11px] sm:text-xs text-[var(--primary)] font-semibold text-center">
                   ✨ {step.subtext}
                 </p>
               )}
@@ -251,7 +251,7 @@ export default function Process() {
         </div>
 
         {/* CTA */}
-        <div ref={ctaRef} className="text-center mt-10 opacity-0">
+        <div ref={ctaRef} className="text-center mt-8 sm:mt-10 opacity-0">
           <button
             className="btn-primary"
             onClick={() => window.ChannelIO?.('openWorkflow', 803868)}

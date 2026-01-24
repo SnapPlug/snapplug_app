@@ -462,10 +462,10 @@ export default function Problem() {
   return (
     <section ref={sectionRef} className="section bg-white">
       <div className="container">
-        <h2 ref={titleRef} className="text-center mb-4 opacity-0">
-          <span className="text-2xl md:text-3xl text-[var(--text-sub)]">반복 업무에 지치셨나요?</span>
+        <h2 ref={titleRef} className="text-center mb-3 sm:mb-4 opacity-0">
+          <span className="text-xl sm:text-2xl md:text-3xl text-[var(--text-sub)]">반복 업무에 지치셨나요?</span>
           <br />
-          <span className="text-3xl md:text-5xl font-bold mt-2 block">
+          <span className="text-2xl sm:text-3xl md:text-5xl font-bold mt-1 sm:mt-2 block">
             AI 팀원이{' '}
             <span className="relative inline-block">
               <span className="text-[var(--primary)]">확실하게</span>
@@ -489,22 +489,22 @@ export default function Problem() {
           </span>
         </h2>
 
-        <p className="text-center text-[var(--text-sub)] mb-12 md:mb-16">
+        <p className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-8 sm:mb-12 md:mb-16">
           도입 전후를 비교해보세요
         </p>
 
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto"
         >
           {challenges.map((item) => (
             <div
               key={item.id}
-              className="challenge-card card p-6 overflow-hidden opacity-0"
+              className="challenge-card card !p-4 sm:!p-5 md:!p-6 overflow-hidden opacity-0"
             >
               {/* Header */}
-              <div className="flex items-center gap-3 mb-6">
-                <div className="relative w-12 h-12 rounded-full overflow-hidden bg-[var(--accent-warm)] flex-shrink-0">
+              <div className="flex items-center gap-2 sm:gap-3 mb-4 sm:mb-6">
+                <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-[var(--accent-warm)] flex-shrink-0">
                   <Image
                     src={item.avatar}
                     alt={item.aiName}
@@ -514,54 +514,54 @@ export default function Problem() {
                   />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold">{item.title}</h3>
-                  <p className="text-xs text-[var(--primary)] font-semibold">with {item.aiName}</p>
+                  <h3 className="text-base sm:text-lg font-bold">{item.title}</h3>
+                  <p className="text-[11px] sm:text-xs text-[var(--primary)] font-semibold">with {item.aiName}</p>
                 </div>
-                <div className="ml-auto bg-[var(--primary)] text-white px-4 py-2 rounded-full">
-                  <span className="text-base font-bold">{item.improvement}</span>
-                  <span className="text-sm ml-1">{item.improvementLabel}</span>
+                <div className="ml-auto bg-[var(--primary)] text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
+                  <span className="text-sm sm:text-base font-bold">{item.improvement}</span>
+                  <span className="text-[11px] sm:text-sm ml-1">{item.improvementLabel}</span>
                 </div>
               </div>
 
               {/* Visual Comparison Graph */}
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 {/* Before Bar */}
                 <div className="relative">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-semibold text-[var(--text-sub)] uppercase tracking-wider">Before</span>
-                    <span className="text-sm font-bold text-[var(--text-main)]">{item.beforeLabel}</span>
+                  <div className="flex justify-between items-center mb-1.5 sm:mb-2">
+                    <span className="text-[11px] sm:text-xs font-semibold text-[var(--text-sub)] uppercase tracking-wider">Before</span>
+                    <span className="text-[13px] sm:text-sm font-bold text-[var(--text-main)]">{item.beforeLabel}</span>
                   </div>
-                  <div className="h-8 bg-gray-100 rounded-full overflow-hidden relative">
+                  <div className="h-6 sm:h-8 bg-gray-100 rounded-full overflow-hidden relative">
                     <div
-                      className="comparison-bar before-bar h-full bg-gray-400 rounded-full flex items-center justify-end pr-3"
+                      className="comparison-bar before-bar h-full bg-gray-400 rounded-full flex items-center justify-end pr-2 sm:pr-3"
                       style={{ width: `${item.beforeValue}%` }}
                     >
                     </div>
                   </div>
-                  <p className="text-xs text-[var(--text-sub)] mt-1">{item.problemDesc}</p>
+                  <p className="text-[11px] sm:text-xs text-[var(--text-sub)] mt-1">{item.problemDesc}</p>
                 </div>
 
                 {/* After Bar */}
                 <div className="relative">
-                  <div className="flex justify-between items-center mb-2">
-                    <span className="text-xs font-semibold text-[var(--primary)] uppercase tracking-wider">After</span>
-                    <span className="text-sm font-bold text-[var(--primary)]">{item.afterLabel}</span>
+                  <div className="flex justify-between items-center mb-1.5 sm:mb-2">
+                    <span className="text-[11px] sm:text-xs font-semibold text-[var(--primary)] uppercase tracking-wider">After</span>
+                    <span className="text-[13px] sm:text-sm font-bold text-[var(--primary)]">{item.afterLabel}</span>
                   </div>
-                  <div className="h-8 bg-[#FFF0E8] rounded-full overflow-hidden relative">
+                  <div className="h-6 sm:h-8 bg-[#FFF0E8] rounded-full overflow-hidden relative">
                     <div
-                      className="comparison-bar after-bar h-full bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-full flex items-center justify-end pr-3"
+                      className="comparison-bar after-bar h-full bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-full flex items-center justify-end pr-2 sm:pr-3"
                       style={{ width: `${item.afterValue}%` }}
                     >
                     </div>
                   </div>
-                  <p className="text-xs text-[var(--text-sub)] mt-1">{item.solutionDesc}</p>
+                  <p className="text-[11px] sm:text-xs text-[var(--text-sub)] mt-1">{item.solutionDesc}</p>
                 </div>
               </div>
 
               {/* Detail Button */}
               <button
                 onClick={() => openModal(item.aiName)}
-                className="block w-full mt-6 py-3 bg-[var(--foreground)] text-white text-center font-semibold rounded-full hover:bg-gray-800 transition-colors"
+                className="block w-full mt-4 sm:mt-6 py-2.5 sm:py-3 bg-[var(--foreground)] text-white text-center text-[13px] sm:text-base font-semibold rounded-full hover:bg-gray-800 transition-colors"
               >
                 {item.aiName} 자세히 보기
               </button>
@@ -573,7 +573,7 @@ export default function Problem() {
       {/* Resume-Style Modal */}
       {selectedMember && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-[1100] flex items-center justify-center p-2 sm:p-4"
           onClick={closeModal}
         >
           {/* Backdrop */}
@@ -587,18 +587,18 @@ export default function Problem() {
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
+              className="absolute top-3 right-3 sm:top-4 sm:right-4 w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 transition-colors z-10"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <svg width="16" height="16" className="sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M18 6L6 18M6 6l12 12" />
               </svg>
             </button>
 
             {/* Resume Header */}
-            <div className="p-6 pb-4 bg-[#F8F9FA] border-b border-gray-200">
-              <div className="flex items-start gap-5">
+            <div className="p-4 sm:p-6 pb-3 sm:pb-4 bg-[#F8F9FA] border-b border-gray-200">
+              <div className="flex items-start gap-3 sm:gap-5">
                 {/* Avatar */}
-                <div className="relative w-24 h-24 rounded-2xl overflow-hidden bg-[var(--accent-warm)] flex-shrink-0 shadow-md">
+                <div className="relative w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-2xl overflow-hidden bg-[var(--accent-warm)] flex-shrink-0 shadow-md">
                   <Image
                     src={selectedMember.image}
                     alt={selectedMember.name}
@@ -608,20 +608,20 @@ export default function Problem() {
                   />
                 </div>
                 {/* Info */}
-                <div className="flex-1 pt-1">
-                  <p className="text-sm text-[var(--text-sub)] italic mb-1">
+                <div className="flex-1 pt-0.5 sm:pt-1">
+                  <p className="text-xs sm:text-sm text-[var(--text-sub)] italic mb-0.5 sm:mb-1 line-clamp-2">
                     {selectedMember.tagline}
                   </p>
-                  <h3 className="text-2xl font-bold mb-2">
+                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold mb-1.5 sm:mb-2">
                     <span className="text-[var(--secondary)]">AI</span>{' '}
                     {selectedMember.name} ({selectedMember.name.toUpperCase()})
                   </h3>
-                  <div className="flex flex-wrap gap-2">
-                    <span className="px-3 py-1 bg-[#2D2D2D] text-white text-xs font-semibold rounded">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                    <span className="px-2 py-0.5 sm:px-3 sm:py-1 bg-[#2D2D2D] text-white text-[10px] sm:text-xs font-semibold rounded">
                       {selectedMember.role} ({selectedMember.roleEn})
                     </span>
-                    <span className="px-3 py-1 border border-[var(--secondary)] text-[var(--secondary)] text-xs font-semibold rounded flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 bg-[var(--secondary)] rounded-full"></span>
+                    <span className="px-2 py-0.5 sm:px-3 sm:py-1 border border-[var(--secondary)] text-[var(--secondary)] text-[10px] sm:text-xs font-semibold rounded flex items-center gap-1">
+                      <span className="w-1 h-1 sm:w-1.5 sm:h-1.5 bg-[var(--secondary)] rounded-full"></span>
                       AI AGENT v2.1
                     </span>
                   </div>
@@ -632,34 +632,34 @@ export default function Problem() {
             {/* Resume Body - 2 Column Layout */}
             <div className="grid grid-cols-1 md:grid-cols-5 gap-0">
               {/* Left Column */}
-              <div className="md:col-span-2 p-6 border-r border-gray-100">
+              <div className="md:col-span-2 p-4 sm:p-6 md:border-r border-gray-100">
                 {/* Licenses */}
-                <div className="mb-6">
-                  <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="text-xs sm:text-sm font-bold mb-2 sm:mb-3 flex items-center gap-2">
                     자격/면허
-                    <span className="text-xs font-normal text-[var(--text-sub)] uppercase tracking-wider">LICENSE</span>
+                    <span className="text-[10px] sm:text-xs font-normal text-[var(--text-sub)] uppercase tracking-wider">LICENSE</span>
                   </h4>
-                  <div className="border-t border-gray-200 pt-3 space-y-2">
+                  <div className="border-t border-gray-200 pt-2 sm:pt-3 space-y-1.5 sm:space-y-2">
                     {selectedMember.licenses.map((license, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm">
+                      <div key={idx} className="flex justify-between items-center text-xs sm:text-sm">
                         <span className="text-[var(--text-main)]">{license.name}</span>
-                        <span className="text-[var(--text-sub)] text-xs">{license.date}</span>
+                        <span className="text-[var(--text-sub)] text-[10px] sm:text-xs">{license.date}</span>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Skills */}
-                <div className="mb-6">
-                  <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
+                <div className="mb-4 sm:mb-6">
+                  <h4 className="text-xs sm:text-sm font-bold mb-2 sm:mb-3 flex items-center gap-2">
                     보유기술
-                    <span className="text-xs font-normal text-[var(--text-sub)] uppercase tracking-wider">SKILLS</span>
+                    <span className="text-[10px] sm:text-xs font-normal text-[var(--text-sub)] uppercase tracking-wider">SKILLS</span>
                   </h4>
-                  <div className="border-t border-gray-200 pt-3 space-y-2">
+                  <div className="border-t border-gray-200 pt-2 sm:pt-3 space-y-1.5 sm:space-y-2">
                     {selectedMember.skills.map((skill, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm">
+                      <div key={idx} className="flex justify-between items-center text-xs sm:text-sm">
                         <span className="text-[var(--text-main)]">{skill.name}</span>
-                        <span className="text-[var(--primary)] tracking-tight">
+                        <span className="text-[var(--primary)] tracking-tight text-xs sm:text-sm">
                           {Array.from({ length: 5 }).map((_, i) => (
                             <span key={i} className={i < skill.level ? '' : 'opacity-25'}>
                               ★
@@ -673,12 +673,12 @@ export default function Problem() {
 
                 {/* Introduction */}
                 <div>
-                  <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
-                    <span className="w-4 h-4 border border-current rounded-full flex items-center justify-center text-xs">i</span>
+                  <h4 className="text-xs sm:text-sm font-bold mb-2 sm:mb-3 flex items-center gap-2">
+                    <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 border border-current rounded-full flex items-center justify-center text-[10px] sm:text-xs">i</span>
                     INTRODUCTION
                   </h4>
-                  <div className="border-t border-gray-200 pt-3">
-                    <p className="text-sm text-[var(--text-sub)] leading-relaxed">
+                  <div className="border-t border-gray-200 pt-2 sm:pt-3">
+                    <p className="text-xs sm:text-sm text-[var(--text-sub)] leading-relaxed">
                       {selectedMember.introduction}
                     </p>
                   </div>
@@ -686,21 +686,21 @@ export default function Problem() {
               </div>
 
               {/* Right Column - Use Cases */}
-              <div className="md:col-span-3 p-6 bg-white">
-                <h4 className="text-sm font-bold mb-3 flex items-center gap-2">
+              <div className="md:col-span-3 p-4 sm:p-6 bg-white border-t md:border-t-0 border-gray-100">
+                <h4 className="text-xs sm:text-sm font-bold mb-2 sm:mb-3 flex items-center gap-2">
                   활용 시나리오
-                  <span className="text-xs font-normal text-[var(--text-sub)] uppercase tracking-wider">USE CASES</span>
+                  <span className="text-[10px] sm:text-xs font-normal text-[var(--text-sub)] uppercase tracking-wider">USE CASES</span>
                 </h4>
 
                 {/* Use Cases Header */}
-                <div className="border-t border-gray-200 pt-3">
-                  <div className="grid grid-cols-12 gap-2 text-xs font-semibold text-[var(--text-sub)] uppercase tracking-wider mb-3">
+                <div className="border-t border-gray-200 pt-2 sm:pt-3">
+                  <div className="hidden sm:grid grid-cols-12 gap-2 text-[10px] sm:text-xs font-semibold text-[var(--text-sub)] uppercase tracking-wider mb-2 sm:mb-3">
                     <div className="col-span-3">상황</div>
                     <div className="col-span-9">시나리오 & 기대효과</div>
                   </div>
 
                   {/* Use Case Items */}
-                  <div className="space-y-5">
+                  <div className="space-y-4 sm:space-y-5">
                     {selectedMember.experiences.map((exp, idx) => {
                       const industryColors: Record<string, string> = {
                         saas: '#3B82F6',
@@ -728,9 +728,9 @@ export default function Problem() {
                       const industryName = industryNames[exp.industry] || exp.industry;
 
                       return (
-                        <div key={idx} className="grid grid-cols-12 gap-2">
+                        <div key={idx} className="flex flex-col sm:grid sm:grid-cols-12 gap-1 sm:gap-2">
                           {/* Industry/Situation */}
-                          <div className="col-span-3 text-xs text-[var(--text-sub)]">
+                          <div className="sm:col-span-3 text-xs text-[var(--text-sub)]">
                             <span
                               className="inline-block px-2 py-0.5 rounded text-white text-[10px] font-medium"
                               style={{ backgroundColor: dotColor }}
@@ -739,14 +739,14 @@ export default function Problem() {
                             </span>
                           </div>
                           {/* Details */}
-                          <div className="col-span-9">
-                            <h5 className="font-bold text-sm mb-1">
+                          <div className="sm:col-span-9">
+                            <h5 className="font-bold text-xs sm:text-sm mb-0.5 sm:mb-1">
                               {exp.company}
                             </h5>
-                            <p className="text-xs text-[var(--text-sub)] mb-2 leading-relaxed">
+                            <p className="text-[11px] sm:text-xs text-[var(--text-sub)] mb-1.5 sm:mb-2 leading-relaxed">
                               {exp.description}
                             </p>
-                            <span className="inline-block px-3 py-1 bg-[var(--secondary)] text-white text-xs font-bold rounded">
+                            <span className="inline-block px-2 sm:px-3 py-0.5 sm:py-1 bg-[var(--secondary)] text-white text-[10px] sm:text-xs font-bold rounded">
                               기대효과 {exp.result}
                             </span>
                           </div>
@@ -759,10 +759,10 @@ export default function Problem() {
             </div>
 
             {/* CTA */}
-            <div className="p-6 pt-4 border-t border-gray-100">
+            <div className="p-4 sm:p-6 pt-3 sm:pt-4 border-t border-gray-100">
               <a
                 href="#contact"
-                className="block w-full py-4 bg-[var(--primary)] text-white text-center font-bold rounded-lg hover:bg-[var(--primary-hover)] transition-colors"
+                className="block w-full py-3 sm:py-4 bg-[var(--primary)] text-white text-center text-sm sm:text-base font-bold rounded-lg hover:bg-[var(--primary-hover)] transition-colors"
                 onClick={closeModal}
               >
                 {selectedMember.name} 도입 상담하기

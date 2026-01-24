@@ -190,25 +190,25 @@ export default function Hero() {
     <section
       id="ai-team"
       ref={sectionRef}
-      className="hero-ponpon px-6 md:px-12 pt-32 pb-20"
+      className="hero-ponpon px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20"
     >
       {/* Title */}
       <h1
         ref={titleRef}
-        className="hero-title-ponpon text-4xl md:text-6xl lg:text-7xl text-center mb-4 opacity-0"
+        className="hero-title-ponpon text-[26px] sm:text-4xl md:text-5xl lg:text-6xl text-center mb-3 sm:mb-4 opacity-0"
       >
         BUSINESS & BEYOND
       </h1>
 
       <p
         ref={subtitleRef}
-        className="text-lg md:text-3xl text-center text-[var(--text-sub)] mb-12 md:mb-16 opacity-0"
+        className="text-base sm:text-xl md:text-2xl text-center text-[var(--text-sub)] mb-8 sm:mb-12 md:mb-16 opacity-0"
       >
         당신의 첫 번째{' '}
         <span className="relative inline-block">
           <span className="text-[var(--primary)] font-bold">AI 팀원</span>
           <svg
-            className="absolute -bottom-2 left-0 w-full h-4 overflow-visible"
+            className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-3 sm:h-4 overflow-visible"
             viewBox="0 0 180 16"
             preserveAspectRatio="none"
           >
@@ -229,31 +229,31 @@ export default function Hero() {
       {/* Team Grid */}
       <div
         ref={teamGridRef}
-        className="flex flex-wrap justify-center gap-4 md:gap-6 max-w-6xl mx-auto mb-12 md:mb-16"
+        className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 max-w-6xl mx-auto mb-8 sm:mb-12 md:mb-16"
       >
         {aiTeamMembers.map((member, index) => (
           <div
             key={member.name}
-            className="team-card team-card-ponpon text-center opacity-0 w-[140px] md:w-[180px]"
+            className="team-card team-card-ponpon text-center opacity-0 w-[100px] sm:w-[120px] md:w-[160px]"
           >
             <div
-              className="team-avatar relative w-20 h-20 md:w-28 md:h-28 mx-auto mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]"
+              className="team-avatar relative w-14 h-14 sm:w-[72px] sm:h-[72px] md:w-24 md:h-24 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]"
             >
               <Image
                 src={member.image}
                 alt={member.name}
                 fill
                 className="object-cover"
-                sizes="(max-width: 768px) 80px, 112px"
+                sizes="(max-width: 640px) 56px, (max-width: 768px) 72px, 96px"
               />
             </div>
-            <h3 className="font-bold text-lg md:text-xl mb-1">{member.name}</h3>
-            <div className="relative inline-block mb-1">
-              <p className="text-sm text-[var(--primary)] font-bold">
+            <h3 className="font-bold text-sm sm:text-base md:text-lg mb-0.5 sm:mb-1">{member.name}</h3>
+            <div className="relative inline-block mb-0.5 sm:mb-1">
+              <p className="text-[11px] sm:text-xs md:text-sm text-[var(--primary)] font-bold">
                 AI {member.role}
               </p>
               <svg
-                className="absolute -bottom-1 left-0 w-full h-3 overflow-visible"
+                className="absolute -bottom-0.5 sm:-bottom-1 left-0 w-full h-2 sm:h-3 overflow-visible"
                 viewBox="0 0 180 16"
                 preserveAspectRatio="none"
               >
@@ -272,7 +272,7 @@ export default function Hero() {
                 />
               </svg>
             </div>
-            <p className="text-xs text-[var(--text-sub)]">{member.desc}</p>
+            <p className="text-[10px] sm:text-[11px] md:text-xs text-[var(--text-sub)] leading-tight">{member.desc}</p>
           </div>
         ))}
       </div>

@@ -34,7 +34,7 @@ export default function Navbar() {
         {/* Logo */}
         <Link
           href="/"
-          className={`${pirulen.className} text-xl md:text-2xl tracking-wide`}
+          className={`${pirulen.className} text-lg sm:text-xl md:text-2xl tracking-wide`}
         >
           SnapPlug
         </Link>
@@ -88,19 +88,19 @@ export default function Navbar() {
           isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
       >
-        <div className="flex flex-col p-6 gap-4">
+        <div className="flex flex-col p-4 gap-3 sm:p-6 sm:gap-4">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="nav-link text-lg"
+              className="nav-link text-base sm:text-lg"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.label}
             </a>
           ))}
           <button
-            className="cta-ponpon text-center mt-2 w-full"
+            className="cta-ponpon text-center mt-2 w-full text-[15px] sm:text-base"
             onClick={() => {
               setIsMobileMenuOpen(false);
               window.ChannelIO?.('openWorkflow', 803868);
