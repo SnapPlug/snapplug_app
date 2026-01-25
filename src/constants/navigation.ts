@@ -10,8 +10,8 @@ export const CHANNEL_WORKFLOW_ID = 803868;
 
 export const SITE_CONFIG = {
   name: 'SnapPlug',
-  url: 'https://snapplug.co.kr',
-  email: 'contact@snapplug.co.kr',
+  url: 'https://snapplug.app',
+  email: 'hello@snapplug.app',
   kakao: '@snapplug',
   slogan: 'Business & Beyond',
   tagline: '당신의 첫 번째 AI 팀원',

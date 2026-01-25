@@ -1,11 +1,11 @@
 # robots.txt for SnapPlug
-# https://snapplug.co.kr
+# https://snapplug.app
 
 User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://snapplug.co.kr/sitemap.xml
+Sitemap: https://snapplug.app/sitemap.xml
 
 # Disallow admin or private paths (if any)
 # Disallow: /admin/
