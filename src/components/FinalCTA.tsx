@@ -1,11 +1,7 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 const aiTeamMembers = [
   { name: 'Ara', role: '수석보좌관', image: '/AI_ara.webp' },
@@ -17,106 +13,28 @@ const aiTeamMembers = [
 
 export default function FinalCTA() {
   const sectionRef = useRef<HTMLElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const teamRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const ctaRef = useRef<HTMLButtonElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
+  // Use IntersectionObserver for visibility-based CSS animations
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title animation
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 85%',
-          },
-        }
-      );
+    const section = sectionRef.current;
+    if (!section) return;
 
-      // Team members animation
-      const members = teamRef.current?.querySelectorAll('.team-member');
-      if (members) {
-        gsap.fromTo(
-          members,
-          { opacity: 0, y: 20, scale: 0.8 },
-          {
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-              trigger: teamRef.current,
-              start: 'top 85%',
-            },
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect();
           }
-        );
-
-        // Floating animation
-        members.forEach((member, index) => {
-          gsap.to(member, {
-            y: -5,
-            duration: 1.5 + index * 0.2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-            delay: index * 0.15,
-          });
         });
-      }
+      },
+      { rootMargin: '50px', threshold: 0.1 }
+    );
 
-      // Content animation
-      gsap.fromTo(
-        contentRef.current,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: contentRef.current,
-            start: 'top 85%',
-          },
-        }
-      );
+    observer.observe(section);
 
-      // CTA button animation
-      gsap.fromTo(
-        ctaRef.current,
-        { opacity: 0, scale: 0.9 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.6,
-          ease: 'back.out(1.7)',
-          scrollTrigger: {
-            trigger: ctaRef.current,
-            start: 'top 90%',
-          },
-        }
-      );
-
-      // CTA pulse animation
-      gsap.to(ctaRef.current, {
-        scale: 1.05,
-        duration: 1.2,
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: 1,
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -129,14 +47,27 @@ export default function FinalCTA() {
       }}
     >
       <div className="container text-center text-white">
-        <h2 ref={titleRef} className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 opacity-0">
+        <h2
+          className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 transition-all duration-700 ease-out ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           반복 업무에서 해방될 준비 되셨나요?
         </h2>
 
         {/* AI Team Members */}
-        <div ref={teamRef} className="flex justify-center gap-2 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
-          {aiTeamMembers.map((member) => (
-            <div key={member.name} className="team-member text-center opacity-0">
+        <div className="flex justify-center gap-2 sm:gap-4 md:gap-6 mb-6 sm:mb-8">
+          {aiTeamMembers.map((member, index) => (
+            <div
+              key={member.name}
+              className={`text-center transition-all duration-500 ease-out ${
+                isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-5 scale-90'
+              }`}
+              style={{
+                transitionDelay: isVisible ? `${200 + index * 100}ms` : '0ms',
+                animation: isVisible ? `float ${2 + index * 0.3}s ease-in-out infinite ${index * 0.15}s` : 'none'
+              }}
+            >
               <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-1.5 sm:mb-2 rounded-full overflow-hidden bg-white bg-opacity-20">
                 <Image
                   src={member.image}
@@ -152,7 +83,11 @@ export default function FinalCTA() {
           ))}
         </div>
 
-        <div ref={contentRef} className="opacity-0">
+        <div
+          className={`transition-all duration-700 ease-out delay-500 ${
+            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          }`}
+        >
           <p className="text-lg sm:text-xl md:text-2xl mb-1.5 sm:mb-2">
             저희가 대표님의 팀이 되어드릴게요.
           </p>
@@ -167,14 +102,24 @@ export default function FinalCTA() {
 
         {/* CTA Button */}
         <button
-          ref={ctaRef}
-          className="inline-block bg-white text-[var(--primary)] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-opacity-90 transition-all shadow-lg opacity-0 cursor-pointer"
+          className={`inline-block bg-white text-[var(--primary)] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-opacity-90 transition-all shadow-lg cursor-pointer ${
+            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+          }`}
+          style={{
+            transitionDelay: isVisible ? '700ms' : '0ms',
+            transitionDuration: '500ms',
+            animation: isVisible ? 'pulse-scale 2s ease-in-out infinite 1.5s' : 'none'
+          }}
           onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
         >
           문의하기
         </button>
 
-        <p className="mt-3 sm:mt-4 text-[11px] sm:text-sm opacity-80">
+        <p
+          className={`mt-3 sm:mt-4 text-[11px] sm:text-sm opacity-80 transition-all duration-500 delay-700 ${
+            isVisible ? 'opacity-80' : 'opacity-0'
+          }`}
+        >
           컨설팅 후 구매 의무 없습니다. 부담 없이 신청하세요.
         </p>
       </div>

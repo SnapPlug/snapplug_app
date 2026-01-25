@@ -129,6 +129,15 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <head>
+        {/* Preconnect to font CDN for faster loading */}
+        <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        <link
+          rel="preload"
+          href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
         <Script
           id="organization-schema"
           type="application/ld+json"

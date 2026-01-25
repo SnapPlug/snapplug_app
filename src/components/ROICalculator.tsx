@@ -1,10 +1,6 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function ROICalculator() {
   const [showDetail, setShowDetail] = useState(false);
@@ -47,40 +43,73 @@ export default function ROICalculator() {
   // 그래프 높이 비율 (Before가 100%)
   const afterHeightPercent = 100 - automationRate;
 
+  // Lazy load GSAP only when section is in viewport
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 85%',
-          },
-        }
-      );
+    const section = sectionRef.current;
+    if (!section) return;
 
-      gsap.fromTo(
-        calculatorRef.current,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: calculatorRef.current,
-            start: 'top 80%',
-          },
-        }
-      );
-    }, sectionRef);
+    let cleanup: (() => void) | undefined;
 
-    return () => ctx.revert();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+
+            Promise.all([
+              import('gsap'),
+              import('gsap/ScrollTrigger')
+            ]).then(([gsapModule, scrollTriggerModule]) => {
+              const gsap = gsapModule.gsap;
+              const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+              gsap.registerPlugin(ScrollTrigger);
+
+              const ctx = gsap.context(() => {
+                gsap.fromTo(
+                  titleRef.current,
+                  { opacity: 0, y: 30 },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                      trigger: titleRef.current,
+                      start: 'top 85%',
+                    },
+                  }
+                );
+
+                gsap.fromTo(
+                  calculatorRef.current,
+                  { opacity: 0, y: 40 },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                      trigger: calculatorRef.current,
+                      start: 'top 80%',
+                    },
+                  }
+                );
+              }, section);
+
+              cleanup = () => ctx.revert();
+            });
+          }
+        });
+      },
+      { rootMargin: '100px' }
+    );
+
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      cleanup?.();
+    };
   }, []);
 
   return (

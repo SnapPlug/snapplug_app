@@ -1,12 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { processSteps } from '@/data/process';
 import { CHANNEL_WORKFLOW_ID } from '@/constants/navigation';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function Process() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -15,100 +11,133 @@ export default function Process() {
   const cardsRef = useRef<HTMLDivElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
 
+  // Lazy load GSAP only when section is in viewport
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title animation
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 85%',
-          },
-        }
-      );
+    const section = sectionRef.current;
+    if (!section) return;
 
-      // Timeline circles animation
-      const circles = timelineRef.current?.querySelectorAll('.timeline-circle');
-      if (circles) {
-        gsap.fromTo(
-          circles,
-          { opacity: 0, scale: 0 },
-          {
-            opacity: 1,
-            scale: 1,
-            duration: 0.5,
-            stagger: 0.2,
-            ease: 'back.out(1.7)',
-            scrollTrigger: {
-              trigger: timelineRef.current,
-              start: 'top 80%',
-            },
+    let cleanup: (() => void) | undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+
+            Promise.all([
+              import('gsap'),
+              import('gsap/ScrollTrigger')
+            ]).then(([gsapModule, scrollTriggerModule]) => {
+              const gsap = gsapModule.gsap;
+              const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+              gsap.registerPlugin(ScrollTrigger);
+
+              const ctx = gsap.context(() => {
+                // Title animation
+                gsap.fromTo(
+                  titleRef.current,
+                  { opacity: 0, y: 30 },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                      trigger: titleRef.current,
+                      start: 'top 85%',
+                    },
+                  }
+                );
+
+                // Timeline circles animation
+                const circles = timelineRef.current?.querySelectorAll('.timeline-circle');
+                if (circles) {
+                  gsap.fromTo(
+                    circles,
+                    { opacity: 0, scale: 0 },
+                    {
+                      opacity: 1,
+                      scale: 1,
+                      duration: 0.5,
+                      stagger: 0.2,
+                      ease: 'back.out(1.7)',
+                      scrollTrigger: {
+                        trigger: timelineRef.current,
+                        start: 'top 80%',
+                      },
+                    }
+                  );
+                }
+
+                // Timeline line animation
+                const line = timelineRef.current?.querySelector('.timeline-line');
+                if (line) {
+                  gsap.fromTo(
+                    line,
+                    { scaleX: 0 },
+                    {
+                      scaleX: 1,
+                      duration: 1,
+                      ease: 'power3.out',
+                      scrollTrigger: {
+                        trigger: timelineRef.current,
+                        start: 'top 80%',
+                      },
+                    }
+                  );
+                }
+
+                // Cards animation
+                const cards = cardsRef.current?.querySelectorAll('.process-card');
+                if (cards) {
+                  gsap.fromTo(
+                    cards,
+                    { opacity: 0, y: 40 },
+                    {
+                      opacity: 1,
+                      y: 0,
+                      duration: 0.6,
+                      stagger: 0.15,
+                      ease: 'power3.out',
+                      scrollTrigger: {
+                        trigger: cardsRef.current,
+                        start: 'top 80%',
+                      },
+                    }
+                  );
+                }
+
+                // CTA animation
+                gsap.fromTo(
+                  ctaRef.current,
+                  { opacity: 0, y: 20 },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.6,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                      trigger: ctaRef.current,
+                      start: 'top 90%',
+                    },
+                  }
+                );
+              }, section);
+
+              cleanup = () => ctx.revert();
+            });
           }
-        );
-      }
+        });
+      },
+      { rootMargin: '100px' }
+    );
 
-      // Timeline line animation
-      const line = timelineRef.current?.querySelector('.timeline-line');
-      if (line) {
-        gsap.fromTo(
-          line,
-          { scaleX: 0 },
-          {
-            scaleX: 1,
-            duration: 1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: timelineRef.current,
-              start: 'top 80%',
-            },
-          }
-        );
-      }
+    observer.observe(section);
 
-      // Cards animation
-      const cards = cardsRef.current?.querySelectorAll('.process-card');
-      if (cards) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 40 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: 'top 80%',
-            },
-          }
-        );
-      }
-
-      // CTA animation
-      gsap.fromTo(
-        ctaRef.current,
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.6,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: ctaRef.current,
-            start: 'top 90%',
-          },
-        }
-      );
-    }, sectionRef);
-
-    return () => ctx.revert();
+    return () => {
+      observer.disconnect();
+      cleanup?.();
+    };
   }, []);
 
   return (

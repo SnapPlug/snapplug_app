@@ -1,11 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { faqs } from '@/data/faq';
-
-gsap.registerPlugin(ScrollTrigger);
 
 export default function FAQ() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -13,46 +9,79 @@ export default function FAQ() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const faqListRef = useRef<HTMLDivElement>(null);
 
+  // Lazy load GSAP only when section is in viewport
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title animation
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 85%',
-          },
-        }
-      );
+    const section = sectionRef.current;
+    if (!section) return;
 
-      // FAQ items animation
-      const items = faqListRef.current?.querySelectorAll('.faq-item');
-      if (items) {
-        gsap.fromTo(
-          items,
-          { opacity: 0, y: 30 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.1,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: faqListRef.current,
-              start: 'top 80%',
-            },
+    let cleanup: (() => void) | undefined;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            observer.disconnect();
+
+            Promise.all([
+              import('gsap'),
+              import('gsap/ScrollTrigger')
+            ]).then(([gsapModule, scrollTriggerModule]) => {
+              const gsap = gsapModule.gsap;
+              const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+              gsap.registerPlugin(ScrollTrigger);
+
+              const ctx = gsap.context(() => {
+                // Title animation
+                gsap.fromTo(
+                  titleRef.current,
+                  { opacity: 0, y: 30 },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                      trigger: titleRef.current,
+                      start: 'top 85%',
+                    },
+                  }
+                );
+
+                // FAQ items animation
+                const items = faqListRef.current?.querySelectorAll('.faq-item');
+                if (items) {
+                  gsap.fromTo(
+                    items,
+                    { opacity: 0, y: 30 },
+                    {
+                      opacity: 1,
+                      y: 0,
+                      duration: 0.5,
+                      stagger: 0.1,
+                      ease: 'power3.out',
+                      scrollTrigger: {
+                        trigger: faqListRef.current,
+                        start: 'top 80%',
+                      },
+                    }
+                  );
+                }
+              }, section);
+
+              cleanup = () => ctx.revert();
+            });
           }
-        );
-      }
-    }, sectionRef);
+        });
+      },
+      { rootMargin: '100px' }
+    );
 
-    return () => ctx.revert();
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      cleanup?.();
+    };
   }, []);
 
   const toggleFaq = (index: number) => {

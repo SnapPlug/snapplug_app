@@ -2,13 +2,9 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import Image from 'next/image';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { challenges, getTeamMemberByName } from '@/data/team';
 import { industryColors, industryNames } from '@/types';
 import type { TeamMember } from '@/types';
-
-gsap.registerPlugin(ScrollTrigger);
 
 // Random underline SVG path (hand-drawn style)
 const underlinePath = "M0,8 Q30,2 60,8 T120,8 T180,8";
@@ -21,86 +17,120 @@ export default function Problem() {
   const modalRef = useRef<HTMLDivElement>(null);
   const [selectedMember, setSelectedMember] = useState<TeamMember | null>(null);
 
+  // Lazy load GSAP only when section is in viewport
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Title animation
-      gsap.fromTo(
-        titleRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power3.out',
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 85%',
-          },
-        }
-      );
+    const section = sectionRef.current;
+    if (!section) return;
 
-      // Draw underline animation
-      if (underlineRef.current) {
-        const pathLength = underlineRef.current.getTotalLength();
-        gsap.set(underlineRef.current, {
-          strokeDasharray: pathLength,
-          strokeDashoffset: pathLength,
-        });
+    let cleanup: (() => void) | undefined;
 
-        gsap.to(underlineRef.current, {
-          strokeDashoffset: 0,
-          duration: 1,
-          ease: 'power2.out',
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: 'top 80%',
-          },
-        });
-      }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            observer.disconnect();
 
-      // Cards animation
-      const cards = cardsRef.current?.querySelectorAll('.challenge-card');
-      if (cards) {
-        gsap.fromTo(
-          cards,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            stagger: 0.15,
-            ease: 'power3.out',
-            scrollTrigger: {
-              trigger: cardsRef.current,
-              start: 'top 80%',
-            },
+            // Lazy load GSAP
+            Promise.all([
+              import('gsap'),
+              import('gsap/ScrollTrigger')
+            ]).then(([gsapModule, scrollTriggerModule]) => {
+              const gsap = gsapModule.gsap;
+              const ScrollTrigger = scrollTriggerModule.ScrollTrigger;
+              gsap.registerPlugin(ScrollTrigger);
+
+              const ctx = gsap.context(() => {
+                // Title animation
+                gsap.fromTo(
+                  titleRef.current,
+                  { opacity: 0, y: 30 },
+                  {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                      trigger: titleRef.current,
+                      start: 'top 85%',
+                    },
+                  }
+                );
+
+                // Draw underline animation
+                if (underlineRef.current) {
+                  const pathLength = underlineRef.current.getTotalLength();
+                  gsap.set(underlineRef.current, {
+                    strokeDasharray: pathLength,
+                    strokeDashoffset: pathLength,
+                  });
+
+                  gsap.to(underlineRef.current, {
+                    strokeDashoffset: 0,
+                    duration: 1,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                      trigger: titleRef.current,
+                      start: 'top 80%',
+                    },
+                  });
+                }
+
+                // Cards animation
+                const cards = cardsRef.current?.querySelectorAll('.challenge-card');
+                if (cards) {
+                  gsap.fromTo(
+                    cards,
+                    { opacity: 0, y: 50 },
+                    {
+                      opacity: 1,
+                      y: 0,
+                      duration: 0.6,
+                      stagger: 0.15,
+                      ease: 'power3.out',
+                      scrollTrigger: {
+                        trigger: cardsRef.current,
+                        start: 'top 80%',
+                      },
+                    }
+                  );
+                }
+
+                // Animate comparison bars
+                const comparisonBars = cardsRef.current?.querySelectorAll('.comparison-bar');
+                if (comparisonBars) {
+                  comparisonBars.forEach((bar) => {
+                    const targetWidth = (bar as HTMLElement).style.width;
+                    gsap.fromTo(
+                      bar,
+                      { width: '0%' },
+                      {
+                        width: targetWidth,
+                        duration: 1.2,
+                        ease: 'power3.out',
+                        scrollTrigger: {
+                          trigger: bar,
+                          start: 'top 90%',
+                        },
+                      }
+                    );
+                  });
+                }
+              }, section);
+
+              cleanup = () => ctx.revert();
+            });
           }
-        );
-      }
-
-      // Animate comparison bars
-      const comparisonBars = cardsRef.current?.querySelectorAll('.comparison-bar');
-      if (comparisonBars) {
-        comparisonBars.forEach((bar) => {
-          const targetWidth = (bar as HTMLElement).style.width;
-          gsap.fromTo(
-            bar,
-            { width: '0%' },
-            {
-              width: targetWidth,
-              duration: 1.2,
-              ease: 'power3.out',
-              scrollTrigger: {
-                trigger: bar,
-                start: 'top 90%',
-              },
-            }
-          );
         });
-      }
-    }, sectionRef);
+      },
+      { rootMargin: '100px' }
+    );
 
-    return () => ctx.revert();
+    observer.observe(section);
+
+    return () => {
+      observer.disconnect();
+      cleanup?.();
+    };
   }, []);
 
   // Lock body scroll when modal is open
