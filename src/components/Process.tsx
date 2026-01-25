@@ -3,65 +3,10 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { processSteps } from '@/data/process';
+import { CHANNEL_WORKFLOW_ID } from '@/constants/navigation';
 
 gsap.registerPlugin(ScrollTrigger);
-
-interface Step {
-  number: string;
-  title: string;
-  duration: string;
-  items: string[];
-  isHighlighted?: boolean;
-  subtext?: string;
-}
-
-const steps: Step[] = [
-  {
-    number: '1',
-    title: '맞춤 컨설팅',
-    duration: '60분',
-    subtext: '무료로 진행됩니다',
-    items: [
-      '현재 업무 프로세스 심층 분석',
-      '자동화 가능 포인트 발견',
-      '예상 ROI 및 도입 방향 제안',
-    ],
-  },
-  {
-    number: '2',
-    title: '서비스 기획 & 설계',
-    duration: '1~2주',
-    isHighlighted: true,
-    subtext: '성공의 80%가 여기서 결정됩니다',
-    items: [
-      '비즈니스 요구사항 정의',
-      '최적의 AI 솔루션 아키텍처 설계',
-      '연동 시스템 및 워크플로우 설계',
-    ],
-  },
-  {
-    number: '3',
-    title: '개발 & 품질 검증',
-    duration: '2~3주',
-    subtext: '완벽하게 작동할 때까지',
-    items: [
-      'AI 솔루션 개발 및 학습',
-      '내부 테스트 (기능/성능)',
-      '외부 테스트 (실사용 환경)',
-    ],
-  },
-  {
-    number: '4',
-    title: '런칭 & 안정화',
-    duration: '',
-    subtext: '안심하고 맡기세요',
-    items: [
-      'AI 팀원 정식 투입',
-      '초기 2주 집중 모니터링',
-      '지속적인 성능 개선',
-    ],
-  },
-];
 
 export default function Process() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -167,19 +112,19 @@ export default function Process() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section">
+    <section ref={sectionRef} className="section" aria-labelledby="process-title">
       <div className="container">
-        <h2 ref={titleRef} className="section-title opacity-0">
+        <h2 ref={titleRef} id="process-title" className="section-title opacity-0">
           AI 팀원, 이렇게 합류합니다
         </h2>
 
         {/* Timeline - Desktop */}
-        <div ref={timelineRef} className="hidden md:block max-w-4xl mx-auto mb-12">
+        <nav ref={timelineRef} className="hidden md:block max-w-4xl mx-auto mb-12" aria-label="도입 프로세스 단계">
           <div className="flex justify-between items-center mb-8 relative">
             {/* Connecting Line */}
-            <div className="timeline-line absolute top-6 left-0 right-0 h-0.5 bg-[var(--border)] origin-left" />
+            <div className="timeline-line absolute top-6 left-0 right-0 h-0.5 bg-[var(--border)] origin-left" aria-hidden="true" />
 
-            {steps.map((step, idx) => (
+            {processSteps.map((step, idx) => (
               <div key={idx} className="relative z-10 flex flex-col items-center">
                 <div className={`timeline-circle w-12 h-12 rounded-full bg-[var(--primary)] text-white flex items-center justify-center font-bold text-lg mb-2 opacity-0 ${
                   step.isHighlighted ? 'ring-4 ring-orange-200 scale-110' : ''
@@ -193,18 +138,24 @@ export default function Process() {
               </div>
             ))}
           </div>
-        </div>
+        </nav>
 
         {/* Step Details */}
-        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto">
-          {steps.map((step, idx) => (
-            <div
+        <div
+          ref={cardsRef}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto"
+          role="list"
+          aria-label="도입 프로세스 상세"
+        >
+          {processSteps.map((step, idx) => (
+            <article
               key={idx}
               className={`process-card card opacity-0 ${
                 step.isHighlighted
                   ? 'border-2 border-[var(--primary)] bg-gradient-to-br from-orange-50 to-white relative'
                   : ''
               }`}
+              role="listitem"
             >
               {/* 핵심 뱃지 */}
               {step.isHighlighted && (
@@ -228,13 +179,13 @@ export default function Process() {
               </div>
 
               <h3 className={`hidden md:block font-bold mb-1 ${step.isHighlighted ? 'text-[var(--primary)]' : ''}`}>
-                {step.number}️. {step.title} {step.duration && `(${step.duration})`}
+                {step.number}. {step.title} {step.duration && `(${step.duration})`}
               </h3>
 
               <ul className="space-y-1.5 sm:space-y-2 mt-2 sm:mt-3">
                 {step.items.map((item, itemIdx) => (
                   <li key={itemIdx} className="flex items-start gap-2 text-[13px] sm:text-sm text-[var(--text-sub)]">
-                    <span className={step.isHighlighted ? 'text-[var(--primary)]' : ''}>•</span>
+                    <span className={step.isHighlighted ? 'text-[var(--primary)]' : ''} aria-hidden="true">•</span>
                     <span>{item}</span>
                   </li>
                 ))}
@@ -243,18 +194,18 @@ export default function Process() {
               {/* 서브텍스트 */}
               {step.subtext && (
                 <p className="mt-2 sm:mt-3 pt-2 sm:pt-3 border-t border-gray-100 text-[11px] sm:text-xs text-[var(--primary)] font-semibold text-center">
-                  ✨ {step.subtext}
+                  <span aria-hidden="true">✨</span> {step.subtext}
                 </p>
               )}
-            </div>
+            </article>
           ))}
         </div>
 
         {/* CTA */}
         <div ref={ctaRef} className="text-center mt-8 sm:mt-10 opacity-0">
           <button
-            className="btn-primary"
-            onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
+            className="btn-primary focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2"
+            onClick={() => window.ChannelIO?.('openWorkflow', CHANNEL_WORKFLOW_ID)}
           >
             문의하기
           </button>

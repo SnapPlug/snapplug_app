@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import ChannelTalk from "@/components/ChannelTalk";
+import { SITE_CONFIG } from "@/constants/navigation";
 
-const siteUrl = "https://snapplug.co.kr";
+const siteUrl = SITE_CONFIG.url;
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -66,6 +68,59 @@ export const metadata: Metadata = {
   },
 };
 
+// JSON-LD Structured Data
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: SITE_CONFIG.name,
+  url: siteUrl,
+  logo: `${siteUrl}/logo.png`,
+  description: "AI 자동화 솔루션으로 스몰비즈니스와 1인 기업의 반복 업무를 자동화합니다.",
+  contactPoint: {
+    "@type": "ContactPoint",
+    email: SITE_CONFIG.email,
+    contactType: "Customer Service",
+    availableLanguage: ["Korean"],
+  },
+  sameAs: [
+    // 소셜 미디어 링크 추가 가능
+  ],
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: SITE_CONFIG.name,
+  url: siteUrl,
+  description: "당신의 첫 번째 AI 팀원 - AI 자동화로 반복 업무에서 해방되세요.",
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${siteUrl}/?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  name: "AI 팀원 도입 서비스",
+  provider: {
+    "@type": "Organization",
+    name: SITE_CONFIG.name,
+  },
+  description: "마케팅, 영업, 고객응대, 업무자동화를 담당하는 AI 팀원을 도입하여 비즈니스 효율을 극대화합니다.",
+  areaServed: {
+    "@type": "Country",
+    name: "South Korea",
+  },
+  serviceType: "AI Automation Service",
+  offers: {
+    "@type": "Offer",
+    description: "맞춤 컨설팅 및 AI 솔루션 구축",
+    priceCurrency: "KRW",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -73,6 +128,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ko">
+      <head>
+        <Script
+          id="organization-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+        />
+        <Script
+          id="website-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
+        />
+        <Script
+          id="service-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
+      </head>
       <body className="antialiased">
         {children}
         <ChannelTalk />

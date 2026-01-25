@@ -4,16 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { heroTeamMembers } from '@/data/team';
 
 gsap.registerPlugin(ScrollTrigger);
-
-const aiTeamMembers = [
-  { name: 'Ara', role: '수석보좌관', desc: '업무 자동화는 제가 할게요!', image: '/AI_ara.webp', delay: 0 },
-  { name: 'Rio', role: '영업 책임자', desc: '리드 관리 맡겨주세요!', image: '/AI_rio.webp', delay: 0.5 },
-  { name: 'Luna', role: '마케팅 책임자', desc: '콘텐츠 발행 도와드릴게요!', image: '/AI_luna.webp', delay: 1 },
-  { name: 'Sera', role: '고객응대 책임자', desc: '고객 문의 제가 받을게요!', image: '/AI_sera.webp', delay: 1.5 },
-  { name: 'Alex', role: '정보관리 책임자', desc: '자료·정보 정리 맡겨주세요!', image: '/AI_alex.webp', delay: 2 },
-];
 
 // Random underline SVG paths (hand-drawn style)
 const underlinePaths = [
@@ -191,9 +184,11 @@ export default function Hero() {
       id="ai-team"
       ref={sectionRef}
       className="hero-ponpon px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20"
+      aria-labelledby="hero-title"
     >
       {/* Title */}
       <h1
+        id="hero-title"
         ref={titleRef}
         className="hero-title-ponpon text-[26px] sm:text-4xl md:text-5xl lg:text-6xl text-center mb-3 sm:mb-4 opacity-0"
       >
@@ -211,6 +206,7 @@ export default function Hero() {
             className="absolute -bottom-1 sm:-bottom-2 left-0 w-full h-3 sm:h-4 overflow-visible"
             viewBox="0 0 180 16"
             preserveAspectRatio="none"
+            aria-hidden="true"
           >
             <path
               ref={underlineRef}
@@ -230,18 +226,21 @@ export default function Hero() {
       <div
         ref={teamGridRef}
         className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 max-w-6xl mx-auto mb-8 sm:mb-12 md:mb-16"
+        role="list"
+        aria-label="AI 팀원 목록"
       >
-        {aiTeamMembers.map((member, index) => (
-          <div
+        {heroTeamMembers.map((member, index) => (
+          <article
             key={member.name}
             className="team-card team-card-ponpon text-center opacity-0 w-[100px] sm:w-[120px] md:w-[160px]"
+            role="listitem"
           >
             <div
               className="team-avatar relative w-14 h-14 sm:w-[72px] sm:h-[72px] md:w-24 md:h-24 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]"
             >
               <Image
                 src={member.image}
-                alt={member.name}
+                alt={`${member.name} - AI ${member.role}`}
                 fill
                 className="object-cover"
                 sizes="(max-width: 640px) 56px, (max-width: 768px) 72px, 96px"
@@ -256,6 +255,7 @@ export default function Hero() {
                 className="absolute -bottom-0.5 sm:-bottom-1 left-0 w-full h-2 sm:h-3 overflow-visible"
                 viewBox="0 0 180 16"
                 preserveAspectRatio="none"
+                aria-hidden="true"
               >
                 <path
                   className="role-underline"
@@ -273,7 +273,7 @@ export default function Hero() {
               </svg>
             </div>
             <p className="text-[10px] sm:text-[11px] md:text-xs text-[var(--text-sub)] leading-tight">{member.desc}</p>
-          </div>
+          </article>
         ))}
       </div>
 
@@ -287,16 +287,16 @@ export default function Hero() {
       </a>
 
       {/* Decorative Elements */}
-      <div className="absolute top-32 left-[20%] w-4 h-4 rounded-full bg-[var(--secondary)] opacity-60 animate-float" style={{ animationDelay: '0s' }} />
-      <div className="absolute top-48 right-[25%] w-6 h-6 rounded-full bg-[var(--primary)] opacity-40 animate-float" style={{ animationDelay: '0.5s' }} />
-      <div className="absolute bottom-48 left-[25%] w-3 h-3 rounded-full bg-[var(--secondary)] opacity-50 animate-float" style={{ animationDelay: '1s' }} />
-      <div className="absolute bottom-32 right-[20%] w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-70 animate-float" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute top-[30%] left-[15%] w-2 h-2 rounded-full bg-[var(--primary)] opacity-50 animate-float" style={{ animationDelay: '0.3s' }} />
-      <div className="absolute top-[25%] right-[18%] w-3 h-3 rounded-full bg-[var(--accent-warm)] opacity-60 animate-float" style={{ animationDelay: '0.8s' }} />
-      <div className="absolute bottom-[35%] right-[30%] w-4 h-4 rounded-full bg-[var(--secondary)] opacity-45 animate-float" style={{ animationDelay: '1.2s' }} />
-      <div className="absolute top-[60%] left-[30%] w-2 h-2 rounded-full bg-[var(--primary)] opacity-35 animate-float" style={{ animationDelay: '1.8s' }} />
-      <div className="absolute bottom-[25%] left-[18%] w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-50 animate-float" style={{ animationDelay: '2s' }} />
-      <div className="absolute top-[45%] right-[15%] w-3 h-3 rounded-full bg-[var(--secondary)] opacity-55 animate-float" style={{ animationDelay: '0.7s' }} />
+      <div className="absolute top-32 left-[20%] w-4 h-4 rounded-full bg-[var(--secondary)] opacity-60 animate-float" style={{ animationDelay: '0s' }} aria-hidden="true" />
+      <div className="absolute top-48 right-[25%] w-6 h-6 rounded-full bg-[var(--primary)] opacity-40 animate-float" style={{ animationDelay: '0.5s' }} aria-hidden="true" />
+      <div className="absolute bottom-48 left-[25%] w-3 h-3 rounded-full bg-[var(--secondary)] opacity-50 animate-float" style={{ animationDelay: '1s' }} aria-hidden="true" />
+      <div className="absolute bottom-32 right-[20%] w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-70 animate-float" style={{ animationDelay: '1.5s' }} aria-hidden="true" />
+      <div className="absolute top-[30%] left-[15%] w-2 h-2 rounded-full bg-[var(--primary)] opacity-50 animate-float" style={{ animationDelay: '0.3s' }} aria-hidden="true" />
+      <div className="absolute top-[25%] right-[18%] w-3 h-3 rounded-full bg-[var(--accent-warm)] opacity-60 animate-float" style={{ animationDelay: '0.8s' }} aria-hidden="true" />
+      <div className="absolute bottom-[35%] right-[30%] w-4 h-4 rounded-full bg-[var(--secondary)] opacity-45 animate-float" style={{ animationDelay: '1.2s' }} aria-hidden="true" />
+      <div className="absolute top-[60%] left-[30%] w-2 h-2 rounded-full bg-[var(--primary)] opacity-35 animate-float" style={{ animationDelay: '1.8s' }} aria-hidden="true" />
+      <div className="absolute bottom-[25%] left-[18%] w-5 h-5 rounded-full bg-[var(--accent-warm)] opacity-50 animate-float" style={{ animationDelay: '2s' }} aria-hidden="true" />
+      <div className="absolute top-[45%] right-[15%] w-3 h-3 rounded-full bg-[var(--secondary)] opacity-55 animate-float" style={{ animationDelay: '0.7s' }} aria-hidden="true" />
     </section>
   );
 }

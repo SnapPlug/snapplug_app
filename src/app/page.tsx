@@ -1,12 +1,30 @@
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import Problem from '@/components/Problem';
-import Scenarios from '@/components/Scenarios';
-import ROICalculator from '@/components/ROICalculator';
-import Process from '@/components/Process';
-import FAQ from '@/components/FAQ';
-import FinalCTA from '@/components/FinalCTA';
-import Footer from '@/components/Footer';
+
+// Lazy load components that are not in the initial viewport
+const Scenarios = dynamic(() => import('@/components/Scenarios'), {
+  loading: () => <div className="section animate-pulse bg-gray-100" />,
+});
+
+const ROICalculator = dynamic(() => import('@/components/ROICalculator'), {
+  loading: () => <div className="section animate-pulse bg-white" />,
+});
+
+const Process = dynamic(() => import('@/components/Process'), {
+  loading: () => <div className="section animate-pulse bg-gray-100" />,
+});
+
+const FAQ = dynamic(() => import('@/components/FAQ'), {
+  loading: () => <div className="section animate-pulse bg-white" />,
+});
+
+const FinalCTA = dynamic(() => import('@/components/FinalCTA'), {
+  loading: () => <div className="section animate-pulse bg-gray-100" />,
+});
+
+const Footer = dynamic(() => import('@/components/Footer'));
 
 export default function Home() {
   return (

@@ -1,0 +1,15 @@
+# robots.txt for SnapPlug
+# https://snapplug.co.kr
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://snapplug.co.kr/sitemap.xml
+
+# Disallow admin or private paths (if any)
+# Disallow: /admin/
+# Disallow: /api/
+
+# Crawl-delay (optional, for politeness)
+# Crawl-delay: 1
