@@ -15,7 +15,7 @@ const underlinePaths = [
 export default function Hero() {
   // Use fixed path for SSR, randomize on client to avoid hydration mismatch
   const [randomPath, setRandomPath] = useState(underlinePaths[0]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   // Scroll to top on initial page load (clear stale #contact hash)
   useEffect(() => {
@@ -25,13 +25,10 @@ export default function Hero() {
     }
   }, []);
 
-  // Trigger animations after mount
+  // Set mounted state for animations
   useEffect(() => {
     setRandomPath(underlinePaths[Math.floor(Math.random() * underlinePaths.length)]);
-    // Small delay to ensure CSS is ready
-    requestAnimationFrame(() => {
-      setIsLoaded(true);
-    });
+    setMounted(true);
   }, []);
 
   return (
@@ -40,21 +37,15 @@ export default function Hero() {
       className="hero-ponpon px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20"
       aria-labelledby="hero-title"
     >
-      {/* Title */}
+      {/* Title - visible immediately, animates on mount */}
       <h1
         id="hero-title"
-        className={`hero-title-ponpon text-[26px] sm:text-4xl md:text-5xl lg:text-6xl text-center mb-3 sm:mb-4 transition-all duration-700 ease-out ${
-          isLoaded ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-20 scale-90'
-        }`}
+        className="hero-title-ponpon text-[26px] sm:text-4xl md:text-5xl lg:text-6xl text-center mb-3 sm:mb-4 animate-fade-in"
       >
         BUSINESS & BEYOND
       </h1>
 
-      <p
-        className={`text-base sm:text-xl md:text-2xl text-center text-[var(--text-sub)] mb-8 sm:mb-12 md:mb-16 transition-all duration-700 ease-out delay-150 ${
-          isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
-        }`}
-      >
+      <p className="text-base sm:text-xl md:text-2xl text-center text-[var(--text-sub)] mb-8 sm:mb-12 md:mb-16 animate-fade-in-delay">
         당신의 첫 번째{' '}
         <span className="relative inline-block">
           <span className="text-[var(--primary)] font-bold">AI 팀원</span>
@@ -71,12 +62,10 @@ export default function Hero() {
               strokeWidth="3"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className={`transition-all duration-1000 ease-out delay-500 ${
-                isLoaded ? 'stroke-dashoffset-0' : ''
-              }`}
               style={{
                 strokeDasharray: 200,
-                strokeDashoffset: isLoaded ? 0 : 200,
+                strokeDashoffset: mounted ? 0 : 200,
+                transition: 'stroke-dashoffset 1s ease-out 0.5s',
               }}
             />
           </svg>
@@ -84,7 +73,7 @@ export default function Hero() {
         을 만나보세요
       </p>
 
-      {/* Team Grid */}
+      {/* Team Grid - visible immediately */}
       <div
         className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 max-w-6xl mx-auto mb-8 sm:mb-12 md:mb-16"
         role="list"
@@ -93,12 +82,10 @@ export default function Hero() {
         {heroTeamMembers.map((member, index) => (
           <article
             key={member.name}
-            className={`team-card team-card-ponpon text-center w-[100px] sm:w-[120px] md:w-[160px] transition-all duration-700 ease-out ${
-              isLoaded ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-24 scale-75'
-            }`}
+            className="team-card team-card-ponpon text-center w-[100px] sm:w-[120px] md:w-[160px] animate-bounce-in"
             style={{
-              transitionDelay: isLoaded ? `${300 + index * 100}ms` : '0ms',
-              animation: isLoaded ? `float ${3 + index * 0.5}s ease-in-out infinite ${index * 0.2}s` : 'none'
+              animationDelay: `${0.3 + index * 0.1}s`,
+              animation: mounted ? `float ${3 + index * 0.5}s ease-in-out infinite ${1 + index * 0.2}s` : undefined,
             }}
             role="listitem"
           >
@@ -134,8 +121,8 @@ export default function Hero() {
                   strokeLinejoin="round"
                   style={{
                     strokeDasharray: 200,
-                    strokeDashoffset: isLoaded ? 0 : 200,
-                    transition: `stroke-dashoffset 0.8s ease-out ${600 + index * 150}ms`,
+                    strokeDashoffset: mounted ? 0 : 200,
+                    transition: `stroke-dashoffset 0.8s ease-out ${0.6 + index * 0.15}s`,
                   }}
                 />
               </svg>
@@ -148,11 +135,9 @@ export default function Hero() {
       {/* CTA Button */}
       <a
         href="#problem"
-        className={`cta-ponpon transition-all duration-700 ease-out delay-700 ${
-          isLoaded ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-        }`}
+        className="cta-ponpon animate-pop-in"
         style={{
-          animation: isLoaded ? 'pulse-scale 2s ease-in-out infinite 1.5s' : 'none'
+          animation: mounted ? 'pulse-scale 2s ease-in-out infinite 1.5s' : undefined,
         }}
       >
         AI 팀원 만나기
