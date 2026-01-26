@@ -83,7 +83,7 @@ export default function Hero() {
         {heroTeamMembers.map((member, index) => (
           <article
             key={member.name}
-            className="team-card team-card-ponpon text-center w-[100px] sm:w-[120px] md:w-[160px] hero-animate-bounce-in"
+            className="team-card team-card-ponpon text-center w-[130px] sm:w-[150px] md:w-[180px] hero-animate-bounce-in"
             style={{
               animationDelay: `${0.3 + index * 0.1}s`,
             }}
