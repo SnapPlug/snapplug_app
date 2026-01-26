@@ -284,7 +284,7 @@ export default function ROICalculator() {
           <div className="flex flex-col sm:flex-row gap-3 justify-center mt-8">
             <button
               className="btn-primary text-center"
-              onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
+              onClick={() => window.openChannelIOWorkflow?.(803868)}
             >
               문의하기
             </button>

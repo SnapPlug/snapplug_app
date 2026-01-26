@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
+import { useStaggerAnimation } from '@/hooks/useInViewAnimation';
 
 const aiTeamMembers = [
   { name: 'Ara', role: '수석보좌관', image: '/AI_ara.webp' },
@@ -12,34 +12,16 @@ const aiTeamMembers = [
 ];
 
 export default function FinalCTA() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-
-  // Use IntersectionObserver for visibility-based CSS animations
-  useEffect(() => {
-    const section = sectionRef.current;
-    if (!section) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            observer.disconnect();
-          }
-        });
-      },
-      { rootMargin: '50px', threshold: 0.1 }
-    );
-
-    observer.observe(section);
-
-    return () => observer.disconnect();
-  }, []);
+  const { ref, isInView, getDelay } = useStaggerAnimation<HTMLElement>({
+    threshold: 0.1,
+    rootMargin: '50px',
+    staggerDelay: 100,
+    baseDelay: 200,
+  });
 
   return (
     <section
-      ref={sectionRef}
+      ref={ref}
       id="contact"
       className="section"
       style={{
@@ -49,7 +31,7 @@ export default function FinalCTA() {
       <div className="container text-center text-white">
         <h2
           className={`text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 transition-all duration-700 ease-out ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
           }`}
         >
           반복 업무에서 해방될 준비 되셨나요?
@@ -61,11 +43,11 @@ export default function FinalCTA() {
             <div
               key={member.name}
               className={`text-center transition-all duration-500 ease-out ${
-                isVisible ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-5 scale-90'
+                isInView ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-5 scale-90'
               }`}
               style={{
-                transitionDelay: isVisible ? `${200 + index * 100}ms` : '0ms',
-                animation: isVisible ? `float ${2 + index * 0.3}s ease-in-out infinite ${index * 0.15}s` : 'none'
+                transitionDelay: isInView ? getDelay(index) : '0ms',
+                animation: isInView ? `float ${2 + index * 0.3}s ease-in-out infinite ${index * 0.15}s` : 'none'
               }}
             >
               <div className="relative w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 mx-auto mb-1.5 sm:mb-2 rounded-full overflow-hidden bg-white bg-opacity-20">
@@ -84,9 +66,10 @@ export default function FinalCTA() {
         </div>
 
         <div
-          className={`transition-all duration-700 ease-out delay-500 ${
-            isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
+          className={`transition-all duration-700 ease-out ${
+            isInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-5'
           }`}
+          style={{ transitionDelay: isInView ? '500ms' : '0ms' }}
         >
           <p className="text-lg sm:text-xl md:text-2xl mb-1.5 sm:mb-2">
             저희가 대표님의 팀이 되어드릴게요.
@@ -103,22 +86,23 @@ export default function FinalCTA() {
         {/* CTA Button */}
         <button
           className={`inline-block bg-white text-[var(--primary)] px-6 sm:px-8 py-3 sm:py-4 rounded-lg font-bold text-base sm:text-lg hover:bg-opacity-90 transition-all shadow-lg cursor-pointer ${
-            isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
+            isInView ? 'opacity-100 scale-100' : 'opacity-0 scale-90'
           }`}
           style={{
-            transitionDelay: isVisible ? '700ms' : '0ms',
+            transitionDelay: isInView ? '700ms' : '0ms',
             transitionDuration: '500ms',
-            animation: isVisible ? 'pulse-scale 2s ease-in-out infinite 1.5s' : 'none'
+            animation: isInView ? 'pulse-scale 2s ease-in-out infinite 1.5s' : 'none'
           }}
-          onClick={() => window.ChannelIO?.('openWorkflow', 803868)}
+          onClick={() => window.openChannelIOWorkflow?.(803868)}
         >
           문의하기
         </button>
 
         <p
-          className={`mt-3 sm:mt-4 text-[11px] sm:text-sm opacity-80 transition-all duration-500 delay-700 ${
-            isVisible ? 'opacity-80' : 'opacity-0'
+          className={`mt-3 sm:mt-4 text-[11px] sm:text-sm transition-all duration-500 ${
+            isInView ? 'opacity-80' : 'opacity-0'
           }`}
+          style={{ transitionDelay: isInView ? '700ms' : '0ms' }}
         >
           컨설팅 후 구매 의무 없습니다. 부담 없이 신청하세요.
         </p>

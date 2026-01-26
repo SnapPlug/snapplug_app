@@ -15,7 +15,7 @@ const underlinePaths = [
 export default function Hero() {
   // Use fixed path for SSR, randomize on client to avoid hydration mismatch
   const [randomPath, setRandomPath] = useState(underlinePaths[0]);
-  const [mounted, setMounted] = useState(false);
+  const [svgMounted, setSvgMounted] = useState(false);
 
   // Scroll to top on initial page load (clear stale #contact hash)
   useEffect(() => {
@@ -25,10 +25,10 @@ export default function Hero() {
     }
   }, []);
 
-  // Set mounted state for animations
+  // Set mounted state only for SVG underline drawing
   useEffect(() => {
     setRandomPath(underlinePaths[Math.floor(Math.random() * underlinePaths.length)]);
-    setMounted(true);
+    setSvgMounted(true);
   }, []);
 
   return (
@@ -37,15 +37,15 @@ export default function Hero() {
       className="hero-ponpon px-4 sm:px-6 md:px-12 pt-20 sm:pt-24 md:pt-32 pb-12 sm:pb-16 md:pb-20"
       aria-labelledby="hero-title"
     >
-      {/* Title - visible immediately, animates on mount */}
+      {/* Title - Pure CSS animation, runs immediately */}
       <h1
         id="hero-title"
-        className="hero-title-ponpon text-[26px] sm:text-4xl md:text-5xl lg:text-6xl text-center mb-3 sm:mb-4 animate-fade-in"
+        className="hero-title-ponpon text-[26px] sm:text-4xl md:text-5xl lg:text-6xl text-center mb-3 sm:mb-4 hero-animate-fade-in"
       >
         BUSINESS & BEYOND
       </h1>
 
-      <p className="text-base sm:text-xl md:text-2xl text-center text-[var(--text-sub)] mb-8 sm:mb-12 md:mb-16 animate-fade-in-delay">
+      <p className="text-base sm:text-xl md:text-2xl text-center text-[var(--text-sub)] mb-8 sm:mb-12 md:mb-16 hero-animate-fade-in-delay">
         당신의 첫 번째{' '}
         <span className="relative inline-block">
           <span className="text-[var(--primary)] font-bold">AI 팀원</span>
@@ -64,7 +64,7 @@ export default function Hero() {
               strokeLinejoin="round"
               style={{
                 strokeDasharray: 200,
-                strokeDashoffset: mounted ? 0 : 200,
+                strokeDashoffset: svgMounted ? 0 : 200,
                 transition: 'stroke-dashoffset 1s ease-out 0.5s',
               }}
             />
@@ -73,7 +73,7 @@ export default function Hero() {
         을 만나보세요
       </p>
 
-      {/* Team Grid - visible immediately */}
+      {/* Team Grid - Pure CSS stagger animation */}
       <div
         className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 max-w-6xl mx-auto mb-8 sm:mb-12 md:mb-16"
         role="list"
@@ -82,15 +82,17 @@ export default function Hero() {
         {heroTeamMembers.map((member, index) => (
           <article
             key={member.name}
-            className="team-card team-card-ponpon text-center w-[100px] sm:w-[120px] md:w-[160px] animate-bounce-in"
+            className="team-card team-card-ponpon text-center w-[100px] sm:w-[120px] md:w-[160px] hero-animate-bounce-in"
             style={{
               animationDelay: `${0.3 + index * 0.1}s`,
-              animation: mounted ? `float ${3 + index * 0.5}s ease-in-out infinite ${1 + index * 0.2}s` : undefined,
             }}
             role="listitem"
           >
             <div
-              className="team-avatar relative w-14 h-14 sm:w-[72px] sm:h-[72px] md:w-24 md:h-24 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)]"
+              className="team-avatar relative w-14 h-14 sm:w-[72px] sm:h-[72px] md:w-24 md:h-24 mx-auto mb-2 sm:mb-3 md:mb-4 rounded-full overflow-hidden bg-[var(--accent-warm)] hero-card-float"
+              style={{
+                animationDelay: `${1 + index * 0.2}s`,
+              }}
             >
               <Image
                 src={member.image}
@@ -121,7 +123,7 @@ export default function Hero() {
                   strokeLinejoin="round"
                   style={{
                     strokeDasharray: 200,
-                    strokeDashoffset: mounted ? 0 : 200,
+                    strokeDashoffset: svgMounted ? 0 : 200,
                     transition: `stroke-dashoffset 0.8s ease-out ${0.6 + index * 0.15}s`,
                   }}
                 />
@@ -132,13 +134,10 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* CTA Button */}
+      {/* CTA Button - Pure CSS animation */}
       <a
         href="#problem"
-        className="cta-ponpon animate-pop-in"
-        style={{
-          animation: mounted ? 'pulse-scale 2s ease-in-out infinite 1.5s' : undefined,
-        }}
+        className="cta-ponpon hero-animate-pop-in hero-cta-pulse"
       >
         AI 팀원 만나기
       </a>

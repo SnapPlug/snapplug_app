@@ -100,7 +100,7 @@ export default function Scenarios() {
           </p>
           <button
             className="inline-flex items-center gap-2 px-5 sm:px-6 py-2.5 sm:py-3 bg-[var(--foreground)] text-white text-[13px] sm:text-base font-semibold rounded-full hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2"
-            onClick={() => window.ChannelIO?.('openWorkflow', CHANNEL_WORKFLOW_ID)}
+            onClick={() => window.openChannelIOWorkflow?.(CHANNEL_WORKFLOW_ID)}
           >
             문의하기
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="sm:w-4 sm:h-4" aria-hidden="true">

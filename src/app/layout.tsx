@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import "./globals.css";
+import { pirulen } from "./fonts";
 import ChannelTalk from "@/components/ChannelTalk";
 import { SITE_CONFIG } from "@/constants/navigation";
 
@@ -131,6 +132,11 @@ export default function RootLayout({
       <head>
         {/* Preconnect to font CDN for faster loading */}
         <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="anonymous" />
+        {/* Preconnect to Channel.io CDN (loaded lazily but preconnect helps when needed) */}
+        <link rel="preconnect" href="https://cdn.channel.io" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cf.channel.io" crossOrigin="anonymous" />
+        {/* DNS prefetch for Sentry (if used) */}
+        <link rel="dns-prefetch" href="https://o249840.ingest.sentry.io" />
         <link
           rel="preload"
           href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/woff2/PretendardVariable.woff2"
@@ -154,7 +160,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
         />
       </head>
-      <body className="antialiased">
+      <body className={`antialiased ${pirulen.variable}`}>
         {children}
         <ChannelTalk />
       </body>

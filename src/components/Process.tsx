@@ -234,7 +234,7 @@ export default function Process() {
         <div ref={ctaRef} className="text-center mt-8 sm:mt-10 opacity-0">
           <button
             className="btn-primary focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2"
-            onClick={() => window.ChannelIO?.('openWorkflow', CHANNEL_WORKFLOW_ID)}
+            onClick={() => window.openChannelIOWorkflow?.(CHANNEL_WORKFLOW_ID)}
           >
             문의하기
           </button>

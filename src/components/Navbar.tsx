@@ -63,7 +63,7 @@ export default function Navbar() {
           ))}
           <button
             className="cta-ponpon !py-3 !px-6 !text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2"
-            onClick={() => window.ChannelIO?.('openWorkflow', CHANNEL_WORKFLOW_ID)}
+            onClick={() => window.openChannelIOWorkflow?.(CHANNEL_WORKFLOW_ID)}
           >
             문의하기
           </button>
@@ -122,7 +122,7 @@ export default function Navbar() {
             className="cta-ponpon text-center mt-2 w-full text-[15px] sm:text-base focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
             onClick={() => {
               setIsMobileMenuOpen(false);
-              window.ChannelIO?.('openWorkflow', CHANNEL_WORKFLOW_ID);
+              window.openChannelIOWorkflow?.(CHANNEL_WORKFLOW_ID);
             }}
             tabIndex={isMobileMenuOpen ? 0 : -1}
           >
