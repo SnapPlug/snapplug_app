@@ -10,8 +10,11 @@ export default function Scenarios() {
     <section id="scenarios" className="section" aria-labelledby="scenarios-title">
       <div className="container">
         <h2 id="scenarios-title" className="section-title">매출 2배, 비용 40% 절감, 월 54시간 확보</h2>
-        <p className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-6 sm:mb-8 md:mb-10 max-w-2xl mx-auto">
+        <p className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-2 sm:mb-3 max-w-2xl mx-auto">
           AI 팀원 도입 후 실제 달라진 결과입니다
+        </p>
+        <p className="text-center text-[10px] sm:text-[11px] text-[var(--text-sub)] opacity-70 mb-6 sm:mb-8 md:mb-10">
+          * SnapPlug 고객 데이터 기반 (2024-2025)
         </p>
 
         {/* Grid Layout */}
@@ -89,6 +92,20 @@ export default function Scenarios() {
                   ))}
                 </ul>
               </div>
+
+              {/* Customer Quote (GEO: Expert/Customer testimonial) */}
+              {scenario.quote && (
+                <blockquote className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-gray-100">
+                  <p className="text-[12px] sm:text-[13px] text-[var(--text-sub)] italic leading-relaxed">
+                    &ldquo;{scenario.quote}&rdquo;
+                  </p>
+                  {scenario.quoteName && (
+                    <cite className="block text-[11px] sm:text-xs text-[var(--primary)] font-medium mt-1 not-italic">
+                      — {scenario.quoteName}
+                    </cite>
+                  )}
+                </blockquote>
+              )}
             </article>
           ))}
         </div>

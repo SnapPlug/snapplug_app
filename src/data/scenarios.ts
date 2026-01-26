@@ -17,6 +17,8 @@ export const scenarios: Scenario[] = [
       '영수증 OCR 판독 및 AI 자동 문서 작성',
       '건당 처리시간 1시간 → 10분',
     ],
+    quote: '영수증 정리하던 시간에 이제 고객 상담을 더 할 수 있게 됐어요.',
+    quoteName: 'P 관세사무소 대표',
   },
   {
     id: 'sensor',
@@ -35,6 +37,8 @@ export const scenarios: Scenario[] = [
       '장비현황 자동 모니터링',
       '문서작업 및 보고서 자동 생성',
     ],
+    quote: '전국 현장 상황을 실시간으로 파악할 수 있게 되니 의사결정이 빨라졌습니다.',
+    quoteName: 'K 센서장비 제조사 대표',
   },
   {
     id: 'obgyn',
@@ -52,6 +56,8 @@ export const scenarios: Scenario[] = [
       '예진·문진·상담과정 자동화',
       '환자 응대 챗봇 연동',
     ],
+    quote: '간호사들이 환자 케어에 더 집중할 수 있게 됐어요.',
+    quoteName: 'O 산부인과 원장',
   },
   {
     id: 'stenography',
@@ -69,6 +75,8 @@ export const scenarios: Scenario[] = [
       '문의 채널 연동 상담 예약·변경 자동 처리',
       '계약 단계별 안내·알림 및 후속 메시지 자동 발송',
     ],
+    quote: '문의 응대에 쓰던 시간을 이제 실제 업무에 쓸 수 있어요.',
+    quoteName: 'S 속기사사무소 실장',
   },
   {
     id: 'pilates',
@@ -86,6 +94,8 @@ export const scenarios: Scenario[] = [
       '카카오톡 기반 회원관리 시스템',
       '수강 만료 전 자동 알림으로 연장률 개선',
     ],
+    quote: '회원분들이 알림 덕분에 수업을 놓치지 않게 됐다고 좋아하세요.',
+    quoteName: 'S 필라테스 원장',
   },
   {
     id: 'academy',
@@ -103,5 +113,7 @@ export const scenarios: Scenario[] = [
       '상담 및 학생 진단 프로세스 AI 자동화',
       '24시간 문의 응대 챗봇',
     ],
+    quote: '수업 중에도 문의가 자동으로 처리되니 상담 누락이 사라졌어요.',
+    quoteName: 'J 종합학원 원장',
   },
 ];

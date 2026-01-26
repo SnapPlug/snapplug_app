@@ -4,6 +4,7 @@ import "./globals.css";
 import { pirulen } from "./fonts";
 import ChannelTalk from "@/components/ChannelTalk";
 import { SITE_CONFIG } from "@/constants/navigation";
+import { faqs } from "@/data/faq";
 
 const siteUrl = SITE_CONFIG.url;
 
@@ -122,6 +123,62 @@ const serviceSchema = {
   },
 };
 
+// FAQ Schema for GEO optimization
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((faq) => ({
+    "@type": "Question",
+    name: faq.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: faq.answer.replace(/\n/g, " "),
+    },
+  })),
+};
+
+// AI Team Member Service Schemas for GEO optimization
+const aiTeamServiceSchemas = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Service",
+      name: "Luna - AI 마케팅 책임자",
+      description: "아이디어 하나로 X, 링크드인, 인스타그램, 페이스북, 유튜브 등 5개+ 채널 콘텐츠를 자동 생성합니다. 콘텐츠 제작 시간 90% 절감.",
+      provider: { "@type": "Organization", name: SITE_CONFIG.name },
+      serviceType: "AI Marketing Automation",
+    },
+    {
+      "@type": "Service",
+      name: "Sera - AI 고객응대 책임자",
+      description: "24시간 무휴로 고객 문의에 즉시 응대합니다. 채널톡, 카카오톡 연동. 응대율 100%, 평균 응대 시간 5분.",
+      provider: { "@type": "Organization", name: SITE_CONFIG.name },
+      serviceType: "AI Customer Service",
+    },
+    {
+      "@type": "Service",
+      name: "Rio - AI 영업 책임자",
+      description: "BANT 기반으로 리드를 자동 검증하고 Hot/Warm/Cold로 분류합니다. 전환율 2배 향상, 기회 손실 최소화.",
+      provider: { "@type": "Organization", name: SITE_CONFIG.name },
+      serviceType: "AI Sales Automation",
+    },
+    {
+      "@type": "Service",
+      name: "Ara - AI 수석보좌관",
+      description: "일정 조율, 보고서 생성, 이메일 초안 작성 등 반복 업무를 자동화합니다. 주간 5시간+ 절감.",
+      provider: { "@type": "Organization", name: SITE_CONFIG.name },
+      serviceType: "AI Administrative Assistant",
+    },
+    {
+      "@type": "Service",
+      name: "Alex - AI 정보관리 책임자",
+      description: "자료와 정보를 자동으로 정리하고 관리합니다. 데이터 입력 오류 0%, 처리 시간 90% 절감.",
+      provider: { "@type": "Organization", name: SITE_CONFIG.name },
+      serviceType: "AI Information Management",
+    },
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -158,6 +215,16 @@ export default function RootLayout({
           id="service-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+        />
+        <Script
+          id="faq-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+        <Script
+          id="ai-team-services-schema"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(aiTeamServiceSchemas) }}
         />
       </head>
       <body className={`antialiased ${pirulen.variable}`}>

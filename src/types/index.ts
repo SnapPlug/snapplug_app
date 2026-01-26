@@ -75,6 +75,9 @@ export interface Scenario {
   };
   painPoint: string;
   solutions: string[];
+  // GEO: Customer testimonial for credibility
+  quote?: string;
+  quoteName?: string;
 }
 
 export type AITeamKey = 'luna' | 'sera' | 'rio' | 'ara';
