@@ -136,8 +136,9 @@ export default function ROICalculator() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {/* 직원 수 */}
               <div>
-                <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">직원 수 (명)</label>
+                <label htmlFor="roi-employees" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">직원 수 (명)</label>
                 <input
+                  id="roi-employees"
                   type="number"
                   value={employees}
                   onChange={(e) => setEmployees(Number(e.target.value) || 1)}
@@ -148,8 +149,9 @@ export default function ROICalculator() {
 
               {/* 평균 월급 */}
               <div>
-                <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">평균 월급 (만원)</label>
+                <label htmlFor="roi-salary" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">평균 월급 (만원)</label>
                 <input
+                  id="roi-salary"
                   type="number"
                   value={monthlySalary}
                   onChange={(e) => setMonthlySalary(Number(e.target.value) || 300)}
@@ -164,8 +166,9 @@ export default function ROICalculator() {
             {showDetail && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 pt-4 border-t border-[var(--border)]">
                 <div>
-                  <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">업무수행시간 (시간/일)</label>
+                  <label htmlFor="roi-task-hours" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">업무수행시간 (시간/일)</label>
                   <input
+                    id="roi-task-hours"
                     type="number"
                     value={taskHoursPerDay}
                     onChange={(e) => setTaskHoursPerDay(Math.min(8, Math.max(1, Number(e.target.value) || 4)))}
@@ -175,8 +178,9 @@ export default function ROICalculator() {
                   />
                 </div>
                 <div>
-                  <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">자동화 효과 (%)</label>
+                  <label htmlFor="roi-automation" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">자동화 효과 (%)</label>
                   <input
+                    id="roi-automation"
                     type="number"
                     value={automationRate}
                     onChange={(e) => setAutomationRate(Math.min(90, Math.max(30, Number(e.target.value) || 70)))}
@@ -186,8 +190,9 @@ export default function ROICalculator() {
                   />
                 </div>
                 <div>
-                  <label className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">개발비 (만원)</label>
+                  <label htmlFor="roi-dev-cost" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">개발비 (만원)</label>
                   <input
+                    id="roi-dev-cost"
                     type="number"
                     value={developmentCost}
                     onChange={(e) => setDevelopmentCost(Number(e.target.value) || 300)}

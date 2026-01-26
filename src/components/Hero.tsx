@@ -74,6 +74,7 @@ export default function Hero() {
       </p>
 
       {/* Team Grid - Pure CSS stagger animation */}
+      <h2 className="sr-only">AI 팀원 소개</h2>
       <div
         className="flex flex-wrap justify-center gap-2 sm:gap-4 md:gap-6 max-w-6xl mx-auto mb-8 sm:mb-12 md:mb-16"
         role="list"

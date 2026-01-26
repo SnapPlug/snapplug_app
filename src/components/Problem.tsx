@@ -224,7 +224,14 @@ export default function Problem() {
                     <span className="text-[11px] sm:text-xs font-semibold text-[var(--text-sub)] uppercase tracking-wider">Before</span>
                     <span className="text-[13px] sm:text-sm font-bold text-[var(--text-main)]">{item.beforeLabel}</span>
                   </div>
-                  <div className="h-6 sm:h-8 bg-gray-100 rounded-full overflow-hidden relative" role="progressbar" aria-valuenow={item.beforeValue} aria-valuemin={0} aria-valuemax={100}>
+                  <div
+                    className="h-6 sm:h-8 bg-gray-100 rounded-full overflow-hidden relative"
+                    role="progressbar"
+                    aria-valuenow={item.beforeValue}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`${item.title} 도입 전: ${item.beforeLabel}`}
+                  >
                     <div
                       className="comparison-bar before-bar h-full bg-gray-400 rounded-full flex items-center justify-end pr-2 sm:pr-3"
                       style={{ width: `${item.beforeValue}%` }}
@@ -240,7 +247,14 @@ export default function Problem() {
                     <span className="text-[11px] sm:text-xs font-semibold text-[var(--primary)] uppercase tracking-wider">After</span>
                     <span className="text-[13px] sm:text-sm font-bold text-[var(--primary)]">{item.afterLabel}</span>
                   </div>
-                  <div className="h-6 sm:h-8 bg-[#FFF0E8] rounded-full overflow-hidden relative" role="progressbar" aria-valuenow={item.afterValue} aria-valuemin={0} aria-valuemax={100}>
+                  <div
+                    className="h-6 sm:h-8 bg-[#FFF0E8] rounded-full overflow-hidden relative"
+                    role="progressbar"
+                    aria-valuenow={item.afterValue}
+                    aria-valuemin={0}
+                    aria-valuemax={100}
+                    aria-label={`${item.title} 도입 후: ${item.afterLabel}`}
+                  >
                     <div
                       className="comparison-bar after-bar h-full bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-full flex items-center justify-end pr-2 sm:pr-3"
                       style={{ width: `${item.afterValue}%` }}
