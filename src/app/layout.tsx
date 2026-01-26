@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "./globals.css";
 import { pirulen } from "./fonts";
 import ChannelTalk from "@/components/ChannelTalk";
@@ -201,27 +200,27 @@ export default function RootLayout({
           type="font/woff2"
           crossOrigin="anonymous"
         />
-        <Script
+        <script
           id="organization-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
-        <Script
+        <script
           id="website-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
-        <Script
+        <script
           id="service-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
         />
-        <Script
+        <script
           id="faq-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
         />
-        <Script
+        <script
           id="ai-team-services-schema"
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(aiTeamServiceSchemas) }}
