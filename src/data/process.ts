@@ -9,7 +9,7 @@ export const processSteps: ProcessStep[] = [
     items: [
       '현재 업무 프로세스 심층 분석',
       '자동화 가능 포인트 발견',
-      '예상 ROI 및 도입 방향 제안',
+      '예상 ROI 및 채용 방향 제안',
     ],
   },
   {

@@ -11,7 +11,7 @@ export default function Scenarios() {
       <div className="container">
         <h2 id="scenarios-title" className="section-title">매출 2배, 비용 40% 절감, 월 54시간 확보</h2>
         <p className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-2 sm:mb-3 max-w-2xl mx-auto">
-          AI 팀원 도입 후 실제 달라진 결과입니다
+          AI 팀원 채용 후 실제 달라진 결과입니다
         </p>
         <p className="text-center text-[10px] sm:text-[11px] text-[var(--text-sub)] opacity-70 mb-6 sm:mb-8 md:mb-10">
           * SnapPlug 고객 데이터 기반 (2024-2025)
@@ -21,7 +21,7 @@ export default function Scenarios() {
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 max-w-6xl mx-auto"
           role="list"
-          aria-label="도입 사례 목록"
+          aria-label="채용 사례 목록"
         >
           {scenarios.map((scenario) => (
             <article
@@ -73,7 +73,7 @@ export default function Scenarios() {
               {/* Pain Point */}
               <div className="mb-3 sm:mb-4">
                 <p className="text-[11px] sm:text-xs text-[var(--text-sub)] mb-1">
-                  <span aria-hidden="true">😩</span> 도입 전
+                  <span aria-hidden="true">😩</span> 채용 전
                 </p>
                 <p className="text-[13px] sm:text-sm text-[var(--text-main)]">{scenario.painPoint}</p>
               </div>

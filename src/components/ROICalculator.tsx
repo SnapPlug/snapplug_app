@@ -31,7 +31,7 @@ export default function ROICalculator() {
   const beforeYearlyCost = Math.round((taskHoursPerDay * hourlyRate * yearlyWorkDays * employees) / 10000); // 만원
   const beforeYearlyHours = yearlyTaskHours;
 
-  // After (AI 도입 후)
+  // After (AI 채용 후)
   const savedRate = automationRate / 100;
   const afterYearlyCost = Math.round(beforeYearlyCost * (1 - savedRate));
   const afterYearlyHours = Math.round(beforeYearlyHours * (1 - savedRate));
@@ -116,7 +116,7 @@ export default function ROICalculator() {
     <section id="roi" ref={sectionRef} className="section bg-white">
       <div className="container">
         <h2 ref={titleRef} className="section-title opacity-0">
-          AI 팀원 도입하면 얼마나 절약될까?
+          AI 팀원 채용하면 얼마나 절약될까?
         </h2>
 
         <div ref={calculatorRef} className="max-w-5xl mx-auto opacity-0">
@@ -246,7 +246,7 @@ export default function ROICalculator() {
             {/* 오른쪽: Before/After 그래프 */}
             <div className="card !p-3 sm:!p-4">
               <h3 className="text-[var(--text-main)] text-center text-base sm:text-lg font-bold mb-3 sm:mb-4">
-                AI 팀원 도입 전 후
+                AI 팀원 채용 전 후
               </h3>
 
               <div className="flex items-end justify-center gap-3 sm:gap-6 h-48 sm:h-56 md:h-64">
@@ -259,7 +259,7 @@ export default function ROICalculator() {
                     <span className="text-[var(--text-main)] font-bold text-sm sm:text-lg">{beforeYearlyCost.toLocaleString()}만원</span>
                     <span className="text-[var(--text-sub)] text-[11px] sm:text-sm">{beforeYearlyHours.toLocaleString()}시간</span>
                   </div>
-                  <span className="text-[var(--text-sub)] text-[11px] sm:text-xs mt-2">도입 전</span>
+                  <span className="text-[var(--text-sub)] text-[11px] sm:text-xs mt-2">채용 전</span>
                 </div>
 
                 {/* 화살표 */}
@@ -279,7 +279,7 @@ export default function ROICalculator() {
                       <span className="text-white/80 text-[11px] sm:text-sm">{afterYearlyHours.toLocaleString()}시간</span>
                     </div>
                   </div>
-                  <span className="text-[var(--primary)] text-[11px] sm:text-xs mt-2 font-bold">도입 후</span>
+                  <span className="text-[var(--primary)] text-[11px] sm:text-xs mt-2 font-bold">채용 후</span>
                 </div>
               </div>
             </div>

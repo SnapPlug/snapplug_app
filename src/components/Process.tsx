@@ -148,7 +148,7 @@ export default function Process() {
         </h2>
 
         {/* Timeline - Desktop */}
-        <nav ref={timelineRef} className="hidden md:block max-w-4xl mx-auto mb-12" aria-label="도입 프로세스 단계">
+        <nav ref={timelineRef} className="hidden md:block max-w-4xl mx-auto mb-12" aria-label="채용 프로세스 단계">
           <div className="flex justify-between items-center mb-8 relative">
             {/* Connecting Line */}
             <div className="timeline-line absolute top-6 left-0 right-0 h-0.5 bg-[var(--border)] origin-left" aria-hidden="true" />
@@ -174,7 +174,7 @@ export default function Process() {
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 max-w-5xl mx-auto"
           role="list"
-          aria-label="도입 프로세스 상세"
+          aria-label="채용 프로세스 상세"
         >
           {processSteps.map((step, idx) => (
             <article

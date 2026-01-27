@@ -234,7 +234,7 @@ export default function TeamMemberModal({ member, onClose }: TeamMemberModalProp
             className="block w-full py-3 sm:py-4 bg-[var(--primary)] text-white text-center text-sm sm:text-base font-bold rounded-lg hover:bg-[var(--primary-hover)] transition-colors focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2"
             onClick={onClose}
           >
-            {member.name} 도입 상담하기
+            {member.name} 채용 상담하기
           </a>
         </div>
       </div>

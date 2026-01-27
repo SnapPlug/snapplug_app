@@ -180,14 +180,14 @@ export default function Problem() {
         </h2>
 
         <p className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-8 sm:mb-12 md:mb-16">
-          도입 전후를 비교해보세요
+          채용 전후를 비교해보세요
         </p>
 
         <div
           ref={cardsRef}
           className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:gap-6 max-w-5xl mx-auto"
           role="list"
-          aria-label="AI 팀원 도입 효과 비교"
+          aria-label="AI 팀원 채용 효과 비교"
         >
           {challenges.map((item) => (
             <article
@@ -230,7 +230,7 @@ export default function Problem() {
                     aria-valuenow={item.beforeValue}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    aria-label={`${item.title} 도입 전: ${item.beforeLabel}`}
+                    aria-label={`${item.title} 채용 전: ${item.beforeLabel}`}
                   >
                     <div
                       className="comparison-bar before-bar h-full bg-gray-400 rounded-full flex items-center justify-end pr-2 sm:pr-3"
@@ -253,7 +253,7 @@ export default function Problem() {
                     aria-valuenow={item.afterValue}
                     aria-valuemin={0}
                     aria-valuemax={100}
-                    aria-label={`${item.title} 도입 후: ${item.afterLabel}`}
+                    aria-label={`${item.title} 채용 후: ${item.afterLabel}`}
                   >
                     <div
                       className="comparison-bar after-bar h-full bg-gradient-to-r from-[var(--primary)] to-[#FF9A76] rounded-full flex items-center justify-end pr-2 sm:pr-3"

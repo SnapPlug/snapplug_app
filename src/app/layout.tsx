@@ -104,12 +104,12 @@ const websiteSchema = {
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "AI 팀원 도입 서비스",
+  name: "AI 팀원 채용 서비스",
   provider: {
     "@type": "Organization",
     name: SITE_CONFIG.name,
   },
-  description: "마케팅, 영업, 고객응대, 업무자동화를 담당하는 AI 팀원을 도입하여 비즈니스 효율을 극대화합니다.",
+  description: "마케팅, 영업, 고객응대, 업무자동화를 담당하는 AI 팀원을 채용하여 비즈니스 효율을 극대화합니다.",
   areaServed: {
     "@type": "Country",
     name: "South Korea",
