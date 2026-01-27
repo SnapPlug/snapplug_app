@@ -1,6 +1,5 @@
 'use client';
 
-import { useEffect } from 'react';
 import Link from 'next/link';
 import localFont from 'next/font/local';
 import Footer from '@/components/Footer';
@@ -11,29 +10,9 @@ const pirulen = localFont({
 });
 
 // Cal.com 설정
-const CAL_LINK = 'snap-plug/60분-진단컨설팅';
+const CAL_URL = 'https://cal.com/snap-plug/60분-진단컨설팅?embed=true&layout=month_view&hideBranding=true';
 
 export default function ContactPage() {
-  useEffect(() => {
-    // Cal.com embed script 로드
-    const script = document.createElement('script');
-    script.src = 'https://app.cal.com/embed/embed.js';
-    script.async = true;
-    document.body.appendChild(script);
-
-    script.onload = () => {
-      // @ts-expect-error Cal is loaded from external script
-      if (typeof Cal !== 'undefined') {
-        // @ts-expect-error Cal is loaded from external script
-        Cal('init', { origin: 'https://cal.com' });
-      }
-    };
-
-    return () => {
-      document.body.removeChild(script);
-    };
-  }, []);
-
   return (
     <main className="min-h-screen flex flex-col">
       {/* Simple Navbar */}
@@ -68,17 +47,16 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* Cal.com Embed */}
+          {/* Cal.com Embed - iframe 방식 */}
           <div className="max-w-4xl mx-auto">
-            <div
-              className="bg-white rounded-2xl shadow-lg overflow-hidden"
-              style={{ minHeight: '700px' }}
-            >
-              {/* Cal.com inline embed */}
-              <div
-                data-cal-link={CAL_LINK}
-                data-cal-config='{"layout":"month_view"}'
-                style={{ width: '100%', height: '700px', overflow: 'auto' }}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+              <iframe
+                src={CAL_URL}
+                width="100%"
+                height="700"
+                frameBorder="0"
+                style={{ border: 'none', minHeight: '700px' }}
+                allow="camera; microphone"
               />
             </div>
           </div>
