@@ -83,18 +83,7 @@ export default function ContactPage() {
                 </svg>
                 hello@snapplug.app
               </a>
-              <span className="hidden sm:block text-[var(--border)]">|</span>
-              <a
-                href="https://pf.kakao.com/_snapplug"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-[var(--foreground)] hover:text-[var(--primary)] transition-colors"
-              >
-                <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 3C6.477 3 2 6.463 2 10.691c0 2.718 1.812 5.104 4.55 6.464-.148.543-.503 1.975-.574 2.29-.089.393.144.387.304.282.126-.083 1.996-1.343 2.81-1.894.6.087 1.217.132 1.91.132 5.523 0 10-3.463 10-7.274C21 6.463 17.523 3 12 3z"/>
-                </svg>
-                카카오톡 채널
-              </a>
+              
             </div>
           </div>
         </div>
