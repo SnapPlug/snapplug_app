@@ -3,16 +3,26 @@
 import Link from 'next/link';
 import localFont from 'next/font/local';
 import Footer from '@/components/Footer';
+import Cal, { getCalApi } from '@calcom/embed-react';
+import { useEffect } from 'react';
 
 const pirulen = localFont({
   src: '../../../public/fonts/pirulen.regular.otf',
   display: 'swap',
 });
 
-// Cal.com 설정
-const CAL_URL = 'https://cal.com/snap-plug/60분-진단컨설팅?embed=true&layout=month_view&hideBranding=true';
-
 export default function ContactPage() {
+  useEffect(() => {
+    (async function () {
+      const cal = await getCalApi();
+      cal('ui', {
+        theme: 'light',
+        hideEventTypeDetails: false,
+        layout: 'month_view',
+      });
+    })();
+  }, []);
+
   return (
     <main className="min-h-screen flex flex-col">
       {/* Simple Navbar */}
@@ -47,16 +57,13 @@ export default function ContactPage() {
             </p>
           </div>
 
-          {/* Cal.com Embed - iframe 방식 */}
+          {/* Cal.com Embed - Official React Component */}
           <div className="max-w-4xl mx-auto">
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <iframe
-                src={CAL_URL}
-                width="100%"
-                height="700"
-                frameBorder="0"
-                style={{ border: 'none', minHeight: '700px' }}
-                allow="camera; microphone"
+              <Cal
+                calLink="snap-plug/60분-진단컨설팅"
+                style={{ width: '100%', height: '100%', overflow: 'scroll' }}
+                config={{ layout: 'month_view' }}
               />
             </div>
           </div>
