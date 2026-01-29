@@ -152,7 +152,7 @@
 ## 🖥️ 결과 페이지 개발 명세
 
 ### 페이지 URL
-`https://snapplug.co.kr/ai-diagnosis/result` (예시)
+`https://snapplug.app/ai-diagnosis/result` (예시)
 
 ### URL 파라미터 처리
 ```
