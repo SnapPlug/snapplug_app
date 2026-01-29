@@ -2,7 +2,7 @@ import type { TeamMember, HeroTeamMember, Challenge, AITeamKey, AITeamInfo } fro
 
 // Hero Section - Simplified Team Members
 export const heroTeamMembers: HeroTeamMember[] = [
-  { name: 'Ara', role: '수석보좌관', desc: '업무 자동화는 제가 할게요!', image: '/AI_ara.webp', delay: 0 },
+  { name: 'Ara', role: '자동화 전문가', desc: '업무 자동화는 제가 할게요!', image: '/AI_ara.webp', delay: 0 },
   { name: 'Rio', role: '영업 책임자', desc: '리드 관리 맡겨주세요!', image: '/AI_rio.webp', delay: 0.5 },
   { name: 'Luna', role: '마케팅 책임자', desc: '콘텐츠 발행 도와드릴게요!', image: '/AI_luna.webp', delay: 1 },
   { name: 'Sera', role: '고객응대 책임자', desc: '고객 문의 제가 받을게요!', image: '/AI_sera.webp', delay: 1.5 },
@@ -199,10 +199,10 @@ export const teamMembers: TeamMember[] = [
   {
     id: 'ara',
     name: 'Ara',
-    role: 'AI 수석보좌관',
-    roleEn: 'CHIEF OF STAFF',
+    role: 'AI 자동화 전문가',
+    roleEn: 'AUTOMATION EXPERT',
     image: '/AI_ara.webp',
-    tagline: '"대표님, 오늘 일정 제가 다 챙겨뒀어요"',
+    tagline: '"반복 업무, 제가 자동화해드릴게요"',
     problems: [
       '미팅 잡느라 이메일 왔다갔다 시간 낭비',
       '일정 겹쳐서 실수하는 경우 발생',
