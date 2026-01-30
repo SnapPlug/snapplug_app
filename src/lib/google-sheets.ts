@@ -20,10 +20,21 @@ const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 
 function getAuthClient() {
   const email = process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
-  const key = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  let key = process.env.GOOGLE_PRIVATE_KEY;
 
   if (!email || !key) {
     throw new Error('Google Sheets credentials not configured');
+  }
+
+  // Vercel 환경에서 다양한 줄바꿈 형식 처리
+  // 1. 리터럴 \n 문자열 -> 실제 줄바꿈
+  // 2. 이미 줄바꿈이면 그대로 유지
+  key = key.replace(/\\n/g, '\n');
+
+  // 혹시 앞뒤 따옴표가 있으면 제거
+  if (key.startsWith('"') && key.endsWith('"')) {
+    key = key.slice(1, -1);
+    key = key.replace(/\\n/g, '\n');
   }
 
   return new google.auth.JWT({
