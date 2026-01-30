@@ -35,6 +35,18 @@ function getAuthClient() {
 
 export async function appendDiagnosisData(data: DiagnosisFormData): Promise<boolean> {
   try {
+    // 환경 변수 확인 로깅
+    const hasEmail = !!process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL;
+    const hasKey = !!process.env.GOOGLE_PRIVATE_KEY;
+    const hasSpreadsheetId = !!process.env.GOOGLE_SPREADSHEET_ID;
+
+    console.log('[Google Sheets] Environment check:', {
+      hasEmail,
+      hasKey,
+      hasSpreadsheetId,
+      keyLength: process.env.GOOGLE_PRIVATE_KEY?.length || 0,
+    });
+
     const auth = getAuthClient();
     const sheets = google.sheets({ version: 'v4', auth });
     const spreadsheetId = process.env.GOOGLE_SPREADSHEET_ID;
@@ -81,7 +93,12 @@ export async function appendDiagnosisData(data: DiagnosisFormData): Promise<bool
 
     return true;
   } catch (error) {
-    console.error('Failed to append to Google Sheets:', error);
+    console.error('[Google Sheets] Failed to append:', error);
+    // 더 자세한 에러 정보
+    if (error instanceof Error) {
+      console.error('[Google Sheets] Error message:', error.message);
+      console.error('[Google Sheets] Error stack:', error.stack);
+    }
     return false;
   }
 }

@@ -105,6 +105,35 @@ const automationRateMap: Record<string, number> = {
   '케이스마다다름': 0.3,
 };
 
+// AI 팀원별 도입 사례
+const agentCaseStudies: Record<string, { quote: string; company: string; result: string }> = {
+  sera: {
+    quote: '채널톡 연동 24시간 자동 응대로 CS 담당자 채용 없이 문의의 80%를 자동 처리',
+    company: '이커머스 스타트업 D사',
+    result: 'CS 채용 불필요 (월 250만원+ 절감), 클레임 50% 감소',
+  },
+  rio: {
+    quote: '구매 이탈 고객 자동 팔로업으로 장바구니 이탈 시 자동 리마인드 발송',
+    company: '이커머스 스타트업 D사',
+    result: '전환율 15% 향상, 리드 관리 시간 주 3시간 → 자동화',
+  },
+  luna: {
+    quote: '스레드 글 1개로 4채널 자동 발행, 콘텐츠 작업 2시간 → 15분으로 단축',
+    company: '비즈니스 코치 C님 (1인 운영)',
+    result: '월 20시간 절감, 노출 4배 증가 → 문의 증가',
+  },
+  alex: {
+    quote: '영수증 업로드 → AI OCR 추출 → 구글시트 자동 저장 → 보고서 자동 생성',
+    company: '관세사무소 B (1인 운영)',
+    result: '건당 1시간 → 5분, 월 25시간 절감, 본업 집중 가능',
+  },
+  ara: {
+    quote: '상담 일정 자동 조율로 캘린더 링크 자동 발송, 일정 조율 시간 0분',
+    company: '비즈니스 코치 C님 (1인 운영)',
+    result: '월 20시간 절감, 수면 1시간 더 확보',
+  },
+};
+
 // 자동화 적합도 계산
 function getAutomationFitScore(pattern: string): number {
   const rate = automationRateMap[pattern] || 0.5;
@@ -313,18 +342,23 @@ function DiagnosisResultContent() {
             </div>
           </div>
 
-          {/* Case Study */}
-          <div className="bg-gradient-to-br from-[var(--primary)]/5 to-[var(--secondary)]/5 rounded-2xl p-6 md:p-8 mb-12">
-            <h2 className="text-lg font-bold text-[var(--foreground)] mb-4">
-              실제 도입 사례
-            </h2>
-            <blockquote className="text-[var(--text-sub)] italic mb-4">
-              &quot;세관 업무 자동화로 월 40시간 절감, 처리 시간 77% 단축, 10x ROI 달성&quot;
-            </blockquote>
-            <p className="text-sm text-[var(--text-sub)]">
-              - 관세사무소 B사, AI 팀원 도입 3개월 후
-            </p>
-          </div>
+          {/* Case Study - 1순위 추천 AI 팀원에 맞는 사례 표시 */}
+          {displayAgents[0] && agentCaseStudies[displayAgents[0].agent] && (
+            <div className="bg-gradient-to-br from-[var(--primary)]/5 to-[var(--secondary)]/5 rounded-2xl p-6 md:p-8 mb-12">
+              <h2 className="text-lg font-bold text-[var(--foreground)] mb-4">
+                {aiTeamData[displayAgents[0].agent]?.name} 도입 사례
+              </h2>
+              <blockquote className="text-[var(--text-sub)] italic mb-4">
+                &quot;{agentCaseStudies[displayAgents[0].agent].quote}&quot;
+              </blockquote>
+              <p className="text-sm text-[var(--success)] font-medium mb-2">
+                {agentCaseStudies[displayAgents[0].agent].result}
+              </p>
+              <p className="text-sm text-[var(--text-sub)]">
+                - {agentCaseStudies[displayAgents[0].agent].company}
+              </p>
+            </div>
+          )}
 
           {/* CTA Section */}
           <div className="bg-white rounded-2xl p-8 shadow-lg border border-[var(--border)] text-center">
