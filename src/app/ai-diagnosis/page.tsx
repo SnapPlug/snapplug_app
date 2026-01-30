@@ -131,6 +131,19 @@ export default function AIDiagnosisPage() {
     router.push(`/ai-diagnosis/result?${params.toString()}`);
   };
 
+  // 이메일 유효성 검사
+  const isValidEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  // 전화번호 입력 핸들러 (숫자와 하이픈만 허용)
+  const handlePhoneChange = (value: string) => {
+    // 숫자와 하이픈만 허용
+    const cleaned = value.replace(/[^0-9-]/g, '');
+    setFormData({ ...formData, phone: cleaned });
+  };
+
   const isStepValid = () => {
     switch (step) {
       case 1:
@@ -144,7 +157,7 @@ export default function AIDiagnosisPage() {
       case 5:
         return formData.teamSize !== '';
       case 6:
-        return formData.company !== '' && formData.name !== '' && formData.email !== '';
+        return formData.company !== '' && formData.name !== '' && formData.email !== '' && isValidEmail(formData.email);
       default:
         return false;
     }
@@ -402,8 +415,15 @@ export default function AIDiagnosisPage() {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="hello@company.com"
-                      className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none transition-colors"
+                      className={`w-full px-4 py-3 rounded-xl border focus:outline-none transition-colors ${
+                        formData.email && !isValidEmail(formData.email)
+                          ? 'border-red-400 focus:border-red-500'
+                          : 'border-[var(--border)] focus:border-[var(--primary)]'
+                      }`}
                     />
+                    {formData.email && !isValidEmail(formData.email) && (
+                      <p className="text-red-500 text-xs mt-1">올바른 이메일 형식을 입력해주세요</p>
+                    )}
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-[var(--foreground)] mb-1">
@@ -412,7 +432,7 @@ export default function AIDiagnosisPage() {
                     <input
                       type="tel"
                       value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      onChange={(e) => handlePhoneChange(e.target.value)}
                       placeholder="010-1234-5678"
                       className="w-full px-4 py-3 rounded-xl border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none transition-colors"
                     />
