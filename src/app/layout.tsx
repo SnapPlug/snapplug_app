@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { pirulen } from "./fonts";
 import ChannelTalk from "@/components/ChannelTalk";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import { SITE_CONFIG } from "@/constants/navigation";
 import { faqs } from "@/data/faq";
 
@@ -227,6 +228,7 @@ export default function RootLayout({
         />
       </head>
       <body className={`antialiased ${pirulen.variable}`}>
+        <GoogleAnalytics />
         {children}
         <ChannelTalk />
       </body>
