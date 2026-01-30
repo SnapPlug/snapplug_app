@@ -12,6 +12,7 @@
     "@calcom/embed-react": "^1.5.3",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
+    "googleapis": "^171.0.0",
     "gsap": "^3.14.2",
     "next": "16.1.4",
     "react": "19.2.3",

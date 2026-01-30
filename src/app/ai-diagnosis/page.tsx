@@ -54,6 +54,7 @@ const teamSizeOptions = [
 export default function AIDiagnosisPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     role: '',
     tasks: [] as string[],
@@ -87,7 +88,37 @@ export default function AIDiagnosisPage() {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setIsSubmitting(true);
+
+    try {
+      // Send data to API for Google Sheets storage
+      const response = await fetch('/api/diagnosis', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          role: formData.role,
+          tasks: formData.tasks,
+          hours: formData.hours,
+          pattern: formData.pattern,
+          teamSize: formData.teamSize,
+          company: formData.company,
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error('Failed to save diagnosis data');
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+
+    // Always redirect to results page (even if API fails)
     const params = new URLSearchParams({
       role: formData.role,
       tasks: formData.tasks.join(','),
@@ -418,14 +449,14 @@ export default function AIDiagnosisPage() {
               ) : (
                 <button
                   onClick={handleSubmit}
-                  disabled={!isStepValid()}
+                  disabled={!isStepValid() || isSubmitting}
                   className={`px-6 py-3 rounded-xl font-medium transition-colors ${
-                    isStepValid()
+                    isStepValid() && !isSubmitting
                       ? 'bg-[var(--primary)] text-white hover:bg-[var(--primary-hover)]'
                       : 'bg-gray-200 text-gray-400 cursor-not-allowed'
                   }`}
                 >
-                  결과 확인하기
+                  {isSubmitting ? '저장 중...' : '결과 확인하기'}
                 </button>
               )}
             </div>
