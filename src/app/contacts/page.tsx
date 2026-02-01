@@ -4,14 +4,39 @@ import Link from 'next/link';
 import localFont from 'next/font/local';
 import Footer from '@/components/Footer';
 import Cal, { getCalApi } from '@calcom/embed-react';
-import { useEffect } from 'react';
+import { useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 const pirulen = localFont({
   src: '../../../public/fonts/pirulen.regular.otf',
   display: 'swap',
 });
 
-export default function ContactPage() {
+function ContactContent() {
+  const searchParams = useSearchParams();
+
+  // 채널톡에서 전달된 고객 정보 읽기
+  const name = searchParams.get('name') || '';
+  const email = searchParams.get('email') || '';
+  const phone = searchParams.get('phone') || '';
+
+  // 채널톡에서 전달된 진단 정보 읽기
+  const problem = searchParams.get('problem') || '';
+  const decision = searchParams.get('decision') || '';
+  const budget = searchParams.get('budget') || '';
+  const plan = searchParams.get('plan') || '';
+
+  // Cal.com notes 필드에 넣을 정보 생성
+  const buildNotes = () => {
+    const lines: string[] = [];
+    if (phone) lines.push(`연락처: ${phone}`);
+    if (problem) lines.push(`고민/문제: ${problem}`);
+    if (decision) lines.push(`의사결정권자: ${decision}`);
+    if (budget) lines.push(`예산: ${budget}`);
+    if (plan) lines.push(`도입계획: ${plan}`);
+    return lines.join('\n');
+  };
+
   useEffect(() => {
     (async function () {
       const cal = await getCalApi();
@@ -63,7 +88,12 @@ export default function ContactPage() {
               <Cal
                 calLink="snap-plug/60분-진단컨설팅"
                 style={{ width: '100%', height: '100%', overflow: 'scroll' }}
-                config={{ layout: 'month_view' }}
+                config={{
+                  layout: 'month_view',
+                  name: name,
+                  email: email,
+                  notes: buildNotes(),
+                }}
               />
             </div>
           </div>
@@ -91,5 +121,20 @@ export default function ContactPage() {
 
       <Footer />
     </main>
+  );
+}
+
+export default function ContactPage() {
+  return (
+    <Suspense fallback={
+      <main className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--primary)] mx-auto mb-4"></div>
+          <p className="text-[var(--text-sub)]">로딩 중...</p>
+        </div>
+      </main>
+    }>
+      <ContactContent />
+    </Suspense>
   );
 }
