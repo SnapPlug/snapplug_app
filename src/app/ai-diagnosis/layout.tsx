@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description:
     "반복 업무에 매달 얼마를 쓰고 계신가요? 30초 진단으로 AI 팀원 도입 시 절감 시간과 비용을 바로 확인하세요. 마케팅, 고객응대, 영업, 업무자동화 맞춤 분석.",
   keywords: [
+    "스냅플러그",
+    "SnapPlug",
     "AI ROI 계산",
     "AI 자동화 진단",
     "업무 자동화 비용",

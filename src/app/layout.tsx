@@ -11,11 +11,13 @@ const siteUrl = SITE_CONFIG.url;
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "SnapPlug - 당신의 첫 번째 AI 팀원 | Business & Beyond",
-    template: "%s | SnapPlug",
+    default: "스냅플러그(SnapPlug) - 당신의 첫 번째 AI 팀원 | Business & Beyond",
+    template: "%s | 스냅플러그(SnapPlug)",
   },
-  description: "AI 자동화로 반복 업무에서 해방되세요. Ara, Rio, Luna, Sera, Alex - 5명의 AI 팀원이 마케팅, 영업, 고객응대, 업무자동화를 대신합니다. 월 54시간 절감, 매출 2배 상승 실제 사례.",
+  description: "스냅플러그(SnapPlug) - AI 자동화로 반복 업무에서 해방되세요. Ara, Rio, Luna, Sera, Alex - 5명의 AI 팀원이 마케팅, 영업, 고객응대, 업무자동화를 대신합니다. 월 54시간 절감, 매출 2배 상승 실제 사례.",
   keywords: [
+    "스냅플러그",
+    "SnapPlug",
     "AI 자동화",
     "AI 팀원",
     "업무 자동화",
@@ -38,17 +40,17 @@ export const metadata: Metadata = {
     telephone: false,
   },
   openGraph: {
-    title: "SnapPlug - 당신의 첫 번째 AI 팀원",
-    description: "AI 자동화로 반복 업무에서 해방되세요. 60분 맞춤 컨설팅으로 시작하세요. 월 54시간 절감, 매출 2배 상승.",
+    title: "스냅플러그(SnapPlug) - 당신의 첫 번째 AI 팀원",
+    description: "스냅플러그 - AI 자동화로 반복 업무에서 해방되세요. 60분 맞춤 컨설팅으로 시작하세요. 월 54시간 절감, 매출 2배 상승.",
     type: "website",
     locale: "ko_KR",
     url: siteUrl,
-    siteName: "SnapPlug",
+    siteName: "스냅플러그(SnapPlug)",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SnapPlug - 당신의 첫 번째 AI 팀원",
-    description: "AI 자동화로 반복 업무에서 해방되세요. 월 54시간 절감, 매출 2배 상승.",
+    title: "스냅플러그(SnapPlug) - 당신의 첫 번째 AI 팀원",
+    description: "스냅플러그 - AI 자동화로 반복 업무에서 해방되세요. 월 54시간 절감, 매출 2배 상승.",
   },
   robots: {
     index: true,
@@ -77,10 +79,11 @@ export const metadata: Metadata = {
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: SITE_CONFIG.name,
+  name: "스냅플러그(SnapPlug)",
+  alternateName: "스냅플러그",
   url: siteUrl,
   logo: `${siteUrl}/logo.png`,
-  description: "AI 자동화 솔루션으로 스몰비즈니스와 1인 기업의 반복 업무를 자동화합니다.",
+  description: "스냅플러그(SnapPlug) - AI 자동화 솔루션으로 스몰비즈니스와 1인 기업의 반복 업무를 자동화합니다.",
   contactPoint: {
     "@type": "ContactPoint",
     email: SITE_CONFIG.email,
@@ -95,9 +98,10 @@ const organizationSchema = {
 const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: SITE_CONFIG.name,
+  name: "스냅플러그(SnapPlug)",
+  alternateName: "스냅플러그",
   url: siteUrl,
-  description: "당신의 첫 번째 AI 팀원 - AI 자동화로 반복 업무에서 해방되세요.",
+  description: "스냅플러그 - 당신의 첫 번째 AI 팀원. AI 자동화로 반복 업무에서 해방되세요.",
   potentialAction: {
     "@type": "SearchAction",
     target: `${siteUrl}/?q={search_term_string}`,
@@ -108,7 +112,7 @@ const websiteSchema = {
 const serviceSchema = {
   "@context": "https://schema.org",
   "@type": "Service",
-  name: "AI 팀원 채용 서비스",
+  name: "스냅플러그 AI 팀원 채용 서비스",
   provider: {
     "@type": "Organization",
     name: SITE_CONFIG.name,

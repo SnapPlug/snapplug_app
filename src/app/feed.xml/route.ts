@@ -2,10 +2,10 @@ const SITE_URL = 'https://snapplug.app';
 
 const pages = [
   {
-    title: 'SnapPlug - 당신의 첫 번째 AI 팀원',
+    title: '스냅플러그(SnapPlug) - 당신의 첫 번째 AI 팀원',
     link: SITE_URL,
     description:
-      'AI 자동화로 반복 업무에서 해방되세요. 5명의 AI 팀원이 마케팅, 영업, 고객응대, 업무자동화를 대신합니다.',
+      '스냅플러그 - AI 자동화로 반복 업무에서 해방되세요. 5명의 AI 팀원이 마케팅, 영업, 고객응대, 업무자동화를 대신합니다.',
   },
   {
     title: 'AI 자동화 ROI 진단 - 30초 만에 확인하세요',
@@ -39,9 +39,9 @@ function buildRss(): string {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
 <channel>
-<title><![CDATA[SnapPlug - 당신의 첫 번째 AI 팀원]]></title>
+<title><![CDATA[스냅플러그(SnapPlug) - 당신의 첫 번째 AI 팀원]]></title>
 <link>${SITE_URL}</link>
-<description><![CDATA[AI 자동화로 반복 업무에서 해방되세요. 스몰비즈니스와 1인 기업을 위한 AI 팀원 채용 서비스.]]></description>
+<description><![CDATA[스냅플러그 - AI 자동화로 반복 업무에서 해방되세요. 스몰비즈니스와 1인 기업을 위한 AI 팀원 채용 서비스.]]></description>
 <language>ko</language>
 <lastBuildDate>${now}</lastBuildDate>
 ${items}

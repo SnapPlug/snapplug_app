@@ -7,6 +7,8 @@ export const metadata: Metadata = {
   description:
     "AI 팀원 도입 무료 상담을 예약하세요. 60분 맞춤 진단으로 업무 자동화 포인트를 찾아드립니다. 마케팅, 고객응대, 영업, 업무자동화 전문가 상담.",
   keywords: [
+    "스냅플러그",
+    "SnapPlug",
     "AI 자동화 상담",
     "무료 컨설팅",
     "AI 팀원 도입 상담",
