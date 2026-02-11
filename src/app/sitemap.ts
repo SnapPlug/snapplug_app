@@ -11,19 +11,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/#problem`,
+      url: `${baseUrl}/ai-diagnosis`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/#scenarios`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}/#roi`,
+      url: `${baseUrl}/contacts`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.7,

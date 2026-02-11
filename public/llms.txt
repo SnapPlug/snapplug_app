@@ -7,7 +7,8 @@ SnapPlug는 스몰비즈니스와 1인 기업을 위한 AI 팀원 채용 서비�
 
 ## 주요 페이지
 - [홈페이지](https://snapplug.app): AI 팀원 소개 및 채용 사례
-- [문의](https://snapplug.app/#contact): 무료 컨설팅 신청
+- [AI 진단](https://snapplug.app/ai-diagnosis): AI 자동화 ROI 진단 - 30초 만에 확인
+- [상담 예약](https://snapplug.app/contacts): 60분 무료 진단 컨설팅 신청
 
 ## AI 팀원
 - Luna: AI 마케팅 책임자 - 콘텐츠 자동 생성, 5개+ 채널 발행

@@ -29,5 +29,12 @@ Allow: /
 User-agent: Amazonbot
 Allow: /
 
+# Naver Search Crawlers
+User-agent: Yeti
+Allow: /
+
+User-agent: Naverbot
+Allow: /
+
 # Sitemap
 Sitemap: https://snapplug.app/sitemap.xml
