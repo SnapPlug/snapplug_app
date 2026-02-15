@@ -66,9 +66,6 @@ export const metadata: Metadata = {
   verification: {
     // Google Search Console 인증 코드 (필요시 추가)
     // google: "your-google-verification-code",
-    other: {
-      "naver-site-verification": "YOUR_NAVER_VERIFICATION_CODE",
-    },
   },
   alternates: {
     canonical: siteUrl,
