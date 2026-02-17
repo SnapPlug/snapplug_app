@@ -152,8 +152,9 @@ export default function WorkspaceDemo() {
           </span>
           <br />
           <span className="text-2xl sm:text-3xl md:text-5xl font-bold mt-1 sm:mt-2 block">
-            AI 팀원이 일하는 모습,{' '}
-            <span className="text-[var(--primary)]">직접 보세요</span>
+            AI 팀원이 일하는 모습,
+            <br className="sm:hidden" />
+            {' '}<span className="text-[var(--primary)]">직접 보세요</span>
           </span>
         </h2>
 
@@ -161,9 +162,9 @@ export default function WorkspaceDemo() {
           ref={descRef}
           className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-8 sm:mb-12 md:mb-16 max-w-2xl mx-auto opacity-0"
         >
-          Ara, Rio, Luna, Sera가 실제로 어떻게 협업하는지 확인해보세요.
-          <br className="hidden sm:block" />
-          대표님은 지시만 하면, 나머지는 AI 팀원이 알아서 처리합니다.
+          AI 팀원이 실제로 협업하는 모습을
+          <br />
+          직접 확인해보세요.
         </p>
 
         <div
