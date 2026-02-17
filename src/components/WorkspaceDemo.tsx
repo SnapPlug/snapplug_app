@@ -31,7 +31,6 @@ export default function WorkspaceDemo() {
               gsap.registerPlugin(ScrollTrigger);
 
               const ctx = gsap.context(() => {
-                // Title animation
                 gsap.fromTo(
                   titleRef.current,
                   { opacity: 0, y: 30 },
@@ -47,7 +46,6 @@ export default function WorkspaceDemo() {
                   }
                 );
 
-                // Description animation
                 gsap.fromTo(
                   descRef.current,
                   { opacity: 0, y: 20 },
@@ -63,7 +61,6 @@ export default function WorkspaceDemo() {
                   }
                 );
 
-                // Video container animation
                 gsap.fromTo(
                   videoContainerRef.current,
                   { opacity: 0, y: 40, scale: 0.95 },
@@ -105,6 +102,36 @@ export default function WorkspaceDemo() {
       videoContainerRef.current?.classList.remove('opacity-0');
     }, 1500);
     return () => clearTimeout(timer);
+  }, []);
+
+  // Aggressive autoplay fallback for mobile
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const attemptPlay = () => {
+      video.muted = true;
+      video.play().catch(() => {});
+    };
+
+    // Try on canplay
+    video.addEventListener('canplay', attemptPlay, { once: true });
+
+    // Also try after a short delay (covers cases where canplay already fired)
+    const timer = setTimeout(attemptPlay, 500);
+
+    // Also try on first user interaction (touch) as ultimate fallback
+    const onTouch = () => {
+      attemptPlay();
+      document.removeEventListener('touchstart', onTouch);
+    };
+    document.addEventListener('touchstart', onTouch, { once: true, passive: true });
+
+    return () => {
+      video.removeEventListener('canplay', attemptPlay);
+      clearTimeout(timer);
+      document.removeEventListener('touchstart', onTouch);
+    };
   }, []);
 
   return (
@@ -151,9 +178,11 @@ export default function WorkspaceDemo() {
             loop
             playsInline
             controls
-            preload="metadata"
+            preload="auto"
             poster="/workspace-demo-poster.jpg"
           >
+            {/* Mobile-first: small file loads fast, desktop gets full quality */}
+            <source src="/workspace-demo-sm.mp4" type="video/mp4" media="(max-width: 768px)" />
             <source src="/workspace-demo.mp4" type="video/mp4" />
           </video>
         </div>
