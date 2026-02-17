@@ -7,6 +7,7 @@ export const heroTeamMembers: HeroTeamMember[] = [
   { name: 'Luna', role: '마케팅 책임자', desc: '콘텐츠 발행 도와드릴게요!', image: '/AI_luna.webp', delay: 1 },
   { name: 'Sera', role: '고객응대 책임자', desc: '고객 문의 제가 받을게요!', image: '/AI_sera.webp', delay: 1.5 },
   { name: 'Alex', role: '정보관리 책임자', desc: '자료·정보 정리 맡겨주세요!', image: '/AI_alex.webp', delay: 2 },
+  { name: 'Theo', role: '개발 책임자', desc: '개발은 제가 맡을게요!', image: '/AI_theo.webp', delay: 2.5 },
 ];
 
 // Full Team Members Data (for modals)

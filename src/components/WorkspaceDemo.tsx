@@ -162,9 +162,11 @@ export default function WorkspaceDemo() {
           ref={descRef}
           className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-8 sm:mb-12 md:mb-16 max-w-2xl mx-auto opacity-0"
         >
-          AI 팀원이 실제로 협업하는 모습을
+          Ara, Rio, Sera, Luna, Alex, Theo가 실제로
           <br />
-          직접 확인해보세요.
+          어떻게 협업하는지 확인해보세요.
+          <br />
+          대표님은 지시만 하면, AI 팀원이 알아서 처리합니다.
         </p>
 
         <div
