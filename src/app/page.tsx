@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
+import WorkspaceDemo from '@/components/WorkspaceDemo';
 import Problem from '@/components/Problem';
 
 // Lazy load components that are not in the initial viewport
@@ -31,6 +32,7 @@ export default function Home() {
     <main>
       <Navbar />
       <Hero />
+      <WorkspaceDemo />
       <Problem />
       <Scenarios />
       <ROICalculator />
