@@ -97,29 +97,14 @@ export default function WorkspaceDemo() {
     };
   }, []);
 
-  // Auto-play video when it enters viewport
+  // CSS fallback: ensure elements become visible even if GSAP fails
   useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            video.play().catch(() => {
-              // Autoplay blocked — user can use controls
-            });
-          } else {
-            video.pause();
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    observer.observe(video);
-
-    return () => observer.disconnect();
+    const timer = setTimeout(() => {
+      titleRef.current?.classList.remove('opacity-0');
+      descRef.current?.classList.remove('opacity-0');
+      videoContainerRef.current?.classList.remove('opacity-0');
+    }, 1500);
+    return () => clearTimeout(timer);
   }, []);
 
   return (
@@ -161,6 +146,7 @@ export default function WorkspaceDemo() {
           <video
             ref={videoRef}
             className="w-full aspect-video"
+            autoPlay
             muted
             loop
             playsInline
