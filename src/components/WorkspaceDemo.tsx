@@ -165,8 +165,8 @@ export default function WorkspaceDemo() {
             loop
             playsInline
             controls
-            preload="none"
-            poster="/workspace-demo-poster.webp"
+            preload="metadata"
+            poster="/workspace-demo-poster.jpg"
           >
             <source src="/workspace-demo.mp4" type="video/mp4" />
           </video>
