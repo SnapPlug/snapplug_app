@@ -14,6 +14,48 @@ export default function ROICalculator() {
   const [automationRate, setAutomationRate] = useState(70); // AI 자동화 효과 %
   const [developmentCost, setDevelopmentCost] = useState(300); // AI 개발비 만원 (기본값 300만원)
 
+  // 입력 필드용 문자열 상태 (사용자가 자유롭게 입력/삭제 가능)
+  const [employeesStr, setEmployeesStr] = useState('1');
+  const [salaryStr, setSalaryStr] = useState('300');
+  const [taskHoursStr, setTaskHoursStr] = useState('4');
+  const [automationStr, setAutomationStr] = useState('70');
+  const [devCostStr, setDevCostStr] = useState('300');
+
+  // blur 시 유효성 검증 후 숫자 상태 동기화
+  const handleBlur = (
+    rawValue: string,
+    setNum: (v: number) => void,
+    setStr: (v: string) => void,
+    min: number,
+    max: number,
+    defaultVal: number
+  ) => {
+    const parsed = Number(rawValue);
+    if (!rawValue.trim() || isNaN(parsed)) {
+      setNum(defaultVal);
+      setStr(String(defaultVal));
+      return;
+    }
+    const clamped = Math.min(max, Math.max(min, Math.round(parsed)));
+    setNum(clamped);
+    setStr(String(clamped));
+  };
+
+  // 스테퍼 버튼 핸들러
+  const handleStep = (
+    currentNum: number,
+    step: number,
+    direction: 1 | -1,
+    setNum: (v: number) => void,
+    setStr: (v: string) => void,
+    min: number,
+    max: number
+  ) => {
+    const next = Math.min(max, Math.max(min, currentNum + step * direction));
+    setNum(next);
+    setStr(String(next));
+  };
+
   // 고정 값
   const workDaysPerMonth = 20;
   const hoursPerDay = 8;
@@ -112,6 +154,54 @@ export default function ROICalculator() {
     };
   }, []);
 
+  // 스테퍼 입력 컴포넌트
+  const StepperInput = ({
+    id, label, value, strValue, setStr, setNum,
+    min, max, defaultVal, step, unit,
+  }: {
+    id: string; label: string; value: number; strValue: string;
+    setStr: (v: string) => void; setNum: (v: number) => void;
+    min: number; max: number; defaultVal: number; step: number; unit: string;
+  }) => (
+    <div>
+      <label htmlFor={id} className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">
+        {label} ({unit})
+      </label>
+      <div className="flex items-stretch">
+        <button
+          type="button"
+          aria-label={`${label} 감소`}
+          onClick={() => handleStep(value, step, -1, setNum, setStr, min, max)}
+          className="flex-none w-11 sm:w-12 bg-[var(--background)] border border-r-0 border-[var(--border)] rounded-l-lg text-[var(--text-sub)] text-xl font-bold hover:bg-gray-100 active:bg-gray-200 transition-colors select-none"
+        >
+          −
+        </button>
+        <input
+          id={id}
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          value={strValue}
+          onChange={(e) => {
+            const v = e.target.value;
+            if (v === '' || /^\d*$/.test(v)) setStr(v);
+          }}
+          onBlur={() => handleBlur(strValue, setNum, setStr, min, max, defaultVal)}
+          onFocus={(e) => e.target.select()}
+          className="flex-1 min-w-0 bg-[var(--background)] text-[var(--text-main)] border-y border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-base sm:text-xl font-bold py-3"
+        />
+        <button
+          type="button"
+          aria-label={`${label} 증가`}
+          onClick={() => handleStep(value, step, 1, setNum, setStr, min, max)}
+          className="flex-none w-11 sm:w-12 bg-[var(--background)] border border-l-0 border-[var(--border)] rounded-r-lg text-[var(--text-sub)] text-xl font-bold hover:bg-gray-100 active:bg-gray-200 transition-colors select-none"
+        >
+          +
+        </button>
+      </div>
+    </div>
+  );
+
   return (
     <section id="roi" ref={sectionRef} className="section bg-white">
       <div className="container">
@@ -134,73 +224,36 @@ export default function ROICalculator() {
 
             {/* 1행: 직원수, 평균월급 (간단/자세히 공통) */}
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
-              {/* 직원 수 */}
-              <div>
-                <label htmlFor="roi-employees" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">직원 수 (명)</label>
-                <input
-                  id="roi-employees"
-                  type="number"
-                  value={employees}
-                  onChange={(e) => setEmployees(Number(e.target.value) || 1)}
-                  min={1}
-                  className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                />
-              </div>
-
-              {/* 평균 월급 */}
-              <div>
-                <label htmlFor="roi-salary" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">평균 월급 (만원)</label>
-                <input
-                  id="roi-salary"
-                  type="number"
-                  value={monthlySalary}
-                  onChange={(e) => setMonthlySalary(Number(e.target.value) || 300)}
-                  min={100}
-                  step={50}
-                  className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                />
-              </div>
+              <StepperInput
+                id="roi-employees" label="직원 수" value={employees}
+                strValue={employeesStr} setStr={setEmployeesStr} setNum={setEmployees}
+                min={1} max={999} defaultVal={1} step={1} unit="명"
+              />
+              <StepperInput
+                id="roi-salary" label="평균 월급" value={monthlySalary}
+                strValue={salaryStr} setStr={setSalaryStr} setNum={setMonthlySalary}
+                min={100} max={9999} defaultVal={300} step={50} unit="만원"
+              />
             </div>
 
             {/* 2행: 자세히 보기 - 업무수행시간, 자동화 효과, 개발비 */}
             {showDetail && (
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-4 pt-4 border-t border-[var(--border)]">
-                <div>
-                  <label htmlFor="roi-task-hours" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">업무수행시간 (시간/일)</label>
-                  <input
-                    id="roi-task-hours"
-                    type="number"
-                    value={taskHoursPerDay}
-                    onChange={(e) => setTaskHoursPerDay(Math.min(8, Math.max(1, Number(e.target.value) || 4)))}
-                    min={1}
-                    max={8}
-                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="roi-automation" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">자동화 효과 (%)</label>
-                  <input
-                    id="roi-automation"
-                    type="number"
-                    value={automationRate}
-                    onChange={(e) => setAutomationRate(Math.min(90, Math.max(30, Number(e.target.value) || 70)))}
-                    min={30}
-                    max={90}
-                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="roi-dev-cost" className="text-[var(--text-sub)] text-[13px] sm:text-sm mb-2 block">개발비 (만원)</label>
-                  <input
-                    id="roi-dev-cost"
-                    type="number"
-                    value={developmentCost}
-                    onChange={(e) => setDevelopmentCost(Number(e.target.value) || 300)}
-                    min={100}
-                    step={50}
-                    className="w-full bg-[var(--background)] text-[var(--text-main)] rounded-lg px-4 py-3 border border-[var(--border)] focus:border-[var(--primary)] focus:outline-none text-center text-lg sm:text-xl font-bold [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-                  />
-                </div>
+                <StepperInput
+                  id="roi-task-hours" label="업무수행시간" value={taskHoursPerDay}
+                  strValue={taskHoursStr} setStr={setTaskHoursStr} setNum={setTaskHoursPerDay}
+                  min={1} max={8} defaultVal={4} step={1} unit="시간/일"
+                />
+                <StepperInput
+                  id="roi-automation" label="자동화 효과" value={automationRate}
+                  strValue={automationStr} setStr={setAutomationStr} setNum={setAutomationRate}
+                  min={30} max={90} defaultVal={70} step={5} unit="%"
+                />
+                <StepperInput
+                  id="roi-dev-cost" label="개발비" value={developmentCost}
+                  strValue={devCostStr} setStr={setDevCostStr} setNum={setDevelopmentCost}
+                  min={100} max={9999} defaultVal={300} step={50} unit="만원"
+                />
               </div>
             )}
 
