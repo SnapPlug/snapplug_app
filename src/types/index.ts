@@ -78,6 +78,11 @@ export interface Scenario {
   // GEO: Customer testimonial for credibility
   quote?: string;
   quoteName?: string;
+  video?: {
+    src: string;
+    srcMobile: string;
+    poster: string;
+  };
 }
 
 export type AITeamKey = 'luna' | 'sera' | 'rio' | 'ara';

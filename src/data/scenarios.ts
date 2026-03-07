@@ -19,6 +19,11 @@ export const scenarios: Scenario[] = [
     ],
     quote: '영수증 정리하던 시간에 이제 고객 상담을 더 할 수 있게 됐어요.',
     quoteName: 'P 관세사무소 대표',
+    video: {
+      src: '/case-studies/case-customs.mp4',
+      srcMobile: '/case-studies/case-customs-sm.mp4',
+      poster: '/case-studies/case-customs-poster.jpg',
+    },
   },
   {
     id: 'sensor',
@@ -39,6 +44,11 @@ export const scenarios: Scenario[] = [
     ],
     quote: '전국 현장 상황을 실시간으로 파악할 수 있게 되니 의사결정이 빨라졌습니다.',
     quoteName: 'K 센서장비 제조사 대표',
+    video: {
+      src: '/case-studies/case-sensor.mp4',
+      srcMobile: '/case-studies/case-sensor-sm.mp4',
+      poster: '/case-studies/case-sensor-poster.jpg',
+    },
   },
   {
     id: 'obgyn',
@@ -58,6 +68,11 @@ export const scenarios: Scenario[] = [
     ],
     quote: '간호사들이 환자 케어에 더 집중할 수 있게 됐어요.',
     quoteName: 'O 산부인과 원장',
+    video: {
+      src: '/case-studies/case-hospital.mp4',
+      srcMobile: '/case-studies/case-hospital-sm.mp4',
+      poster: '/case-studies/case-hospital-poster.jpg',
+    },
   },
   {
     id: 'stenography',
@@ -77,6 +92,11 @@ export const scenarios: Scenario[] = [
     ],
     quote: '문의 응대에 쓰던 시간을 이제 실제 업무에 쓸 수 있어요.',
     quoteName: 'S 속기사사무소 실장',
+    video: {
+      src: '/case-studies/case-stenographer.mp4',
+      srcMobile: '/case-studies/case-stenographer-sm.mp4',
+      poster: '/case-studies/case-stenographer-poster.jpg',
+    },
   },
   {
     id: 'pilates',
@@ -96,6 +116,11 @@ export const scenarios: Scenario[] = [
     ],
     quote: '회원분들이 알림 덕분에 수업을 놓치지 않게 됐다고 좋아하세요.',
     quoteName: 'S 필라테스 원장',
+    video: {
+      src: '/case-studies/case-pilates.mp4',
+      srcMobile: '/case-studies/case-pilates-sm.mp4',
+      poster: '/case-studies/case-pilates-poster.jpg',
+    },
   },
   {
     id: 'academy',
@@ -115,5 +140,106 @@ export const scenarios: Scenario[] = [
     ],
     quote: '수업 중에도 문의가 자동으로 처리되니 상담 누락이 사라졌어요.',
     quoteName: 'J 종합학원 원장',
+    video: {
+      src: '/case-studies/case-academy.mp4',
+      srcMobile: '/case-studies/case-academy-sm.mp4',
+      poster: '/case-studies/case-academy-poster.jpg',
+    },
+  },
+  {
+    id: 'commerce',
+    icon: '🛒',
+    title: 'B2B 농산물 유통사',
+    subtitle: '채널톡 ALF 연동 CS 자동화',
+    aiTeam: ['sera'],
+    highlight: {
+      number: '70',
+      unit: '%',
+      suffix: ' 문의 자동처리',
+    },
+    painPoint: '거래처 문의가 하루 50건+, 반복 질문에 응대 시간 소모',
+    solutions: [
+      '채널톡 ALF 연동으로 반복 문의 자동 응대',
+      '문의 3~4회 → 1회로 단축',
+    ],
+    quote: '거래처 분들이 답변이 빨라졌다고 좋아하세요.',
+    quoteName: 'B2B 유통사 대표',
+    video: {
+      src: '/case-studies/case-commerce.mp4',
+      srcMobile: '/case-studies/case-commerce-sm.mp4',
+      poster: '/case-studies/case-commerce-poster.jpg',
+    },
+  },
+  {
+    id: 'lawfirm',
+    icon: '🏛️',
+    title: 'L 로펌',
+    subtitle: '1차 상담 AI 자동 응대',
+    aiTeam: ['sera', 'rio'],
+    highlight: {
+      number: '60',
+      unit: '%',
+      suffix: ' 상담 자동화',
+    },
+    painPoint: '1차 법률 상담 문의가 쏟아지지만 변호사 시간은 한정적',
+    solutions: [
+      '1차 상담 AI 자동 응대 + 사건 분류',
+      'CRM 자동 기록으로 팔로업 누락 방지',
+    ],
+    quote: '변호사가 진짜 중요한 사건에 집중할 수 있게 됐습니다.',
+    quoteName: 'L 로펌 대표 변호사',
+    video: {
+      src: '/case-studies/case-lawfirm.mp4',
+      srcMobile: '/case-studies/case-lawfirm-sm.mp4',
+      poster: '/case-studies/case-lawfirm-poster.jpg',
+    },
+  },
+  {
+    id: 'babyedu',
+    icon: '👶',
+    title: '영유아 교육센터',
+    subtitle: '부모님 맞춤 케어 자동화',
+    aiTeam: ['sera', 'ara'],
+    highlight: {
+      number: '35',
+      unit: '시간',
+      suffix: '/월 절감',
+    },
+    painPoint: '상담 예약, 수업 히스토리, 부모님 소통을 수동으로 관리',
+    solutions: [
+      '상담~히스토리 관리 자동화',
+      '부모님 맞춤 알림 및 진도 리포트 자동 발송',
+    ],
+    quote: '부모님들이 아이 진도를 자동으로 받아보시니 만족도가 올라갔어요.',
+    quoteName: '영유아 교육센터 원장',
+    video: {
+      src: '/case-studies/case-babyedu.mp4',
+      srcMobile: '/case-studies/case-babyedu-sm.mp4',
+      poster: '/case-studies/case-babyedu-poster.jpg',
+    },
+  },
+  {
+    id: 'fortune',
+    icon: '🔮',
+    title: '운세 콘텐츠 크리에이터',
+    subtitle: '사주 콘텐츠 자동 생성',
+    aiTeam: ['luna'],
+    highlight: {
+      number: '4',
+      unit: '배',
+      suffix: ' 콘텐츠 생산',
+    },
+    painPoint: '사주 기반 콘텐츠를 직접 작성하고 예약 발행까지 수동 관리',
+    solutions: [
+      '사주 콘텐츠 자동 생성 + 톤 커스터마이징',
+      '스레드/SNS 예약 발행 자동화',
+    ],
+    quote: '콘텐츠 만들 시간에 상담에 더 집중할 수 있게 됐어요.',
+    quoteName: '운세 크리에이터',
+    video: {
+      src: '/case-studies/case-fortune.mp4',
+      srcMobile: '/case-studies/case-fortune-sm.mp4',
+      poster: '/case-studies/case-fortune-poster.jpg',
+    },
   },
 ];
