@@ -10,12 +10,12 @@ export default function Scenarios() {
   return (
     <section id="scenarios" className="section" aria-labelledby="scenarios-title">
       <div className="container">
-        <h2 id="scenarios-title" className="section-title">매출 2배, 비용 40% 절감, 월 54시간 확보</h2>
+        <h2 id="scenarios-title" className="section-title">이 대표님들은 왜 AI 팀원을 뽑았을까?</h2>
         <p className="text-center text-[var(--text-sub)] text-[13px] sm:text-sm md:text-base mb-2 sm:mb-3 max-w-2xl mx-auto">
-          AI 팀원 채용 후 실제 달라진 결과입니다
+          AI 팀원 도입 후 실제 달라진 현장의 이야기
         </p>
         <p className="text-center text-[10px] sm:text-[11px] text-[var(--text-sub)] opacity-70 mb-6 sm:mb-8 md:mb-10">
-          * SnapPlug 고객 데이터 기반 (2024-2025)
+          * 실제 프로젝트를 바탕으로 재구성하였습니다
         </p>
 
         {/* Grid Layout */}
