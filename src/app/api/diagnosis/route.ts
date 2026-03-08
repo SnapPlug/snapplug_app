@@ -1,6 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { appendDiagnosisData, DiagnosisFormData } from '@/lib/google-sheets';
 
+// Simple in-memory rate limiter (IP-based, 5 requests per minute)
+const RATE_LIMIT_WINDOW = 60 * 1000;
+const RATE_LIMIT_MAX = 5;
+const requestCounts = new Map<string, { count: number; resetAt: number }>();
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const entry = requestCounts.get(ip);
+
+  if (!entry || now > entry.resetAt) {
+    requestCounts.set(ip, { count: 1, resetAt: now + RATE_LIMIT_WINDOW });
+    return false;
+  }
+
+  if (entry.count >= RATE_LIMIT_MAX) {
+    return true;
+  }
+
+  requestCounts.set(ip, { ...entry, count: entry.count + 1 });
+  return false;
+}
+
 // Role to Agent mapping
 const roleToAgent: Record<string, string> = {
   cs_담당자: 'sera',
@@ -59,6 +81,17 @@ function calculateAnnualSavings(hours: string, pattern: string): number {
 
 export async function POST(request: NextRequest) {
   try {
+    // Rate limit check
+    const forwardedFor = request.headers.get('x-forwarded-for');
+    const clientIp = forwardedFor?.split(',')[0]?.trim() || 'unknown';
+
+    if (isRateLimited(clientIp)) {
+      return NextResponse.json(
+        { error: 'Too many requests. Please try again later.' },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
 
     // Validate required fields
@@ -84,8 +117,6 @@ export async function POST(request: NextRequest) {
 
     // Get metadata
     const userAgent = request.headers.get('user-agent') || '';
-    const forwardedFor = request.headers.get('x-forwarded-for');
-    const ipAddress = forwardedFor?.split(',')[0]?.trim() || 'unknown';
 
     const formData: DiagnosisFormData = {
       role: body.role,
@@ -100,7 +131,7 @@ export async function POST(request: NextRequest) {
       recommendedAgents,
       estimatedSavings,
       userAgent,
-      ipAddress,
+      ipAddress: clientIp,
     };
 
     // Append to Google Sheets
