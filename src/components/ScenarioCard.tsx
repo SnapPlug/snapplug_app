@@ -1,9 +1,11 @@
 'use client';
 
-import { useRef, useEffect, useCallback } from 'react';
+import { useRef, useEffect, useCallback, useState } from 'react';
 import Image from 'next/image';
 import type { Scenario } from '@/types';
 import { aiTeamInfo } from '@/data/team';
+
+const SPEED_OPTIONS = [0.5, 1, 1.5, 2] as const;
 
 interface ScenarioCardProps {
   scenario: Scenario;
@@ -12,6 +14,13 @@ interface ScenarioCardProps {
 export default function ScenarioCard({ scenario }: ScenarioCardProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const cardRef = useRef<HTMLElement>(null);
+  const userPausedRef = useRef(false);
+  const hideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [playbackRate, setPlaybackRate] = useState(1);
+  const [controlsVisible, setControlsVisible] = useState(false);
+  const [showSpeedMenu, setShowSpeedMenu] = useState(false);
 
   const handleIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     const video = videoRef.current;
@@ -19,9 +28,13 @@ export default function ScenarioCard({ scenario }: ScenarioCardProps) {
 
     for (const entry of entries) {
       if (entry.isIntersecting) {
-        video.play().catch(() => {});
+        if (!userPausedRef.current) {
+          video.play().catch(() => {});
+          setIsPlaying(true);
+        }
       } else {
         video.pause();
+        setIsPlaying(false);
       }
     }
   }, []);
@@ -34,6 +47,7 @@ export default function ScenarioCard({ scenario }: ScenarioCardProps) {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       video.pause();
+      setIsPlaying(false);
       return;
     }
 
@@ -44,6 +58,63 @@ export default function ScenarioCard({ scenario }: ScenarioCardProps) {
 
     return () => observer.disconnect();
   }, [handleIntersection]);
+
+  useEffect(() => {
+    return () => {
+      if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    };
+  }, []);
+
+  const togglePlay = useCallback(() => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.play().catch(() => {});
+      setIsPlaying(true);
+      userPausedRef.current = false;
+    } else {
+      video.pause();
+      setIsPlaying(false);
+      userPausedRef.current = true;
+    }
+  }, []);
+
+  const changeSpeed = useCallback((speed: number) => {
+    const video = videoRef.current;
+    if (!video) return;
+
+    video.playbackRate = speed;
+    setPlaybackRate(speed);
+    setShowSpeedMenu(false);
+  }, []);
+
+  const scheduleHide = useCallback((delay = 2500) => {
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+    hideTimerRef.current = setTimeout(() => {
+      setControlsVisible(false);
+      setShowSpeedMenu(false);
+    }, delay);
+  }, []);
+
+  const showControls = useCallback(() => {
+    setControlsVisible(true);
+    scheduleHide();
+  }, [scheduleHide]);
+
+  const handlePointerEnter = useCallback(() => {
+    setControlsVisible(true);
+    if (hideTimerRef.current) clearTimeout(hideTimerRef.current);
+  }, []);
+
+  const handlePointerLeave = useCallback(() => {
+    scheduleHide();
+  }, [scheduleHide]);
+
+  const handleTouchStart = useCallback(() => {
+    setControlsVisible(true);
+    scheduleHide(3000);
+  }, [scheduleHide]);
 
   const hasVideo = !!scenario.video;
 
@@ -61,7 +132,12 @@ export default function ScenarioCard({ scenario }: ScenarioCardProps) {
       {hasVideo && (
         <>
           {/* Video container */}
-          <div className="relative aspect-video rounded-t-2xl md:rounded-2xl overflow-hidden">
+          <div
+            className="relative aspect-video rounded-t-2xl md:rounded-2xl overflow-hidden"
+            onPointerEnter={handlePointerEnter}
+            onPointerLeave={handlePointerLeave}
+            onTouchStart={handleTouchStart}
+          >
             <video
               ref={videoRef}
               className="absolute inset-0 w-full h-full object-contain"
@@ -75,6 +151,66 @@ export default function ScenarioCard({ scenario }: ScenarioCardProps) {
               <source src={scenario.video!.srcMobile} media="(max-width: 768px)" type="video/mp4" />
               <source src={scenario.video!.src} type="video/mp4" />
             </video>
+
+            {/* Playback controls */}
+            <div
+              className={`absolute bottom-3 left-3 z-20 flex items-center gap-1 bg-black/50 backdrop-blur-md rounded-lg px-2 py-1.5 transition-all duration-300 ${
+                controlsVisible
+                  ? 'opacity-100 translate-y-0'
+                  : 'opacity-0 translate-y-1 pointer-events-none'
+              }`}
+            >
+              <button
+                type="button"
+                onClick={togglePlay}
+                aria-label={isPlaying ? '일시정지' : '재생'}
+                className="text-white hover:text-white/80 transition-colors p-0.5"
+              >
+                {isPlaying ? (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <rect x="5" y="3" width="4" height="18" />
+                    <rect x="15" y="3" width="4" height="18" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <polygon points="6,3 18,12 6,21" />
+                  </svg>
+                )}
+              </button>
+
+              <div className="w-px h-4 bg-white/30" />
+
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setShowSpeedMenu((prev) => !prev)}
+                  aria-label="재생 속도"
+                  aria-expanded={showSpeedMenu}
+                  className="text-white text-[11px] font-medium hover:text-white/80 transition-colors px-1 py-0.5"
+                >
+                  {playbackRate}x
+                </button>
+
+                {showSpeedMenu && (
+                  <div className="absolute bottom-full mb-1 left-1/2 -translate-x-1/2 bg-black/70 backdrop-blur-md rounded-lg py-1 min-w-[56px]">
+                    {[...SPEED_OPTIONS].reverse().map((speed) => (
+                      <button
+                        key={speed}
+                        type="button"
+                        onClick={() => changeSpeed(speed)}
+                        className={`block w-full text-center text-[11px] px-3 py-1 transition-colors ${
+                          speed === playbackRate
+                            ? 'text-white font-semibold bg-white/20'
+                            : 'text-white/80 hover:bg-white/10'
+                        }`}
+                      >
+                        {speed}x
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
 
             {/* Desktop overlay panel */}
             <div className="hidden md:block absolute bottom-3 right-3 z-10 w-[260px] bg-black/50 backdrop-blur-md rounded-xl px-3.5 py-3 text-white">
