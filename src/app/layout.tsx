@@ -68,6 +68,10 @@ export const metadata: Metadata = {
   },
   alternates: {
     canonical: siteUrl,
+    languages: {
+      'ko': siteUrl,
+      'x-default': siteUrl,
+    },
   },
 };
 
