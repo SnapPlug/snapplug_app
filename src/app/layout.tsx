@@ -90,6 +90,9 @@ const organizationSchema = {
     url: `${siteUrl}/about`,
     image: `${siteUrl}/Jason%20Jeong.jpeg`,
   },
+  sameAs: [
+    "https://www.threads.com/@snapplug.app",
+  ],
   contactPoint: {
     "@type": "ContactPoint",
     email: SITE_CONFIG.email,
