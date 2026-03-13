@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import { scenarios } from '@/data/scenarios';
 import { CHANNEL_WORKFLOW_ID } from '@/constants/navigation';
 
-const ScenarioCard = dynamic(() => import('./ScenarioCard'), { ssr: false });
+const ScenarioCard = dynamic(() => import('./ScenarioCard'));
 
 export default function Scenarios() {
   return (

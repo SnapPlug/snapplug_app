@@ -26,7 +26,19 @@ Allow: /
 User-agent: Google-Extended
 Allow: /
 
+User-agent: Gemini-Fetcher
+Allow: /
+
 User-agent: Amazonbot
+Allow: /
+
+User-agent: Meta-ExternalAgent
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bytespider
 Allow: /
 
 # Naver Search Crawlers

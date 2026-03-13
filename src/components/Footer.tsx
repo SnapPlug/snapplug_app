@@ -15,7 +15,13 @@ export default function Footer() {
           </p>
 
           {/* Links */}
-          <div className="flex items-center gap-6 text-sm text-[var(--text-sub)]">
+          <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--text-sub)]">
+            <a
+              href="/about"
+              className="hover:text-[var(--foreground)] transition-colors"
+            >
+              회사 소개
+            </a>
             <a
               href="https://elegant-sand-f36.notion.site/24f2b9ca10c38009b496fca952cac1d4"
               target="_blank"
@@ -30,13 +36,13 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="hover:text-[var(--foreground)] transition-colors"
             >
-              Terms of Service
+              Terms
             </a>
             <button
               onClick={() => setIsCompanyModalOpen(true)}
               className="hover:text-[var(--foreground)] transition-colors"
             >
-              Company
+              사업자정보
             </button>
           </div>
         </div>

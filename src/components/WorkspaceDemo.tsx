@@ -181,7 +181,7 @@ export default function WorkspaceDemo() {
             loop
             playsInline
             controls
-            preload="auto"
+            preload="metadata"
             poster="/workspace-demo-poster.jpg"
           >
             {/* Mobile-first: small file loads fast, desktop gets full quality */}
