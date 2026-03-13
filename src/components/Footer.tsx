@@ -23,17 +23,13 @@ export default function Footer() {
               회사 소개
             </a>
             <a
-              href="https://elegant-sand-f36.notion.site/24f2b9ca10c38009b496fca952cac1d4"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/privacy"
               className="hover:text-[var(--foreground)] transition-colors"
             >
               Privacy
             </a>
             <a
-              href="https://elegant-sand-f36.notion.site/24f2b9ca10c380c6b295d0fa5e23633c"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/terms"
               className="hover:text-[var(--foreground)] transition-colors"
             >
               Terms
