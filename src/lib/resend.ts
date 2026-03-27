@@ -40,7 +40,7 @@ export async function sendDiagnosisNotification(data: DiagnosisNotificationData)
     const savingsFormatted = `${(data.estimatedSavings / 10000).toLocaleString()}만원`;
 
     await resend.emails.send({
-      from: 'SnapPlug <noreply@snapplug.app>',
+      from: process.env.RESEND_FROM_EMAIL || 'SnapPlug <onboarding@resend.dev>',
       to: 'hello@snapplug.app',
       subject: `[AI 진단] ${data.company} - ${data.name}님 신규 진단 완료`,
       html: `
