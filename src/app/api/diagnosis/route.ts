@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { appendDiagnosisData, DiagnosisFormData } from '@/lib/google-sheets';
+import { sendDiagnosisNotification } from '@/lib/resend';
 
 // Simple in-memory rate limiter (IP-based, 5 requests per minute)
 const RATE_LIMIT_WINDOW = 60 * 1000;
@@ -135,11 +136,27 @@ export async function POST(request: NextRequest) {
     };
 
     // Append to Google Sheets
-    const success = await appendDiagnosisData(formData);
-
-    if (!success) {
-      // Log error but don't fail the request
+    const sheetSuccess = await appendDiagnosisData(formData);
+    if (!sheetSuccess) {
       console.error('Failed to save to Google Sheets, but continuing...');
+    }
+
+    // Send email notification
+    const emailSuccess = await sendDiagnosisNotification({
+      company: body.company,
+      name: body.name,
+      email: body.email,
+      phone: body.phone,
+      role: body.role,
+      tasks: body.tasks,
+      hours: body.hours,
+      pattern: body.pattern,
+      teamSize: body.teamSize,
+      recommendedAgents,
+      estimatedSavings,
+    });
+    if (!emailSuccess) {
+      console.error('Failed to send email notification, but continuing...');
     }
 
     return NextResponse.json({
