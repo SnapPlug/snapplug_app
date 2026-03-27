@@ -17,6 +17,12 @@ export default function Footer() {
           {/* Links */}
           <div className="flex flex-wrap items-center gap-4 text-sm text-[var(--text-sub)]">
             <a
+              href="/blog"
+              className="hover:text-[var(--foreground)] transition-colors"
+            >
+              블로그
+            </a>
+            <a
               href="/about"
               className="hover:text-[var(--foreground)] transition-colors"
             >

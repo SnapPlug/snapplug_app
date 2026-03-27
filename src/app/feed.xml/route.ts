@@ -1,3 +1,6 @@
+import { getAllPosts } from '@/lib/blog';
+import { BLOG_CATEGORIES } from '@/types';
+
 const SITE_URL = 'https://snapplug.app';
 
 const pages = [
@@ -21,10 +24,10 @@ const pages = [
   },
 ];
 
-function buildRss(): string {
+async function buildRss(): Promise<string> {
   const now = new Date().toUTCString();
 
-  const items = pages
+  const pageItems = pages
     .map(
       (page) => `<item>
 <title><![CDATA[${page.title}]]></title>
@@ -32,6 +35,20 @@ function buildRss(): string {
 <description><![CDATA[${page.description}]]></description>
 <guid isPermaLink="true">${page.link}</guid>
 <pubDate>${now}</pubDate>
+</item>`
+    )
+    .join('\n');
+
+  const blogPosts = await getAllPosts();
+  const blogItems = blogPosts
+    .map(
+      (post) => `<item>
+<title><![CDATA[${post.frontmatter.title}]]></title>
+<link>${SITE_URL}/blog/${post.slug}</link>
+<description><![CDATA[${post.frontmatter.description}]]></description>
+<guid isPermaLink="true">${SITE_URL}/blog/${post.slug}</guid>
+<pubDate>${new Date(post.frontmatter.date).toUTCString()}</pubDate>
+<category>${BLOG_CATEGORIES[post.frontmatter.category]?.label ?? ''}</category>
 </item>`
     )
     .join('\n');
@@ -44,13 +61,14 @@ function buildRss(): string {
 <description><![CDATA[스냅플러그 - AI 자동화로 반복 업무에서 해방되세요. 스몰비즈니스와 1인 기업을 위한 AI 팀원 채용 서비스.]]></description>
 <language>ko</language>
 <lastBuildDate>${now}</lastBuildDate>
-${items}
+${pageItems}
+${blogItems}
 </channel>
 </rss>`;
 }
 
-export function GET() {
-  return new Response(buildRss(), {
+export async function GET() {
+  return new Response(await buildRss(), {
     headers: {
       'Content-Type': 'text/xml; charset=utf-8',
       'Cache-Control': 'public, max-age=3600, s-maxage=3600',

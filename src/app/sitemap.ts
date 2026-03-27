@@ -1,12 +1,21 @@
 import { MetadataRoute } from 'next';
 import { scenarios } from '@/data/scenarios';
+import { getAllPosts } from '@/lib/blog';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://snapplug.app';
 
   const caseStudyUrls: MetadataRoute.Sitemap = scenarios.map((s) => ({
     url: `${baseUrl}/case-studies/${s.id}`,
     lastModified: new Date('2026-03-13'),
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
+  }));
+
+  const blogPosts = await getAllPosts();
+  const blogUrls: MetadataRoute.Sitemap = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.frontmatter.updatedAt || post.frontmatter.date),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
@@ -55,5 +64,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
     },
     ...caseStudyUrls,
+    {
+      url: `${baseUrl}/blog`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly' as const,
+      priority: 0.8,
+    },
+    ...blogUrls,
   ];
 }

@@ -144,3 +144,43 @@ export const industryNames: Record<IndustryType, string> = {
   subscription: '구독서비스',
   startup: '스타트업',
 };
+
+// Blog Types
+export type BlogCategory = 'ai-automation' | 'case-study' | 'how-to' | 'industry-trends';
+
+export interface BlogFrontmatter {
+  title: string;
+  description: string;
+  date: string;
+  updatedAt?: string;
+  category: BlogCategory;
+  tags?: string[];
+  author: string;
+  published: boolean;
+}
+
+export interface BlogPost {
+  slug: string;
+  frontmatter: BlogFrontmatter;
+  content: string;
+  readingTime: number;
+}
+
+export const BLOG_CATEGORIES: Record<BlogCategory, { label: string; description: string }> = {
+  'ai-automation': {
+    label: 'AI 자동화 인사이트',
+    description: 'AI 자동화 트렌드와 실무 인사이트',
+  },
+  'case-study': {
+    label: '고객 사례',
+    description: '스냅플러그 AI 팀원 도입 스토리',
+  },
+  'how-to': {
+    label: '실전 가이드',
+    description: '단계별 AI 자동화 구축 가이드',
+  },
+  'industry-trends': {
+    label: '업계 트렌드',
+    description: 'AI 업계 최신 동향과 분석',
+  },
+};

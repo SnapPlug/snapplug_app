@@ -13,10 +13,14 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "googleapis": "^171.0.0",
+    "gray-matter": "^4.0.3",
     "gsap": "^3.14.2",
     "next": "16.1.4",
+    "next-mdx-remote": "^6.0.0",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "reading-time": "^1.5.0",
+    "remark-gfm": "^4.0.1"
   },
   "browserslist": [
     "defaults and supports es6-module",

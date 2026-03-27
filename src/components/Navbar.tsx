@@ -61,6 +61,9 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <Link href="/blog" className="nav-link">
+            블로그
+          </Link>
           <button
             className="cta-ponpon !py-3 !px-6 !text-sm focus:outline-none focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-2"
             onClick={() => window.openChannelIOWorkflow?.(CHANNEL_WORKFLOW_ID)}
@@ -118,6 +121,14 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
+          <Link
+            href="/blog"
+            className="nav-link text-base sm:text-lg"
+            onClick={() => setIsMobileMenuOpen(false)}
+            tabIndex={isMobileMenuOpen ? 0 : -1}
+          >
+            블로그
+          </Link>
           <button
             className="cta-ponpon text-center mt-2 w-full text-[15px] sm:text-base focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
             onClick={() => {
