@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import Breadcrumb from '@/components/Breadcrumb';
 import { SITE_CONFIG } from '@/constants/navigation';
 
 export const metadata: Metadata = {
@@ -71,6 +72,10 @@ export default function AboutPage() {
         {/* About Section */}
         <section className="flex-1 py-16 md:py-24">
           <div className="container max-w-4xl">
+            <Breadcrumb
+              items={[{ label: '홈', href: '/' }]}
+              current="소개"
+            />
 
             {/* Founder Card */}
             <div className="bg-white rounded-2xl shadow-sm border border-[var(--border)] p-8 md:p-12 mb-12">

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Breadcrumb from '@/components/Breadcrumb';
 import AIDiagnosisClient from './AIDiagnosisClient';
 
 export const metadata: Metadata = {
@@ -15,5 +16,14 @@ export const metadata: Metadata = {
 };
 
 export default function AIDiagnosisPage() {
-  return <AIDiagnosisClient />;
+  return (
+    <>
+      <Breadcrumb
+        items={[{ label: '홈', href: '/' }]}
+        current="AI 진단"
+        className="container max-w-2xl pt-4"
+      />
+      <AIDiagnosisClient />
+    </>
+  );
 }

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Footer from '@/components/Footer';
+import Breadcrumb from '@/components/Breadcrumb';
 import { scenarios } from '@/data/scenarios';
 import { aiTeamInfo } from '@/data/team';
 import { SITE_CONFIG } from '@/constants/navigation';
@@ -105,16 +106,13 @@ export default async function CaseStudyPage({ params }: Props) {
         <article className="flex-1 py-16 md:py-24">
           <div className="container max-w-3xl">
 
-            {/* Breadcrumb */}
-            <nav aria-label="breadcrumb" className="mb-8">
-              <ol className="flex items-center gap-2 text-sm text-[var(--text-sub)]">
-                <li><Link href="/" className="hover:text-[var(--foreground)] transition-colors">홈</Link></li>
-                <li aria-hidden="true">/</li>
-                <li><Link href="/case-studies" className="hover:text-[var(--foreground)] transition-colors">케이스스터디</Link></li>
-                <li aria-hidden="true">/</li>
-                <li className="text-[var(--foreground)] font-medium truncate">{scenario.title}</li>
-              </ol>
-            </nav>
+            <Breadcrumb
+              items={[
+                { label: '홈', href: '/' },
+                { label: '케이스스터디', href: '/case-studies' },
+              ]}
+              current={scenario.title}
+            />
 
             {/* Header */}
             <header className="mb-10">

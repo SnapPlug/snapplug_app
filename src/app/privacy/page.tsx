@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import Breadcrumb from '@/components/Breadcrumb';
 import { SITE_CONFIG } from '@/constants/navigation';
 
 export const metadata: Metadata = {
@@ -28,6 +29,10 @@ export default function PrivacyPage() {
 
       <section className="flex-1 py-16 md:py-24">
         <div className="container max-w-3xl">
+          <Breadcrumb
+            items={[{ label: '홈', href: '/' }]}
+            current="개인정보처리방침"
+          />
           <h1 className="text-3xl font-bold text-[var(--foreground)] mb-2">개인정보처리방침</h1>
           <p className="text-sm text-[var(--text-sub)] mb-10">시행일: 2025년 3월 13일</p>
 

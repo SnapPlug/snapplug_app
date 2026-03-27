@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import Footer from '@/components/Footer';
+import Breadcrumb from '@/components/Breadcrumb';
 import { scenarios } from '@/data/scenarios';
 import { aiTeamInfo } from '@/data/team';
 import { SITE_CONFIG } from '@/constants/navigation';
@@ -53,6 +54,10 @@ export default function CaseStudiesPage() {
 
         <section className="flex-1 py-16 md:py-24">
           <div className="container max-w-5xl">
+            <Breadcrumb
+              items={[{ label: '홈', href: '/' }]}
+              current="케이스스터디"
+            />
             <div className="text-center mb-12">
               <h1 className="text-3xl md:text-4xl font-bold text-[var(--foreground)] mb-4">
                 AI 팀원 도입 사례

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Breadcrumb from "@/components/Breadcrumb";
 
 export const metadata: Metadata = {
   title: "AI 자동화 진단 결과",
@@ -14,5 +15,17 @@ export default function DiagnosisResultLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Breadcrumb
+        items={[
+          { label: '홈', href: '/' },
+          { label: 'AI 진단', href: '/ai-diagnosis' },
+        ]}
+        current="진단 결과"
+        className="container max-w-4xl pt-4"
+      />
+      {children}
+    </>
+  );
 }

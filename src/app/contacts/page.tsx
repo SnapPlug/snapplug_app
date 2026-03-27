@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Breadcrumb from '@/components/Breadcrumb';
 import ContactsClient from './ContactsClient';
 
 export const metadata: Metadata = {
@@ -15,5 +16,14 @@ export const metadata: Metadata = {
 };
 
 export default function ContactPage() {
-  return <ContactsClient />;
+  return (
+    <>
+      <Breadcrumb
+        items={[{ label: '홈', href: '/' }]}
+        current="상담 예약"
+        className="container max-w-6xl pt-4"
+      />
+      <ContactsClient />
+    </>
+  );
 }
